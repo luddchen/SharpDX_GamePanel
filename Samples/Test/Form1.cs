@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace Test
 {
 
@@ -24,7 +23,6 @@ namespace Test
             
             Game1 game = new Game1( this.splitContainer.Panel2 );
             game.form = this;
-            game.TargetFps = 120;
             game.Start();
         }
 

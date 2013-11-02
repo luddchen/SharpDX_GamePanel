@@ -46,6 +46,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SharpDX\Bin\DirectX11_1-net40\SharpDX.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX.Toolkit.Game, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SharpDX\Bin\DirectX11_1-net40\SharpDX.Toolkit.Game.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX.Toolkit.Graphics, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SharpDX\Bin\DirectX11_1-net40\SharpDX.Toolkit.Graphics.dll</HintPath>
@@ -60,9 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GamePanel.Control.cs" />
     <Compile Include="GamePanel.cs" />
+    <Compile Include="GamePanel.Services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceProvider\PanelDeviceManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,9 +7,14 @@ namespace GamePanel
 
     public partial class GamePanel
     {
-        private TimerTick timer;
-        private TimeSpan accumulatedElapsedTime;
-        protected TimeSpan lastFrameElapsedTime;
+
+        public readonly System.Windows.Forms.Control Control;
+
+        private readonly TimerTick timer;
+
+        private TimeSpan accumulatedElapsedGameTime;
+        protected TimeSpan lastFrameElapsedGameTime;
+
         private float targetFps = 60.0f;
         public float TargetFps
         {
@@ -21,23 +26,24 @@ namespace GamePanel
             }
         }
         private long maximumElapsed;
+
         public bool IsFixedTimeStep = true;
+
+        protected long currentFrame = 0;
 
         private bool doWork = true;
 
 
         public GamePanel( System.Windows.Forms.Control control )
         {
-            this.Control = control;
-            InitControl();
-        }
+            this.Control = control; 
+            this.Control.Disposed += Control_Disposed;
 
+            InitServices();
 
-        private void InitTimer()
-        {
             this.timer = new TimerTick();
-            this.accumulatedElapsedTime = new TimeSpan();
-            this.lastFrameElapsedTime = new TimeSpan();
+            this.accumulatedElapsedGameTime = new TimeSpan();
+            this.lastFrameElapsedGameTime = new TimeSpan();
             this.maximumElapsed = (long)( 10000000.0f / targetFps );
         }
 
@@ -61,8 +67,6 @@ namespace GamePanel
 
         private void Run()
         {
-            InitGraphics();
-            InitTimer();
             Initialize();
             LoadContent();
 
@@ -83,18 +87,22 @@ namespace GamePanel
 
             if ( !this.IsFixedTimeStep )
             {
-                this.lastFrameElapsedTime = this.timer.ElapsedAdjustedTime;
+                this.lastFrameElapsedGameTime = this.timer.ElapsedAdjustedTime;
                 DrawFrame();
             }
             else
             {
-                this.accumulatedElapsedTime += this.timer.ElapsedAdjustedTime;
+                this.accumulatedElapsedGameTime += this.timer.ElapsedAdjustedTime;
 
-                if ( this.accumulatedElapsedTime.Ticks > this.maximumElapsed )
+                if ( this.accumulatedElapsedGameTime.Ticks > this.maximumElapsed )
                 {
-                    this.lastFrameElapsedTime = this.accumulatedElapsedTime;
-                    this.accumulatedElapsedTime = new TimeSpan();
+                    this.lastFrameElapsedGameTime = this.accumulatedElapsedGameTime;
+                    this.accumulatedElapsedGameTime = new TimeSpan();
                     DrawFrame();
+                }
+                else
+                {
+                    // sleep
                 }
             }
         }
@@ -102,31 +110,27 @@ namespace GamePanel
 
         private void DrawFrame()
         {
-            if ( !this.initialized )
-            {
-                InitGraphics();
-            }
+            ++currentFrame;
 
-            this.Device.Viewport = new SharpDX.ViewportF( 0, 0, this.Control.Width, this.Control.Height );
-            this.Device.SetRenderTargets( this.renderView );
+            this.graphicsDeviceManager.BeginDraw(); //todo : check
 
             Draw();
 
-            this.swapChain.Present( 0, PresentFlags.None );
+            this.graphicsDeviceManager.EndDraw();
         }
 
 
         protected virtual void Draw() { }
 
 
+        private void Control_Disposed( object sender, EventArgs e )
+        {
+            doWork = false;
+        }
+
         protected virtual void Dispose( bool disposing )
         {
-            this.renderView.Dispose();
-            this.backBuffer.Dispose();
-            this.swapChain.Dispose();
-            this.factory.Dispose();
-            this.Device.Dispose();
-            this.dx11Device.Dispose();
+            // graphicsdevicemanager dispose !?
         }
 
     }
