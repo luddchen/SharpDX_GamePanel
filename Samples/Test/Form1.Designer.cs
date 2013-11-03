@@ -31,16 +31,24 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showMouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideMouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -65,8 +73,36 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // gameToolStripMenuItem
+            // 
+            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showMouseToolStripMenuItem,
+            this.hideMouseToolStripMenuItem,
+            this.loadTextureToolStripMenuItem});
+            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Text = "Game";
+            // 
+            // showMouseToolStripMenuItem
+            // 
+            this.showMouseToolStripMenuItem.Name = "showMouseToolStripMenuItem";
+            this.showMouseToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.showMouseToolStripMenuItem.Text = "Show Mouse";
+            // 
+            // hideMouseToolStripMenuItem
+            // 
+            this.hideMouseToolStripMenuItem.Name = "hideMouseToolStripMenuItem";
+            this.hideMouseToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.hideMouseToolStripMenuItem.Text = "Hide Mouse";
+            // 
+            // loadTextureToolStripMenuItem
+            // 
+            this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.loadTextureToolStripMenuItem.Text = "LoadTexture";
             // 
             // statusStrip1
             // 
@@ -93,30 +129,36 @@
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.BackColor = System.Drawing.SystemColors.Info;
+            this.splitContainer.Panel1.Controls.Add(this.splitContainer1);
             this.splitContainer.Size = new System.Drawing.Size(739, 404);
             this.splitContainer.SplitterDistance = 246;
             this.splitContainer.TabIndex = 2;
             // 
-            // gameToolStripMenuItem
+            // openFileDialog1
             // 
-            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showMouseToolStripMenuItem,
-            this.hideMouseToolStripMenuItem});
-            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.gameToolStripMenuItem.Text = "Game";
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // showMouseToolStripMenuItem
+            // splitContainer1
             // 
-            this.showMouseToolStripMenuItem.Name = "showMouseToolStripMenuItem";
-            this.showMouseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.showMouseToolStripMenuItem.Text = "Show Mouse";
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // hideMouseToolStripMenuItem
+            // splitContainer1.Panel1
             // 
-            this.hideMouseToolStripMenuItem.Name = "hideMouseToolStripMenuItem";
-            this.hideMouseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.hideMouseToolStripMenuItem.Text = "Hide Mouse";
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Size = new System.Drawing.Size(246, 404);
+            this.splitContainer1.SplitterDistance = 195;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // treeView1
+            // 
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(246, 196);
+            this.treeView1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -133,8 +175,12 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +197,10 @@
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showMouseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hideMouseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadTextureToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 

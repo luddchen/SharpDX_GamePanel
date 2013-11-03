@@ -22,7 +22,7 @@ namespace GamePanel
             get { return this.panelDeviceManager.GraphicsDevice; } 
         }
         
-        public void InitServices()
+        private void InitServices()
         {
             this.Services = new GameServiceRegistry();
             this.Content = new ContentManager( this.Services );

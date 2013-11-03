@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GamePanel.cs" />
+    <Compile Include="GamePanel.Cursor.cs" />
     <Compile Include="GamePanel.Services.cs" />
     <Compile Include="PanelGameTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
