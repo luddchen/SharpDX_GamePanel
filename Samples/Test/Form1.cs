@@ -11,6 +11,8 @@ namespace Test
 
         private StatusInfo SetInfo;
 
+        private Game1 game;
+
         public Form1()
         {
             InitializeComponent();
@@ -21,9 +23,22 @@ namespace Test
                 this.statusLabel1.Text = text;
             };
             
-            Game1 game = new Game1( this.splitContainer.Panel2 );
+            game = new Game1( this.splitContainer.Panel2 );
             game.form = this;
             game.Start();
+
+            this.showMouseToolStripMenuItem.Click += showMouseToolStripMenuItem_Click;
+            this.hideMouseToolStripMenuItem.Click += hideMouseToolStripMenuItem_Click;
+        }
+
+        private void hideMouseToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            game.IsMouseVisible = false;
+        }
+
+        private void showMouseToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            game.IsMouseVisible = true;
         }
 
         private void exitToolStripMenuItem_Click( object sender, System.EventArgs e )

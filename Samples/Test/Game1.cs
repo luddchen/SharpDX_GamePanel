@@ -1,4 +1,5 @@
-﻿using SharpDX.Toolkit.Graphics;
+﻿using GamePanel;
+using SharpDX.Toolkit.Graphics;
 using System;
 using System.Windows.Forms;
 
@@ -27,21 +28,22 @@ namespace Test
             texture2 = Content.Load<Texture2D>( "Content//Galaxy.png" );
         }
 
-        protected override void Dispose( bool disposing )
+        protected override void UnloadContent()
         {
             texture.Dispose();
+            texture2.Dispose();
             spriteBatch.Dispose();
-            base.Dispose( disposing );
         }
 
-        protected override void Draw()
+        protected override void Draw( PanelGameTime gameTime)
         {
-            form.SetStatus( 
-                String.Format( "{0:F4} ms / frame  =  {1:F2} fps , Frame {2}, Memory {3} kB", 
-                this.lastFrameElapsedGameTime.Ticks / 10000.0f, 
-                (float)( 10000000.0f / (float)this.lastFrameElapsedGameTime.Ticks ), 
-                this.currentFrame,
-                GC.GetTotalMemory(false) / 1024 ) );
+            form.SetStatus(
+                String.Format( "{0:F4} ms / frame  =  {1:F2} fps , Frame {2} , Mouse {3} {4}", 
+                                this.lastFrameElapsedGameTime.Ticks / 10000.0f, 
+                                (float)( 10000000.0f / (float)this.lastFrameElapsedGameTime.Ticks ), 
+                                gameTime.FrameCount,
+                                this.IsMouseVisible ? "visible" : "invisible",
+                                this.IsMouseVisible ? "" : (this.isCursorVisible ? "active" : "inactive" ) ) );
 
             this.GraphicsDevice.Clear( SharpDX.Color.ForestGreen );
 

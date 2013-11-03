@@ -9,7 +9,7 @@ using Device = SharpDX.Direct3D11.Device;
 namespace GamePanel.ServiceProvider
 { 
 
-    class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService
+    class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IDisposable
     {
 
         private Factory factory;
@@ -21,6 +21,7 @@ namespace GamePanel.ServiceProvider
         private RenderTargetView renderView;
 
         private bool initialized = false;
+        private bool isFirstInit = true;
 
         private GamePanel game;
 
@@ -47,6 +48,7 @@ namespace GamePanel.ServiceProvider
             };
 
             this.game.Control.ClientSizeChanged += Control_ClientSizeChanged;
+            this.game.Control.Disposed += Control_Disposed;
         }
 
         private void InitGraphics()
@@ -54,8 +56,18 @@ namespace GamePanel.ServiceProvider
             this.desc.ModeDescription.Width = this.game.Control.Width;
             this.desc.ModeDescription.Height = this.game.Control.Height;
 
-            this.swapChain = new SwapChain( this.factory, this.dx11Device, this.desc );
+            if ( !this.isFirstInit )
+            {
+                this.renderView.Dispose();
+                this.backBuffer.Dispose();
+                this.swapChain.Dispose();
+            }
+            else
+            {
+                this.isFirstInit = false;
+            }
 
+            this.swapChain = new SwapChain( this.factory, this.dx11Device, this.desc );
             this.backBuffer = Texture2D.FromSwapChain<Texture2D>( this.swapChain, 0 );
             this.renderView = new RenderTargetView( this.dx11Device, this.backBuffer );
 
@@ -67,6 +79,11 @@ namespace GamePanel.ServiceProvider
             this.initialized = false;
         }
 
+        private void Control_Disposed( object sender, EventArgs e )
+        {
+            this.game.Stop();
+        }
+
 
         #region IGraphicsDeviceManager Member
 
@@ -76,7 +93,6 @@ namespace GamePanel.ServiceProvider
             {
                 InitGraphics();
             }
-
 
             this.GraphicsDevice.SetRenderTargets( this.renderView );
             this.GraphicsDevice.Viewport = new SharpDX.ViewportF( 0, 0, this.game.Control.Width, this.game.Control.Height );
@@ -141,6 +157,20 @@ namespace GamePanel.ServiceProvider
 
         #endregion
 
+
+        #region IDisposable Member
+
+        public void Dispose()
+        {
+            this.renderView.Dispose();
+            this.backBuffer.Dispose();
+            this.swapChain.Dispose();
+            this.GraphicsDevice.Dispose();
+            this.dx11Device.Dispose();
+            this.factory.Dispose();
+        }
+
+        #endregion
     }
 
 }
