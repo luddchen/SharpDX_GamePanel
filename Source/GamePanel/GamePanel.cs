@@ -27,12 +27,14 @@ namespace GamePanel
             set 
             { 
                 this.targetFps = value;
-                this.maximumElapsed = (long)( 10000000.0f / targetFps );
+                this.maximumElapsed = new TimeSpan((long)( 10000000.0f / targetFps ));
             }
         }
-        private long maximumElapsed;
+        private TimeSpan maximumElapsed;
 
         public bool IsFixedTimeStep = true;
+
+        private bool firstUpdateDone = false;
 
         private bool doWork = true;
 
@@ -50,7 +52,7 @@ namespace GamePanel
             this.timer = new TimerTick();
             this.accumulatedElapsedGameTime = new TimeSpan();
             this.lastFrameElapsedGameTime = new TimeSpan();
-            this.maximumElapsed = (long)( 10000000.0f / targetFps );
+            this.maximumElapsed = new TimeSpan( (long)( 10000000.0f / targetFps ) );
         }
 
         public void Start()
@@ -92,11 +94,17 @@ namespace GamePanel
             {
                 this.accumulatedElapsedGameTime += this.timer.ElapsedAdjustedTime;
 
-                if ( this.accumulatedElapsedGameTime.Ticks > this.maximumElapsed )
+                if ( this.accumulatedElapsedGameTime > this.maximumElapsed )
                 {
                     this.lastFrameElapsedGameTime = this.accumulatedElapsedGameTime;
+                    //this.accumulatedElapsedGameTime -= this.maximumElapsed;
                     this.accumulatedElapsedGameTime = new TimeSpan();
                     DrawFrame();
+                } else 
+                {   // only update
+                    this.gameTime.Update( this.gameTime.TotalGameTime, this.timer.ElapsedAdjustedTime, false );
+                    Update( this.gameTime );
+                    firstUpdateDone = true;
                 }
             }
         }
@@ -104,8 +112,7 @@ namespace GamePanel
 
         private void DrawFrame()
         {
-            ++this.gameTime.FrameCount;
-
+            this.gameTime.FrameCount++;
             this.gameTime.Update( 
                 this.gameTime.TotalGameTime + this.lastFrameElapsedGameTime, 
                 this.lastFrameElapsedGameTime, 
@@ -113,7 +120,14 @@ namespace GamePanel
 
             UpdateCursor( this.gameTime );
 
-            Update( this.gameTime );   // temp -> replace
+            if ( !firstUpdateDone )
+            {
+                Update( this.gameTime );   // temp -> replace
+            }
+            else
+            {
+                firstUpdateDone = false;
+            }
 
             this.panelDeviceManager.BeginDraw(); //todo : check
 

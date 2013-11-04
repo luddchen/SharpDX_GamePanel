@@ -11,8 +11,12 @@ namespace Test
 
         public Form1 form;
 
+        public TextureNode selected;
+
         SpriteBatch spriteBatch;
         Texture2D texture;
+
+        int updates;
 
         public Game1( Control control ) : base( control ) { }
 
@@ -33,22 +37,37 @@ namespace Test
             spriteBatch.Dispose();
         }
 
-        protected override void Draw( PanelGameTime gameTime)
+        protected override void Update( PanelGameTime gameTime )
+        {
+            updates++;
+        }
+
+        protected override void Draw( PanelGameTime gameTime )
         {
             form.SetStatus(
-                String.Format( "{0:F4} ms / frame  =  {1:F2} fps , Frame {2} , Mouse {3} , GameTime {4} ", 
+                String.Format( "{0:F4} ms / frame  =  {1:F2} fps , Frame {2} , Mouse {3} , GameTime {4} , Updates {5} ", 
                                 gameTime.ElapsedGameTime.Ticks / 10000.0f, 
                                 (float)( 10000000.0f / (float)this.lastFrameElapsedGameTime.Ticks ), 
                                 gameTime.FrameCount,
                                 this.IsMouseVisible ? "visible" : "invisible",
-                                gameTime.TotalGameTime) );
+                                gameTime.TotalGameTime,
+                                updates) );
+            updates = 0;
 
             this.GraphicsDevice.Clear( SharpDX.Color.Black );
+            SharpDX.Rectangle dest = new SharpDX.Rectangle(this.Control.Width / 2, this.Control.Height / 2, this.Control.Width, this.Control.Height);
 
-            spriteBatch.Begin();
-            this.form.RootNode.Draw( spriteBatch, this.Control.Width, this.Control.Height );
-            spriteBatch.Draw( texture, new SharpDX.Vector2(20f, 20f), new SharpDX.Color( 0.5f, 0.5f, 0.5f, 0.2f ) );
+            spriteBatch.Begin( spritemode: SpriteSortMode.BackToFront );
+            this.form.RootNode.Draw( spriteBatch, dest, 0f );
             spriteBatch.End();
+
+            if ( selected != null && selected.texture != null )
+            {
+                spriteBatch.Begin();
+                SharpDX.Rectangle rect = new SharpDX.Rectangle( 0, 0, 50, 50 );
+                spriteBatch.Draw( selected.texture, rect, null, SharpDX.Color.White, 0f, SharpDX.Vector2.Zero, SpriteEffects.None, 0 );
+                spriteBatch.End();
+            }
         }
 
         public TextureNode LoadBackgroundTexture( string name, string safeFileName )
