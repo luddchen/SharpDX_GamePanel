@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace GamePanel
 {
 
-    partial class GamePanel
+    partial class PanelGame
     {
         private bool isMouseVisible;
         private bool isMouseOver;

@@ -9,7 +9,7 @@ using Device = SharpDX.Direct3D11.Device;
 namespace GamePanel.ServiceProvider
 { 
 
-    class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IDisposable
+    public class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IDisposable
     {
 
         private Factory factory;
@@ -23,10 +23,10 @@ namespace GamePanel.ServiceProvider
         private bool initialized = false;
         private bool isFirstInit = true;
 
-        private GamePanel game;
+        private PanelGame game;
 
 
-        public PanelDeviceManager( GamePanel game )
+        public PanelDeviceManager( PanelGame game )
         {
             this.game = game;
             this.game.Services.AddService( typeof( IGraphicsDeviceManager ), this );
@@ -35,6 +35,7 @@ namespace GamePanel.ServiceProvider
             this.dx11Device = new Device( DriverType.Hardware );
             this.GraphicsDevice = SharpDX.Toolkit.Graphics.GraphicsDevice.New( this.dx11Device );
             this.factory = new Factory();
+            this.GraphicsDevice.Disposing += DeviceDisposing;
 
             this.desc = new SwapChainDescription()
             {
@@ -70,7 +71,7 @@ namespace GamePanel.ServiceProvider
             this.swapChain = new SwapChain( this.factory, this.dx11Device, this.desc );
             this.backBuffer = Texture2D.FromSwapChain<Texture2D>( this.swapChain, 0 );
             this.renderView = new RenderTargetView( this.dx11Device, this.backBuffer );
-
+            
             this.initialized = true;
         }
 
@@ -81,11 +82,16 @@ namespace GamePanel.ServiceProvider
 
         private void Control_Disposed( object sender, EventArgs e )
         {
-            this.game.Stop();
+            this.game.Exit();
         }
 
 
         #region IGraphicsDeviceManager Member
+
+        public void CreateDevice()
+        {
+            OnDeviceCreated( this, EventArgs.Empty );
+        }
 
         public bool BeginDraw()
         {
@@ -95,13 +101,8 @@ namespace GamePanel.ServiceProvider
             }
 
             this.GraphicsDevice.SetRenderTargets( this.renderView );
-            this.GraphicsDevice.Viewport = new SharpDX.ViewportF( 0, 0, this.game.Control.Width, this.game.Control.Height );
+            this.GraphicsDevice.Viewport = new SharpDX.ViewportF( 0, 0, this.game.Control.ClientSize.Width, this.game.Control.ClientSize.Height );
             return true;
-        }
-
-        public void CreateDevice()
-        {
-            throw new NotImplementedException();
         }
 
         public void EndDraw()
@@ -126,27 +127,33 @@ namespace GamePanel.ServiceProvider
 
         protected void OnDeviceChangeBegin( object sender, EventArgs args )
         {
-            DeviceChangeBegin( sender, args );
+            RaiseEvent( DeviceChangeBegin, sender, args );
         }
 
         protected void OnDeviceChangeEnd( object sender, EventArgs args )
         {
-            DeviceChangeEnd( sender, args );
+            RaiseEvent( DeviceChangeEnd, sender, args );
         }
 
         protected void OnDeviceCreated( object sender, EventArgs args )
         {
-            DeviceCreated( sender, args );
+            RaiseEvent( DeviceCreated, sender, args );
         }
 
         protected void OnDeviceDisposing( object sender, EventArgs args )
         {
-            DeviceDisposing( sender, args );
+            RaiseEvent( DeviceDisposing, sender, args );
         }
 
-        protected void OnDeviceLost( object sender, EventArgs args )
+        protected void OnDeviceLost( object sender, EventArgs args ) 
+        { 
+            RaiseEvent( DeviceLost, sender, args );
+        }
+
+        private void RaiseEvent<T>( EventHandler<T> handler, object sender, T args ) where T : EventArgs
         {
-            DeviceLost( sender, args );
+            if ( handler != null )
+                handler( sender, args );
         }
 
         public SharpDX.Toolkit.Graphics.GraphicsDevice GraphicsDevice
@@ -162,6 +169,9 @@ namespace GamePanel.ServiceProvider
 
         public void Dispose()
         {
+            Console.WriteLine( "PanelDeviceManager.Dispose();" );
+            this.game = null;
+            OnDeviceDisposing( this, EventArgs.Empty );
             this.renderView.Dispose();
             this.backBuffer.Dispose();
             this.swapChain.Dispose();

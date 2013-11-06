@@ -43,6 +43,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newNodeContextItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeNodeItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.parentRotationCheckBox = new System.Windows.Forms.CheckBox();
             this.layerValue = new System.Windows.Forms.NumericUpDown();
             this.layerLabel = new System.Windows.Forms.Label();
             this.alphaValue = new System.Windows.Forms.NumericUpDown();
@@ -59,13 +60,17 @@
             this.nodeNameLabel = new System.Windows.Forms.Label();
             this.rotationLabel = new System.Windows.Forms.Label();
             this.rotationValue = new System.Windows.Forms.NumericUpDown();
+            this.gameContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pauseItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.parentRotationCheckBox = new System.Windows.Forms.CheckBox();
+            this.fixedTimeStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -79,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.heightValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotationValue)).BeginInit();
+            this.gameContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -110,7 +116,8 @@
             // 
             this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showMouseToolStripMenuItem,
-            this.hideMouseToolStripMenuItem});
+            this.hideMouseToolStripMenuItem,
+            this.fixedTimeStepToolStripMenuItem});
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
             this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.gameToolStripMenuItem.Text = "Game";
@@ -118,13 +125,13 @@
             // showMouseToolStripMenuItem
             // 
             this.showMouseToolStripMenuItem.Name = "showMouseToolStripMenuItem";
-            this.showMouseToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.showMouseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.showMouseToolStripMenuItem.Text = "Show Mouse";
             // 
             // hideMouseToolStripMenuItem
             // 
             this.hideMouseToolStripMenuItem.Name = "hideMouseToolStripMenuItem";
-            this.hideMouseToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.hideMouseToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.hideMouseToolStripMenuItem.Text = "Hide Mouse";
             // 
             // statusStrip1
@@ -153,6 +160,11 @@
             // 
             this.splitContainer.Panel1.BackColor = System.Drawing.SystemColors.Info;
             this.splitContainer.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.ContextMenuStrip = this.gameContext;
+            this.splitContainer.Panel2.Controls.Add(this.pauseButton);
             this.splitContainer.Size = new System.Drawing.Size(739, 404);
             this.splitContainer.SplitterDistance = 246;
             this.splitContainer.TabIndex = 2;
@@ -219,6 +231,16 @@
             this.removeNodeItem.Name = "removeNodeItem";
             this.removeNodeItem.Size = new System.Drawing.Size(149, 22);
             this.removeNodeItem.Text = "Remove Node";
+            // 
+            // parentRotationCheckBox
+            // 
+            this.parentRotationCheckBox.AutoSize = true;
+            this.parentRotationCheckBox.Location = new System.Drawing.Point(18, 66);
+            this.parentRotationCheckBox.Name = "parentRotationCheckBox";
+            this.parentRotationCheckBox.Size = new System.Drawing.Size(54, 17);
+            this.parentRotationCheckBox.TabIndex = 18;
+            this.parentRotationCheckBox.Text = "relativ";
+            this.parentRotationCheckBox.UseVisualStyleBackColor = true;
             // 
             // layerValue
             // 
@@ -437,19 +459,41 @@
             this.rotationValue.Size = new System.Drawing.Size(49, 20);
             this.rotationValue.TabIndex = 0;
             // 
+            // gameContext
+            // 
+            this.gameContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pauseItem});
+            this.gameContext.Name = "gameContext";
+            this.gameContext.Size = new System.Drawing.Size(106, 26);
+            // 
+            // pauseItem
+            // 
+            this.pauseItem.Name = "pauseItem";
+            this.pauseItem.Size = new System.Drawing.Size(105, 22);
+            this.pauseItem.Text = "Pause";
+            // 
+            // pauseButton
+            // 
+            this.pauseButton.Location = new System.Drawing.Point(4, 378);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.Size = new System.Drawing.Size(50, 23);
+            this.pauseButton.TabIndex = 0;
+            this.pauseButton.Text = "Pause";
+            this.pauseButton.UseVisualStyleBackColor = true;
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // parentRotationCheckBox
+            // fixedTimeStepToolStripMenuItem
             // 
-            this.parentRotationCheckBox.AutoSize = true;
-            this.parentRotationCheckBox.Location = new System.Drawing.Point(18, 66);
-            this.parentRotationCheckBox.Name = "parentRotationCheckBox";
-            this.parentRotationCheckBox.Size = new System.Drawing.Size(54, 17);
-            this.parentRotationCheckBox.TabIndex = 18;
-            this.parentRotationCheckBox.Text = "relativ";
-            this.parentRotationCheckBox.UseVisualStyleBackColor = true;
+            this.fixedTimeStepToolStripMenuItem.Checked = true;
+            this.fixedTimeStepToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.fixedTimeStepToolStripMenuItem.Name = "fixedTimeStepToolStripMenuItem";
+            this.fixedTimeStepToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.fixedTimeStepToolStripMenuItem.Text = "Fixed TimeStep";
+            this.fixedTimeStepToolStripMenuItem.CheckedChanged += new System.EventHandler(this.fixedTimestepChanged);
+            this.fixedTimeStepToolStripMenuItem.Click += new System.EventHandler(this.fixedTimeStepClick);
             // 
             // Form1
             // 
@@ -467,6 +511,7 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -482,6 +527,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.heightValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotationValue)).EndInit();
+            this.gameContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -522,6 +568,10 @@
         private System.Windows.Forms.ToolStripMenuItem newNodeContextItem;
         private System.Windows.Forms.ToolStripMenuItem removeNodeItem;
         private System.Windows.Forms.CheckBox parentRotationCheckBox;
+        private System.Windows.Forms.ContextMenuStrip gameContext;
+        private System.Windows.Forms.Button pauseButton;
+        private System.Windows.Forms.ToolStripMenuItem pauseItem;
+        private System.Windows.Forms.ToolStripMenuItem fixedTimeStepToolStripMenuItem;
     }
 }
 

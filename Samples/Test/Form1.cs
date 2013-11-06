@@ -23,10 +23,10 @@ namespace Test
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             SetInfo = delegate( string text ) { this.statusLabel1.Text = text; };
             SetTitle = delegate( string text ) { this.Text = text; };
-            
+
             game = new Game1( this.splitContainer.Panel2 );
             game.form = this;
-            game.Start();
+            game.Run();
 
             this.showMouseToolStripMenuItem.Click += showMouseToolStripMenuItem_Click;
             this.hideMouseToolStripMenuItem.Click += hideMouseToolStripMenuItem_Click;
@@ -36,8 +36,9 @@ namespace Test
             this.openFileDialog1.FileOk += openFileDialog1_FileOk;
 
             this.splitContainer1.Panel1.SizeChanged += Panel1_SizeChanged;
-            this.treeView1.Nodes.Add( RootNode = new TextureNode() );
-            RootNode.Text = "Root";
+            this.treeView1.Nodes.Add( RootNode = game.LoadBackgroundTexture("Content//Galaxy.png", "Root" ) );
+
+            //RootNode.Text = "Root";
 
             this.treeView1.AfterSelect += treeView1_AfterSelect;
             this.rotationValue.ValueChanged += rotationValue_ValueChanged;
@@ -168,6 +169,9 @@ namespace Test
                 this.layerValue.Value = (decimal)( e.Node as TextureNode ).layer;
                 this.parentRotationCheckBox.Checked = ( e.Node as TextureNode ).relativRotation;
                 game.selected = e.Node as TextureNode;
+
+                this.splitContainer1.Panel2.BackgroundImage = ( e.Node as TextureNode ).icon;
+                this.splitContainer1.Panel2.BackgroundImageLayout = ImageLayout.Stretch;
             }
         }
 
@@ -251,6 +255,16 @@ namespace Test
         private void label1_Click( object sender, EventArgs e )
         {
 
+        }
+
+        private void fixedTimestepChanged( object sender, EventArgs e )
+        {
+            this.game.IsFixedTimeStep = this.fixedTimeStepToolStripMenuItem.Checked;
+        }
+
+        private void fixedTimeStepClick( object sender, EventArgs e )
+        {
+            this.fixedTimeStepToolStripMenuItem.Checked = !this.fixedTimeStepToolStripMenuItem.Checked;
         }
 
     }

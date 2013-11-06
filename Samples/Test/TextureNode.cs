@@ -12,6 +12,8 @@ namespace Test
     public class TextureNode : TreeNode
     {
 
+        public System.Drawing.Image icon;
+
         public Color Color = Color.White;
 
         public Texture2D texture;
@@ -62,7 +64,7 @@ namespace Test
             {
                 origin.X = texture.Width / 2;
                 origin.Y = texture.Height / 2;
-
+                
                 spriteBatch.Draw( texture, dest, null, Color, nodeRotation, origin, SpriteEffects.None, layer );
             }
 
