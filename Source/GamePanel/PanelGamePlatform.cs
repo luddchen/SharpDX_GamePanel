@@ -1,13 +1,28 @@
-﻿using System;
+﻿using SharpDX.Toolkit;
+using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace GamePanel
 {
 
     public class PanelGamePlatform
     {
+        public readonly PanelGame Game;
 
-        protected PanelGameWindow gameWindow;
+        protected PanelGameWindow mainWindow;
+
+        public PanelGameWindow MainWindow
+        {
+            get { return this.mainWindow; }
+            set
+            {
+                if ( value != null )
+                {
+                    this.mainWindow = value;
+                }
+            }
+        }
 
 
         private readonly Thread gameThread;
@@ -20,9 +35,17 @@ namespace GamePanel
 
         public PanelGamePlatform( PanelGame game )
         {
+            this.Game = game;
+            this.mainWindow = CreateWindow( game.Control );
+
             this.gameThread = new Thread( RenderLoopCallback );
             this.InitCallback = game.InitializeBeforeRun;
             this.RunCallback = game.Tick;
+        }
+
+        public PanelGameWindow CreateWindow( Control control )
+        {
+            return new PanelGameWindow( control );
         }
 
         internal void Run()

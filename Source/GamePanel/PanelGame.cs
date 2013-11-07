@@ -37,6 +37,18 @@ namespace GamePanel
             #endregion
         }
 
+        public PanelGameWindow Window
+        {
+            get
+            {
+                if ( this.gamePlatform != null )
+                {
+                    return this.gamePlatform.MainWindow;
+                }
+                return null;
+            }
+        }
+
         public void Run()
         {
             this.gamePlatform.Run();

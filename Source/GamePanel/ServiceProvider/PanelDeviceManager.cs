@@ -9,19 +9,12 @@ using Device = SharpDX.Direct3D11.Device;
 namespace GamePanel.ServiceProvider
 { 
 
-    public class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IDisposable
+    public class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IGraphicsDeviceFactory, IDisposable
     {
 
         private Factory factory;
+
         private Device dx11Device;
-        private SwapChain swapChain;
-        private SwapChainDescription desc;
-
-        private Texture2D backBuffer;
-        private RenderTargetView renderView;
-
-        private bool initialized = false;
-        private bool isFirstInit = true;
 
         private PanelGame game;
 
@@ -37,48 +30,9 @@ namespace GamePanel.ServiceProvider
             this.factory = new Factory();
             this.GraphicsDevice.Disposing += DeviceDisposing;
 
-            this.desc = new SwapChainDescription()
-            {
-                BufferCount = 2,
-                ModeDescription = new ModeDescription( this.game.Control.Width, this.game.Control.Height, new Rational( 60, 1 ), Format.R8G8B8A8_UNorm ),
-                IsWindowed = true,
-                OutputHandle = this.game.Control.Handle,
-                SampleDescription = new SampleDescription( 1, 0 ),
-                SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput
-            };
-
-            this.game.Control.ClientSizeChanged += Control_ClientSizeChanged;
             this.game.Control.Disposed += Control_Disposed;
         }
 
-        private void InitGraphics()
-        {
-            this.desc.ModeDescription.Width = this.game.Control.Width;
-            this.desc.ModeDescription.Height = this.game.Control.Height;
-
-            if ( !this.isFirstInit )
-            {
-                this.renderView.Dispose();
-                this.backBuffer.Dispose();
-                this.swapChain.Dispose();
-            }
-            else
-            {
-                this.isFirstInit = false;
-            }
-
-            this.swapChain = new SwapChain( this.factory, this.dx11Device, this.desc );
-            this.backBuffer = Texture2D.FromSwapChain<Texture2D>( this.swapChain, 0 );
-            this.renderView = new RenderTargetView( this.dx11Device, this.backBuffer );
-            
-            this.initialized = true;
-        }
-
-        private void Control_ClientSizeChanged( object sender, EventArgs e )
-        {
-            this.initialized = false;
-        }
 
         private void Control_Disposed( object sender, EventArgs e )
         {
@@ -95,19 +49,20 @@ namespace GamePanel.ServiceProvider
 
         public bool BeginDraw()
         {
-            if ( !this.initialized )
+            if ( this.game.Window == null || !this.game.Window.IsInitialized(this.dx11Device, this.factory) ) 
             {
-                InitGraphics();
+                return false; 
             }
 
-            this.GraphicsDevice.SetRenderTargets( this.renderView );
-            this.GraphicsDevice.Viewport = new SharpDX.ViewportF( 0, 0, this.game.Control.ClientSize.Width, this.game.Control.ClientSize.Height );
+            this.GraphicsDevice.SetRenderTargets( this.game.Window.RenderView );
+            this.GraphicsDevice.SetViewport( 0, 0, this.game.Window.ClientSize.X, this.game.Window.ClientSize.Y );
+
             return true;
         }
 
         public void EndDraw()
         {
-            this.swapChain.Present( 0, PresentFlags.None );
+            this.game.Window.SwapChain.Present( 0, PresentFlags.None );
         }
 
         #endregion
@@ -172,12 +127,24 @@ namespace GamePanel.ServiceProvider
             Console.WriteLine( "PanelDeviceManager.Dispose();" );
             this.game = null;
             OnDeviceDisposing( this, EventArgs.Empty );
-            this.renderView.Dispose();
-            this.backBuffer.Dispose();
-            this.swapChain.Dispose();
             this.GraphicsDevice.Dispose();
             this.dx11Device.Dispose();
             this.factory.Dispose();
+        }
+
+        #endregion
+
+
+        #region IGraphicsDeviceFactory Member
+
+        public SharpDX.Toolkit.Graphics.GraphicsDevice CreateDevice( GraphicsDeviceInformation deviceInformation )
+        {
+            throw new NotImplementedException();
+        }
+
+        public System.Collections.Generic.List<GraphicsDeviceInformation> FindBestDevices( GameGraphicsParameters graphicsParameters )
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

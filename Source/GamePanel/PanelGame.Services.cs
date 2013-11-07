@@ -28,7 +28,6 @@ namespace GamePanel
             this.Services = new GameServiceRegistry();
             this.Content = new ContentManager( this.Services );
             this.graphicsDeviceManager = new PanelDeviceManager( this );
-            this.graphicsDeviceService = this.graphicsDeviceManager as IGraphicsDeviceService;    // can be removed until gameloop works
 
             this.Content.Resolvers.Add( new FileSystemContentResolver( this.gamePlatform.DefaultAppDirectory ) );
 
