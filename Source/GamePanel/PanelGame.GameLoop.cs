@@ -97,7 +97,8 @@ namespace GamePanel
         internal void InitializeBeforeRun()
         {
             // Make sure that the device is already created
-            this.graphicsDeviceManager.CreateDevice();
+            this.gamePlatform.CreateDevice( new SharpDX.Toolkit.GraphicsDeviceInformation() );
+            this.graphicsDeviceManager = this.Services.GetService( typeof( SharpDX.Toolkit.IGraphicsDeviceManager ) ) as SharpDX.Toolkit.IGraphicsDeviceManager;
             SetupGraphicsDeviceEvents();
 
             // Initialize this instance and all game systems

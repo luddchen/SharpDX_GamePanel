@@ -9,7 +9,7 @@ using Device = SharpDX.Direct3D11.Device;
 namespace GamePanel.ServiceProvider
 { 
 
-    public class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IGraphicsDeviceFactory, IDisposable
+    public class PanelDeviceManager : IGraphicsDeviceManager, SharpDX.Toolkit.Graphics.IGraphicsDeviceService, IDisposable
     {
 
         private Factory factory;
@@ -29,14 +29,6 @@ namespace GamePanel.ServiceProvider
             this.GraphicsDevice = SharpDX.Toolkit.Graphics.GraphicsDevice.New( this.dx11Device );
             this.factory = new Factory();
             this.GraphicsDevice.Disposing += DeviceDisposing;
-
-            this.game.Control.Disposed += Control_Disposed;
-        }
-
-
-        private void Control_Disposed( object sender, EventArgs e )
-        {
-            this.game.Exit();
         }
 
 
@@ -134,20 +126,6 @@ namespace GamePanel.ServiceProvider
 
         #endregion
 
-
-        #region IGraphicsDeviceFactory Member
-
-        public SharpDX.Toolkit.Graphics.GraphicsDevice CreateDevice( GraphicsDeviceInformation deviceInformation )
-        {
-            throw new NotImplementedException();
-        }
-
-        public System.Collections.Generic.List<GraphicsDeviceInformation> FindBestDevices( GameGraphicsParameters graphicsParameters )
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 
 }

@@ -1,26 +1,21 @@
 ﻿using SharpDX;
 using System;
-using System.Windows.Forms;
 
 namespace GamePanel
 {
 
     public partial class PanelGame : IDisposable
     {
-        
-        public readonly Control Control;
 
         private readonly PanelGamePlatform gamePlatform;
 
 
         public PanelGame( System.Windows.Forms.Control control )
         {
-            this.Control = control;
-            this.gamePlatform = new PanelGamePlatform( this );
+            this.gamePlatform = new PanelGamePlatform( this, control );
             this.gamePlatform.ExitCallback = this.UnloadContent;    // ...
 
             InitServices();
-            InitCursor();
 
             #region GameLoop stuff
             this.lastUpdateCount = new int[ 4 ];
@@ -35,6 +30,12 @@ namespace GamePanel
 
             InitGameLoop();
             #endregion
+        }
+
+        public bool IsMouseVisible
+        {
+            get { return this.Window.WindowCursor.IsMouseVisible; }
+            set { this.Window.WindowCursor.IsMouseVisible = value; }
         }
 
         public PanelGameWindow Window
@@ -64,14 +65,15 @@ namespace GamePanel
                     this.gameTime.Update( this.totalGameTime, this.lastFrameElapsedGameTime, this.drawRunningSlowly );
                     this.gameTime.FrameCount++;
 
-                    UpdateCursor( this.gameTime );
+                    this.Window.WindowCursor.UpdateCursor( this.gameTime );
 
-                    this.graphicsDeviceManager.BeginDraw(); //todo : check
+                    //this.graphicsDeviceManager.BeginDraw(); //todo : check
+                    this.Window.BeginDraw();    // begin draw to the mainWindow
 
                     Draw( this.gameTime );
                     DrawGameSystems( this.gameTime );
 
-                    this.graphicsDeviceManager.EndDraw();
+                    this.gamePlatform.EndAllDraw();
                 }
             }
             finally

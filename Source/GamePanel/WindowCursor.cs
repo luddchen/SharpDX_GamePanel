@@ -5,8 +5,11 @@ using System.Windows.Forms;
 namespace GamePanel
 {
 
-    partial class PanelGame
+    public class WindowCursor
     {
+
+        private Control control;
+
         private bool isMouseVisible;
         private bool isMouseOver;
         private bool isCursorVisible;
@@ -19,20 +22,23 @@ namespace GamePanel
         private delegate void SetCursor( Cursor cursor );
         private SetCursor setCursor;
 
-        private void InitCursor()
+
+        public WindowCursor( Control control )
         {
+            this.control = control;
+
             this.defaultCursor = Cursors.Hand;
             this.invisibleCursor = new Cursor( new System.Drawing.Bitmap( 48, 48 ).GetHicon() );
             this.isCursorVisible = true;
             this.inactiveTime = new TimeSpan();
 
-            setCursor = delegate( Cursor cursor ) { try { this.Control.Cursor = cursor; } catch ( Exception ) { } };
+            setCursor = delegate( Cursor cursor ) { try { this.control.Cursor = cursor; } catch ( Exception ) { } };
 
-            this.Control.MouseEnter += Control_MouseEnter;
-            this.Control.MouseLeave += Control_MouseLeave;
+            this.control.MouseEnter += Control_MouseEnter;
+            this.control.MouseLeave += Control_MouseLeave;
         }
 
-        private void UpdateCursor( PanelGameTime gameTime)
+        public void UpdateCursor( PanelGameTime gameTime )
         {
             Point newMousePos = new Point( Cursor.Position.X, Cursor.Position.Y );
             if ( !this.isMouseVisible )
@@ -60,51 +66,27 @@ namespace GamePanel
             this.mousePos.Y = newMousePos.Y;
         }
 
-        private void SetControlCursor( Cursor cursor )
-        {
-            try
-            {
-                this.Control.Invoke( setCursor, cursor );
-            }
-            catch ( Exception ) { }
-        }
-
-        private void Control_MouseEnter( object sender, EventArgs e )
-        {
-            this.isMouseOver = true;
-            if ( !this.isMouseVisible )
-            {
-                this.inactiveTime = new TimeSpan(); // restart "timer" on mouse enter and mouseinvisible
-                this.isCursorVisible = true;
-            }
-        }
-
-        private void Control_MouseLeave( object sender, EventArgs e )
-        {
-            this.isMouseOver = false;
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether the mouse should be visible.
         /// </summary>
         /// <value><c>true</c> if the mouse should be visible; otherwise, <c>false</c>.</value>
         public bool IsMouseVisible
         {
-            get 
+            get
             {
                 bool visible = this.isMouseVisible;
-                if (!visible) 
+                if ( !visible )
                 {
                     visible = this.isCursorVisible;
                 }
-                return visible; 
+                return visible;
             }
 
             set
             {
                 this.isMouseVisible = value;
                 if ( value )
-                    this.Control.Invoke( setCursor, this.defaultCursor );
+                    this.control.Invoke( setCursor, this.defaultCursor );
                 else
                     this.inactiveTime = new TimeSpan(); // restart timer
             }
@@ -131,6 +113,30 @@ namespace GamePanel
         {
             get { return this.invisibleTimeout; }
             set { this.invisibleTimeout = value; }
+        }
+
+        private void SetControlCursor( Cursor cursor )
+        {
+            try
+            {
+                this.control.Invoke( setCursor, cursor );
+            }
+            catch ( Exception ) { }
+        }
+
+        private void Control_MouseEnter( object sender, EventArgs e )
+        {
+            this.isMouseOver = true;
+            if ( !this.isMouseVisible )
+            {
+                this.inactiveTime = new TimeSpan(); // restart "timer" on mouse enter and mouseinvisible
+                this.isCursorVisible = true;
+            }
+        }
+
+        private void Control_MouseLeave( object sender, EventArgs e )
+        {
+            this.isMouseOver = false;
         }
 
     }

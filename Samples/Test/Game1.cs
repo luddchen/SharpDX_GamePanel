@@ -66,7 +66,12 @@ namespace Test
             if ( this.form.RootNode != null )
             {
                 this.GraphicsDevice.Clear( SharpDX.Color.Black );
-                SharpDX.Rectangle dest = new SharpDX.Rectangle( this.Control.Width / 2, this.Control.Height / 2, this.Control.Width, this.Control.Height );
+                SharpDX.Rectangle dest = 
+                    new SharpDX.Rectangle( 
+                        this.Window.ClientSize.X / 2, 
+                        this.Window.ClientSize.Y / 2, 
+                        this.Window.ClientSize.X, 
+                        this.Window.ClientSize.Y );
 
                 spriteBatch.Begin( spritemode: SpriteSortMode.BackToFront );
                 this.form.RootNode.Draw( spriteBatch, dest, 0f );

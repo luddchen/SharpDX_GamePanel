@@ -3,18 +3,15 @@ using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using System;
 using System.Windows.Forms;
+using XGame;
 
-namespace GamePanel
+namespace DXGame
 {
 
-    public class PanelGameWindow : IDisposable
+    public class DXGameWindow : XGameWindow
     {
 
         public readonly Control Control;
-
-        public readonly PanelGamePlatform Platform;
-
-        public readonly WindowCursor WindowCursor;
 
         public SwapChain SwapChain { get; private set; }
         private SwapChainDescription desc;
@@ -25,19 +22,19 @@ namespace GamePanel
         private bool initialized = false;
         private bool isFirstInitDone = false;
 
-        public PanelGameWindow( Control control, PanelGamePlatform platform )
+        public DXGameWindow( XGamePlatform platform, Control control ) : base( platform )
         {
+            if ( control == null ) throw new ArgumentNullException( "control" );
             this.Control = control;
             this.Control.Disposed += Control_Disposed;
-            this.WindowCursor = new WindowCursor( this.Control );
+            this.Cursor = new DXGameWindowCursor( control );
 
-            this.Platform = platform;
-            this.clientSize = new Point( this.Control.ClientSize.Width, this.Control.ClientSize.Height );
+            this.Control_ClientSizeChanged( this, EventArgs.Empty );
 
             this.desc = new SwapChainDescription()
             {
                 BufferCount = 2,
-                ModeDescription = new ModeDescription( this.clientSize.X, this.clientSize.Y, new Rational( 60, 1 ), Format.R8G8B8A8_UNorm ),
+                ModeDescription = new ModeDescription( (int)this.Width, (int)this.Height, new Rational( 60, 1 ), Format.R8G8B8A8_UNorm ),
                 IsWindowed = true,
                 OutputHandle = this.Control.Handle,
                 SampleDescription = new SampleDescription( 1, 0 ),
@@ -48,18 +45,15 @@ namespace GamePanel
             this.Control.ClientSizeChanged += Control_ClientSizeChanged;
         }
 
-        private void Control_Disposed( object sender, EventArgs e )
-        {
-            this.Platform.Game.Exit();
-        }
-
-        public bool IsInitialized( SharpDX.Direct3D11.Device device, Factory factory )
+        public override bool IsInitialized()
         {
             if ( this.initialized ) return true;
+            SharpDX.Direct3D11.Device device = ( this.Platform.DeviceManager as DXGameDeviceManager ).Dx11Device;
+            Factory factory = ( this.Platform.DeviceManager as DXGameDeviceManager ).Factory;
             if ( device == null || factory == null ) return false;
 
-            this.desc.ModeDescription.Width = this.clientSize.X;
-            this.desc.ModeDescription.Height = this.clientSize.Y;
+            this.desc.ModeDescription.Width = (int)this.Width;
+            this.desc.ModeDescription.Height = (int)this.Height;
 
             Dispose();
 
@@ -71,32 +65,19 @@ namespace GamePanel
             return true;
         }
 
-        public void BeginDraw()
-        {
-            this.Platform.MainWindow = this;
-            this.Platform.GraphicsDeviceManager.BeginDraw();
-        }
-
-        public void EndDraw()
-        {
-            this.SwapChain.Present( 0, PresentFlags.None );
-        }
-
-
-        private Point clientSize;
-        public Point ClientSize { get { return this.clientSize; } }
-
         private void Control_ClientSizeChanged( object sender, EventArgs e )
         {
             this.initialized = false;
-            this.clientSize.X = this.Control.ClientSize.Width;
-            this.clientSize.Y = this.Control.ClientSize.Height;
+            this.Width = this.Control.ClientSize.Width;
+            this.Height = this.Control.ClientSize.Height;
         }
 
+        private void Control_Disposed( object sender, EventArgs e )
+        {
+            this.Platform.Game.Exit();
+        }
 
-        #region IDisposable Member
-
-        public void Dispose()
+        public override void Dispose()
         {
             if ( this.isFirstInitDone )
             {
@@ -106,7 +87,6 @@ namespace GamePanel
             }
         }
 
-        #endregion
     }
 
 }

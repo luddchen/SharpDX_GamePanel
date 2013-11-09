@@ -1,16 +1,20 @@
-﻿using SharpDX.Toolkit;
+﻿using GamePanel.ServiceProvider;
+using SharpDX.Toolkit;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace GamePanel
 {
 
-    public class PanelGamePlatform
+    public class PanelGamePlatform : IGraphicsDeviceFactory
     {
         public readonly PanelGame Game;
 
-        protected PanelGameWindow mainWindow;
+        private PanelGameWindow mainWindow;
+
+        public PanelDeviceManager GraphicsDeviceManager { get; set; }
 
         public PanelGameWindow MainWindow
         {
@@ -24,6 +28,7 @@ namespace GamePanel
             }
         }
 
+        private List<PanelGameWindow> allGameWindows;
 
         private readonly Thread gameThread;
 
@@ -33,10 +38,12 @@ namespace GamePanel
         internal Action RunCallback;
         internal Action ExitCallback;
 
-        public PanelGamePlatform( PanelGame game )
+        public PanelGamePlatform( PanelGame game, Control control )
         {
             this.Game = game;
-            this.mainWindow = CreateWindow( game.Control );
+            this.allGameWindows = new List<PanelGameWindow>();
+            this.mainWindow = CreateWindow( control );
+            this.allGameWindows.Add( this.mainWindow );
 
             this.gameThread = new Thread( RenderLoopCallback );
             this.InitCallback = game.InitializeBeforeRun;
@@ -45,7 +52,15 @@ namespace GamePanel
 
         public PanelGameWindow CreateWindow( Control control )
         {
-            return new PanelGameWindow( control );
+            return new PanelGameWindow( control, this );
+        }
+
+        public void EndAllDraw()
+        {
+            foreach ( PanelGameWindow panel in this.allGameWindows )
+            {
+                panel.EndDraw();
+            }
         }
 
         internal void Run()
@@ -73,6 +88,22 @@ namespace GamePanel
             }
         }
 
+
+        #region IGraphicsDeviceFactory Member
+
+        public SharpDX.Toolkit.Graphics.GraphicsDevice CreateDevice( GraphicsDeviceInformation deviceInformation )
+        {
+            this.GraphicsDeviceManager = new PanelDeviceManager( this.Game );
+            this.GraphicsDeviceManager.CreateDevice();
+            return this.GraphicsDeviceManager.GraphicsDevice;
+        }
+
+        public List<GraphicsDeviceInformation> FindBestDevices( GameGraphicsParameters graphicsParameters )
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
 }
