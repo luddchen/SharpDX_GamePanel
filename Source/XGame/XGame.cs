@@ -51,18 +51,13 @@ namespace XGame
 
         public XGame()
         {
-            //this.Services = new XGameServiceRegistry();
-            //this.Services.AddService( typeof( XGameServiceRegistry ), this.Services );
-
             #region GameLoop stuff
 
             this.lastUpdateCount = new int[ 4 ];
             this.timer = new XTimerTick();
             this.gameTime = new XGameTime();
 
-            // Calculate the updateCountAverageSlowLimit (assuming moving average is >=3 )
-            // Example for a moving average of 4: updateCountAverageSlowLimit = (2 * 2 + (4 - 2)) / 4 = 1.5f
-            const int BadUpdateCountTime = 2; // number of bad frame (a bad frame is a frame that has at least 2 updates)
+            const int BadUpdateCountTime = 2;
             var maxLastCount = 2 * Math.Min( BadUpdateCountTime, this.lastUpdateCount.Length );
             this.updateCountAverageSlowLimit = (float)( maxLastCount + ( this.lastUpdateCount.Length - maxLastCount ) ) / this.lastUpdateCount.Length;
 
@@ -146,6 +141,7 @@ namespace XGame
 
         internal void InitializeBeforeRun()
         {
+            Console.WriteLine( "XGame.Initialize" );
             if ( this.Platform == null ) throw new ArgumentNullException( "XGame.Platform" );
             this.Platform.CreateDevice();// or initialize ?!
             //SetupGraphicsDeviceEvents -> move to CreateDevice
@@ -316,6 +312,21 @@ namespace XGame
             }
         }
 
+        internal void CleanUpAfterRun()
+        {
+            if ( this.contentLoaded )
+            {
+                this.UnloadContent();
+                this.UnloadContentSystems();
+            }
+            Console.WriteLine( "XGame.CleanUp .. start" );
+            //todo : dispose stuff
+            this.Dispose();
+            this.platform.Dispose();
+            //this.platform = null;
+            Console.WriteLine( "XGame.CleanUp .. done" );
+        }
+
 
         #region empty virtual methods
 
@@ -351,6 +362,8 @@ namespace XGame
 
         /// <summary>Unloads the content.</summary>
         protected virtual void UnloadContent() { }
+
+        protected virtual void Dispose() { }
 
         #endregion
 

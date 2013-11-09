@@ -3,7 +3,7 @@
 namespace XGame
 {
 
-    public abstract class XGameWindowCursor
+    public abstract class XGameWindowCursor : IDisposable
     {
 
         protected bool isCursorVisible;
@@ -55,6 +55,15 @@ namespace XGame
         {
             this.IsMouseOver = false;
         }
+
+        #region IDisposable Member
+
+        public virtual void Dispose() 
+        {
+            Console.WriteLine( "XGameWindowCursor.Dispose" );
+        }
+
+        #endregion
     }
 
 }

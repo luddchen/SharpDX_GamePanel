@@ -70,6 +70,19 @@ namespace DXGame
             catch ( Exception ) { }
         }
 
+        public override void Dispose()
+        {
+            Console.WriteLine( "DXGameWindowCursor.Dispose .. start" );
+            this.control.MouseEnter -= this.MouseEnter;
+            this.control.MouseLeave -= this.MouseLeave;
+            this.control = null;
+            this.invisibleCursor = null;
+            this.defaultCursor = null;
+            this.setCursor = null;
+            Console.WriteLine( "DXGameWindowCursor.Dispose .. done" );
+            base.Dispose();
+        }
+
     }
 
 }

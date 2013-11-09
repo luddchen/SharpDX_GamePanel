@@ -16,11 +16,37 @@ namespace DXTest
 
         public Game1( Control control ) : base( control ) { }
 
+        protected override void Initialize()
+        {
+            Console.WriteLine( "Game1.Initialize" );
+        }
+
         protected override void LoadContent()
         {
+            Console.WriteLine( "Game1.LoadContent" );
             this.spriteBatch = new SpriteBatch( this.GraphicsDevice );
             this.texture = Texture2D.Load( this.GraphicsDevice, "Content//Galaxy.png" );
             this.origin = new Vector2( this.texture.Width / 2 , this.texture.Height / 2 );
+        }
+
+        protected override void BeginRun()
+        {
+            Console.WriteLine( "Game1.BeginRun" );
+        }
+
+        protected override void EndRun()
+        {
+            Console.WriteLine( "Game1.EndRun" );
+        }
+
+        protected override void UnloadContent()
+        {
+            Console.WriteLine( "Game1.UnloadContent" );
+        }
+
+        protected override void Dispose()
+        {
+            Console.WriteLine( "Game1.Dispose" );
         }
 
         protected override void Update( XGame.XGameTime gameTime )

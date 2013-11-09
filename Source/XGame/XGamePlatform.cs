@@ -5,11 +5,11 @@ using System.Threading;
 namespace XGame
 {
 
-    public class XGamePlatform
+    public class XGamePlatform : IDisposable
     {
         public XGameWindow MainWindow;
 
-        public readonly XGame Game;
+        public XGame Game { get; private set; }
 
         private IXGameDeviceManager deviceManager;
         public IXGameDeviceManager DeviceManager
@@ -40,6 +40,7 @@ namespace XGame
             this.allGameWindows = new List<XGameWindow>();
             this.InitCallback = game.InitializeBeforeRun;
             this.RunCallback = game.Tick;
+            this.ExitCallback = game.CleanUpAfterRun;
         }
 
         public void Present()
@@ -109,6 +110,35 @@ namespace XGame
             Thread.Sleep( sleepTime );
         }
 
+
+        #region IDisposable Member
+
+        public virtual void Dispose()
+        {
+            Console.WriteLine( "XGamePlatform.Dispose .. start" );
+
+            this.MainWindow = null;
+
+            foreach ( XGameWindow window in this.allGameWindows )
+            {
+                window.Dispose();
+            }
+
+            this.allGameWindows.Clear();
+            this.allGameWindows = null;
+
+            this.Game = null;
+
+            this.deviceManager.Dispose();
+            this.deviceManager = null;
+
+            this.InitCallback = null;
+            this.RunCallback = null;
+            this.ExitCallback = null;
+            Console.WriteLine( "XGamePlatform.Dispose .. done" );
+        }
+
+        #endregion
     }
 
 }

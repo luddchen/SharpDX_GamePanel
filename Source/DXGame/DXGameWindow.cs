@@ -11,7 +11,7 @@ namespace DXGame
     public class DXGameWindow : XGameWindow
     {
 
-        public readonly Control Control;
+        public Control Control { get; private set; }
 
         public SwapChain SwapChain { get; private set; }
         private SwapChainDescription desc;
@@ -26,9 +26,7 @@ namespace DXGame
         {
             if ( control == null ) throw new ArgumentNullException( "control" );
             this.Control = control;
-            this.Control.Disposed += Control_Disposed;
             this.Cursor = new DXGameWindowCursor( control );
-
             this.Control_ClientSizeChanged( this, EventArgs.Empty );
 
             this.desc = new SwapChainDescription()
@@ -42,6 +40,7 @@ namespace DXGame
                 Usage = Usage.RenderTargetOutput
             };
 
+            this.Control.Disposed += Control_Disposed;
             this.Control.ClientSizeChanged += Control_ClientSizeChanged;
         }
 
@@ -55,7 +54,7 @@ namespace DXGame
             this.desc.ModeDescription.Width = (int)this.Width;
             this.desc.ModeDescription.Height = (int)this.Height;
 
-            Dispose();
+            this.BufferDispose();
 
             this.SwapChain = new SwapChain( factory, device, this.desc );
             this.backBuffer = Texture2D.FromSwapChain<Texture2D>( this.SwapChain, 0 );
@@ -74,10 +73,11 @@ namespace DXGame
 
         private void Control_Disposed( object sender, EventArgs e )
         {
+            if ( this.Platform == null || this.Platform.Game == null )  return; // game still disposing
             this.Platform.Game.Exit();
         }
 
-        public override void Dispose()
+        private void BufferDispose()
         {
             if ( this.isFirstInitDone )
             {
@@ -85,6 +85,17 @@ namespace DXGame
                 this.backBuffer.Dispose();
                 this.SwapChain.Dispose();
             }
+        }
+
+        public override void Dispose()
+        {
+            Console.WriteLine( "DXGameWindow.Dispose .. start" );
+            this.BufferDispose();
+            this.Control.Disposed -= this.Control_Disposed;
+            this.Control.ClientSizeChanged -= this.Control_ClientSizeChanged;
+            this.Control = null;
+            Console.WriteLine( "DXGameWindow.Dispose .. done" );
+            base.Dispose();
         }
 
     }

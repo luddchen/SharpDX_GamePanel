@@ -4,7 +4,7 @@ namespace XGame
 {
     public abstract class XGameWindow : IDisposable
     {
-        public readonly XGamePlatform Platform;
+        public XGamePlatform Platform { get; private set; }
 
         private XGameWindowCursor cursor;
         public XGameWindowCursor Cursor
@@ -48,7 +48,14 @@ namespace XGame
 
         #region IDisposable Member
 
-        public virtual void Dispose() { }
+        public virtual void Dispose()
+        {
+            Console.WriteLine( "XGameWindow.Dispose .. start" );
+            this.cursor.Dispose();
+            this.cursor = null;
+            this.Platform = null;
+            Console.WriteLine( "XGameWindow.Dispose .. done" );
+        }
 
         #endregion
     }

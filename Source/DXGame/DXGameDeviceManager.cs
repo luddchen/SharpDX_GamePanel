@@ -69,9 +69,12 @@ namespace DXGame
 
         public void Dispose()
         {
+            Console.WriteLine( "DXGameDeviceManager.Dispose .. start" );
             this.GraphicsDevice.Dispose();
             this.Dx11Device.Dispose();
             this.Factory.Dispose();
+            this.platform = null;
+            Console.WriteLine( "DXGameDeviceManager.Dispose .. done" );
         }
 
         #endregion
