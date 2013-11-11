@@ -29,12 +29,8 @@
         private void InitializeComponent()
         {
             this.menu = new System.Windows.Forms.MenuStrip();
-            this.status = new System.Windows.Forms.StatusStrip();
-            this.tools = new System.Windows.Forms.ToolStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exitFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.infoHelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,8 +39,12 @@
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editorSplitPanel1 = new GameEditorTemplate.EditorSplitPanel();
+            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoHelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tools = new System.Windows.Forms.ToolStrip();
+            this.editorSplitPanel1 = new GameEditorTemplate.EditorSplitPanel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.SuspendLayout();
@@ -57,27 +57,9 @@
             this.helpMenu});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(836, 24);
+            this.menu.Size = new System.Drawing.Size(584, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
-            // 
-            // status
-            // 
-            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 391);
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(836, 22);
-            this.status.TabIndex = 1;
-            this.status.Text = "statusStrip1";
-            // 
-            // tools
-            // 
-            this.tools.Location = new System.Drawing.Point(0, 24);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(836, 25);
-            this.tools.TabIndex = 2;
-            this.tools.Text = "toolStrip1";
             // 
             // fileMenu
             // 
@@ -93,20 +75,6 @@
             this.exitFileMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitFileMenuItem.Text = "Exit";
             this.exitFileMenuItem.Click += new System.EventHandler(this.exitClick);
-            // 
-            // helpMenu
-            // 
-            this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoHelpMenuItem});
-            this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(44, 20);
-            this.helpMenu.Text = "Help";
-            // 
-            // infoHelpMenuItem
-            // 
-            this.infoHelpMenuItem.Name = "infoHelpMenuItem";
-            this.infoHelpMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.infoHelpMenuItem.Text = "Info";
             // 
             // windowToolStripMenuItem
             // 
@@ -128,7 +96,7 @@
             this.toolsToolStripMenuItem.CheckOnClick = true;
             this.toolsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
             this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsVisible);
             // 
@@ -138,7 +106,7 @@
             this.statusToolStripMenuItem.CheckOnClick = true;
             this.statusToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.statusToolStripMenuItem.Text = "Status";
             this.statusToolStripMenuItem.Click += new System.EventHandler(this.statusVisible);
             // 
@@ -148,7 +116,7 @@
             this.topToolStripMenuItem.CheckOnClick = true;
             this.topToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.topToolStripMenuItem.Name = "topToolStripMenuItem";
-            this.topToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.topToolStripMenuItem.Text = "Top";
             this.topToolStripMenuItem.Click += new System.EventHandler(this.topVisible);
             // 
@@ -158,7 +126,7 @@
             this.bottomToolStripMenuItem.CheckOnClick = true;
             this.bottomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.bottomToolStripMenuItem.Name = "bottomToolStripMenuItem";
-            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.bottomToolStripMenuItem.Text = "Bottom";
             this.bottomToolStripMenuItem.Click += new System.EventHandler(this.bottomVisible);
             // 
@@ -168,7 +136,7 @@
             this.leftToolStripMenuItem.CheckOnClick = true;
             this.leftToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.leftToolStripMenuItem.Name = "leftToolStripMenuItem";
-            this.leftToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.leftToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.leftToolStripMenuItem.Text = "Left";
             this.leftToolStripMenuItem.Click += new System.EventHandler(this.leftVisible);
             // 
@@ -178,7 +146,7 @@
             this.rightToolStripMenuItem.CheckOnClick = true;
             this.rightToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
-            this.rightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rightToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.rightToolStripMenuItem.Text = "Right";
             this.rightToolStripMenuItem.Click += new System.EventHandler(this.rightVisible);
             // 
@@ -188,9 +156,48 @@
             this.centerToolStripMenuItem.CheckOnClick = true;
             this.centerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
-            this.centerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.centerToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.centerToolStripMenuItem.Text = "Center";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerVisible);
+            // 
+            // helpMenu
+            // 
+            this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.infoHelpMenuItem});
+            this.helpMenu.Name = "helpMenu";
+            this.helpMenu.Size = new System.Drawing.Size(44, 20);
+            this.helpMenu.Text = "Help";
+            // 
+            // infoHelpMenuItem
+            // 
+            this.infoHelpMenuItem.Name = "infoHelpMenuItem";
+            this.infoHelpMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoHelpMenuItem.Text = "Info";
+            this.infoHelpMenuItem.Click += new System.EventHandler(this.infoClick);
+            // 
+            // status
+            // 
+            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.status.Location = new System.Drawing.Point(0, 389);
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(584, 22);
+            this.status.TabIndex = 1;
+            this.status.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(10, 17);
+            this.statusLabel.Text = " ";
+            // 
+            // tools
+            // 
+            this.tools.Location = new System.Drawing.Point(0, 24);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(584, 25);
+            this.tools.TabIndex = 2;
+            this.tools.Text = "toolStrip1";
             // 
             // editorSplitPanel1
             // 
@@ -199,20 +206,14 @@
             this.editorSplitPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editorSplitPanel1.Location = new System.Drawing.Point(0, 49);
             this.editorSplitPanel1.Name = "editorSplitPanel1";
-            this.editorSplitPanel1.Size = new System.Drawing.Size(836, 342);
+            this.editorSplitPanel1.Size = new System.Drawing.Size(584, 340);
             this.editorSplitPanel1.TabIndex = 3;
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(10, 17);
-            this.statusLabel.Text = " ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 413);
+            this.ClientSize = new System.Drawing.Size(584, 411);
             this.Controls.Add(this.editorSplitPanel1);
             this.Controls.Add(this.tools);
             this.Controls.Add(this.status);

@@ -56,5 +56,11 @@ namespace GameEditorTemplate
         {
             this.editorSplitPanel1.TopSplit.Panel2Collapsed = !this.editorSplitPanel1.TopSplit.Panel2Collapsed;
         }
+
+        private void infoClick( object sender, EventArgs e )
+        {
+            InfoForm info = new InfoForm();
+            info.ShowDialog();
+        }
     }
 }
