@@ -12,7 +12,11 @@ namespace XGame
 
         public XGamePlatform Platform
         {
-            get { return this.platform; }
+            get
+            {
+                if ( this.platform == null ) throw new MemberAccessException( "no Platform set" );
+                return this.platform; 
+            }
             set
             {
                 if ( this.platform != null ) throw new InvalidOperationException( "Platform can be set only once" );
@@ -42,9 +46,10 @@ namespace XGame
         private readonly XTimerTick timer;
 
         public TimeSpan InactiveSleepTime { get; set; }
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; protected set; }
         public bool IsFixedTimeStep { get; set; }
         public bool IsRunning { get; private set; }
+        public bool IsCleanedUp { get; private set; }
         public TimeSpan TargetElapsedTime { get; set; }
 
         #endregion
@@ -74,13 +79,18 @@ namespace XGame
             #endregion
         }
 
+        public void Pause()
+        {
+            if ( this.IsRunning ) this.IsActive = !this.IsActive;
+        }
+
         public XGameWindow Window
         {
             get
             {
                 if ( this.Platform != null )
                 {
-                    return this.Platform.MainWindow;
+                    return this.Platform.ActiveWindow;
                 }
                 return null;
             }
@@ -88,7 +98,7 @@ namespace XGame
             {
                 if ( this.Platform != null )
                 {
-                    this.Platform.MainWindow = value;
+                    this.Platform.ActiveWindow = value;
                 }
             }
         }
@@ -96,22 +106,13 @@ namespace XGame
         // todo : global MouseVisibilty -> method in XGamePlatform
         public bool IsMouseVisible
         {
-            get
-            {
-                if ( this.Platform == null ) throw new MemberAccessException( "no Platform set" );
-                return this.Platform.IsMouseVisible;
-            }
-            set
-            {
-                if ( this.Platform == null ) throw new MemberAccessException( "no Platform set" );
-                this.Platform.IsMouseVisible = value;
-            }
+            get { return this.Platform.IsMouseVisible; }
+            set { this.Platform.IsMouseVisible = value; }
         }
 
-        public void Run()
-        {
-            if ( this.Platform == null ) throw new MemberAccessException( "no Platform set" );
-            this.Platform.Run();
+        public void Run() 
+        { 
+            if (!this.IsRunning) this.Platform.Run(); 
         }
 
         /// <summary>
@@ -121,11 +122,7 @@ namespace XGame
         {
             this.isExiting = true;
             this.Platform.Exiting = true;
-            if ( this.IsRunning )
-            {
-                EndRun();
-                this.IsRunning = false;
-            }
+            this.IsRunning = false;
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace XGame
         internal void InitializeBeforeRun()
         {
             Console.WriteLine( "XGame.Initialize" );
-            if ( this.Platform == null ) throw new ArgumentNullException( "XGame.Platform" );
+            this.IsCleanedUp = false;
             this.Platform.CreateDevice();// or initialize ?!
             //SetupGraphicsDeviceEvents -> move to CreateDevice
 
@@ -199,7 +196,11 @@ namespace XGame
         {
             if ( this.isExiting ) { return; }
 
-            if ( !this.IsActive && this.Platform != null ) { this.Platform.Sleep( this.inactiveSleepTime ); }
+            if ( !this.IsActive && this.Platform != null ) 
+            { 
+                this.Platform.Sleep( this.inactiveSleepTime ); 
+                return; 
+            }
 
             this.timer.Tick();
 
@@ -296,10 +297,9 @@ namespace XGame
 
                     this.Platform.Update( this.gameTime );  // cursor visibility update
 
-                    //this.graphicsDeviceManager.BeginDraw(); //todo : check, differ MainWindow and ActiveWindow
-                    this.Window.BeginDraw();    // begin draw to the mainWindow
+                    this.Platform.MainWindow.BeginDraw();
                     Draw( this.gameTime );
-                    this.Window.EndDraw();
+                    this.Platform.MainWindow.EndDraw();
 
                     DrawGameSystems( this.gameTime );
 
@@ -314,6 +314,7 @@ namespace XGame
 
         internal void CleanUpAfterRun()
         {
+            this.EndRun();
             if ( this.contentLoaded )
             {
                 this.UnloadContent();
@@ -325,6 +326,7 @@ namespace XGame
             this.platform.Dispose();
             //this.platform = null;
             Console.WriteLine( "XGame.CleanUp .. done" );
+            this.IsCleanedUp = true;
         }
 
 

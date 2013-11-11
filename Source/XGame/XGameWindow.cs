@@ -25,19 +25,22 @@ namespace XGame
 
         public void BeginDraw() 
         {
-            this.Platform.MainWindow = this;
+            //this.Platform.MainWindow = this;
+            this.Platform.ActiveWindow = this;
             this.Platform.DeviceManager.BeginDraw();
         }
 
         public void EndDraw()
         {
-            this.Platform.MainWindow = this;
+            //this.Platform.MainWindow = this;
+            this.Platform.ActiveWindow = this;
             this.Platform.DeviceManager.EndDraw();
         }
 
         public void Present()
         {
-            this.Platform.MainWindow = this;
+            //this.Platform.MainWindow = this;
+            this.Platform.ActiveWindow = this;
             this.Platform.DeviceManager.Present();
         }
 

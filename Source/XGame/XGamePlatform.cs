@@ -7,7 +7,9 @@ namespace XGame
 
     public class XGamePlatform : IDisposable
     {
-        public XGameWindow MainWindow;
+        public XGameWindow MainWindow { get; protected set; }
+
+        public XGameWindow ActiveWindow;
 
         public XGame Game { get; private set; }
 
@@ -27,6 +29,7 @@ namespace XGame
         private readonly Thread gameThread;
 
         internal bool Exiting;
+        public bool IsRunning { get; private set; }
 
         internal Action InitCallback;
         internal Action RunCallback;
@@ -41,6 +44,7 @@ namespace XGame
             this.InitCallback = game.InitializeBeforeRun;
             this.RunCallback = game.Tick;
             this.ExitCallback = game.CleanUpAfterRun;
+            this.IsRunning = false;
         }
 
         public void Present()
@@ -83,11 +87,13 @@ namespace XGame
 
         private void RenderLoopCallback()
         {
+            this.IsRunning = true;
             while ( !this.Exiting )
             {
                 this.RunCallback();
             }
-
+            this.IsRunning = false;
+            Console.WriteLine( "RenderCallback finished" );
             if ( this.ExitCallback != null ) this.ExitCallback();
         }
 
@@ -118,6 +124,7 @@ namespace XGame
             Console.WriteLine( "XGamePlatform.Dispose .. start" );
 
             this.MainWindow = null;
+            this.ActiveWindow = null;
 
             foreach ( XGameWindow window in this.allGameWindows )
             {

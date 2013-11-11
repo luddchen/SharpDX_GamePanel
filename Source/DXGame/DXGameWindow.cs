@@ -22,12 +22,22 @@ namespace DXGame
         private bool initialized = false;
         private bool isFirstInitDone = false;
 
+        delegate void FormCloser();
+        FormCloser formClose;
+
         public DXGameWindow( XGamePlatform platform, Control control ) : base( platform )
         {
             if ( control == null ) throw new ArgumentNullException( "control" );
             this.Control = control;
             this.Cursor = new DXGameWindowCursor( control );
             this.Control_ClientSizeChanged( this, EventArgs.Empty );
+            if ( this.Control.TopLevelControl is Form )
+            {
+                formClose = delegate()
+                {
+                    ( this.Control.TopLevelControl as Form ).Close();
+                };
+            }
 
             this.desc = new SwapChainDescription()
             {
@@ -93,10 +103,12 @@ namespace DXGame
             this.BufferDispose();
             this.Control.Disposed -= this.Control_Disposed;
             this.Control.ClientSizeChanged -= this.Control_ClientSizeChanged;
+            if ( this.Control.TopLevelControl is Form ) ( this.Control.TopLevelControl as Form ).Invoke( formClose );
             this.Control = null;
             Console.WriteLine( "DXGameWindow.Dispose .. done" );
             base.Dispose();
         }
+
 
     }
 

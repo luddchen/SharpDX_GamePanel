@@ -43,13 +43,13 @@ namespace DXGame
 
         public bool BeginDraw()
         {
-            if ( this.platform.MainWindow == null || !this.platform.MainWindow.IsInitialized() )
+            if ( this.platform.ActiveWindow == null || !this.platform.ActiveWindow.IsInitialized() )
             {
                 return false;
             }
 
-            this.GraphicsDevice.SetRenderTargets( ( this.platform.MainWindow as DXGameWindow ).RenderView );
-            this.GraphicsDevice.SetViewport( 0, 0, this.platform.MainWindow.Width, this.platform.MainWindow.Height );
+            this.GraphicsDevice.SetRenderTargets( ( this.platform.ActiveWindow as DXGameWindow ).RenderView );
+            this.GraphicsDevice.SetViewport( 0, 0, this.platform.ActiveWindow.Width, this.platform.ActiveWindow.Height );
 
             return true;
         }
@@ -60,7 +60,7 @@ namespace DXGame
 
         public void Present()
         {
-            ( this.platform.MainWindow as DXGameWindow ).SwapChain.Present( 0, PresentFlags.None );
+            ( this.platform.ActiveWindow as DXGameWindow ).SwapChain.Present( 0, PresentFlags.None );
         }
 
         #endregion
