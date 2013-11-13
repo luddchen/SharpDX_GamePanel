@@ -1,4 +1,4 @@
-﻿namespace GameEditorTemplate
+﻿namespace DXControls
 {
     partial class EditorSplitPanel
     {

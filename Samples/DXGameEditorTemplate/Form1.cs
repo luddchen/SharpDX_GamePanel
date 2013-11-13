@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
+
 namespace GameEditorTemplate
 {
     public partial class Form1 : Form
@@ -59,7 +60,7 @@ namespace GameEditorTemplate
 
         private void infoClick( object sender, EventArgs e )
         {
-            InfoForm info = new InfoForm();
+            DXControls.InfoForm info = new DXControls.InfoForm();
             info.ShowDialog();
         }
     }
