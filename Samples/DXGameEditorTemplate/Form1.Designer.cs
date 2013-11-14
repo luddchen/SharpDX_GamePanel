@@ -38,12 +38,12 @@
             this.bottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.infoHelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
-            this.gameModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -96,7 +96,7 @@
             this.toolsToolStripMenuItem.CheckOnClick = true;
             this.toolsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
             this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsVisible);
             // 
@@ -106,7 +106,7 @@
             this.statusToolStripMenuItem.CheckOnClick = true;
             this.statusToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.statusToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.statusToolStripMenuItem.Text = "Status";
             this.statusToolStripMenuItem.Click += new System.EventHandler(this.statusVisible);
             // 
@@ -116,7 +116,7 @@
             this.topToolStripMenuItem.CheckOnClick = true;
             this.topToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.topToolStripMenuItem.Name = "topToolStripMenuItem";
-            this.topToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.topToolStripMenuItem.Text = "Top";
             this.topToolStripMenuItem.Click += new System.EventHandler(this.topVisible);
             // 
@@ -126,7 +126,7 @@
             this.bottomToolStripMenuItem.CheckOnClick = true;
             this.bottomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.bottomToolStripMenuItem.Name = "bottomToolStripMenuItem";
-            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.bottomToolStripMenuItem.Text = "Bottom";
             this.bottomToolStripMenuItem.Click += new System.EventHandler(this.bottomVisible);
             // 
@@ -136,7 +136,7 @@
             this.leftToolStripMenuItem.CheckOnClick = true;
             this.leftToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.leftToolStripMenuItem.Name = "leftToolStripMenuItem";
-            this.leftToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.leftToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.leftToolStripMenuItem.Text = "Left";
             this.leftToolStripMenuItem.Click += new System.EventHandler(this.leftVisible);
             // 
@@ -146,9 +146,17 @@
             this.rightToolStripMenuItem.CheckOnClick = true;
             this.rightToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
-            this.rightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rightToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.rightToolStripMenuItem.Text = "Right";
             this.rightToolStripMenuItem.Click += new System.EventHandler(this.rightVisible);
+            // 
+            // gameModeToolStripMenuItem
+            // 
+            this.gameModeToolStripMenuItem.CheckOnClick = true;
+            this.gameModeToolStripMenuItem.Name = "gameModeToolStripMenuItem";
+            this.gameModeToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.gameModeToolStripMenuItem.Text = "Game Mode";
+            this.gameModeToolStripMenuItem.Click += new System.EventHandler(this.gameModeClick);
             // 
             // helpMenu
             // 
@@ -188,14 +196,6 @@
             this.tools.Size = new System.Drawing.Size(584, 25);
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
-            // 
-            // gameModeToolStripMenuItem
-            // 
-            this.gameModeToolStripMenuItem.CheckOnClick = true;
-            this.gameModeToolStripMenuItem.Name = "gameModeToolStripMenuItem";
-            this.gameModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.gameModeToolStripMenuItem.Text = "Game Mode";
-            this.gameModeToolStripMenuItem.Click += new System.EventHandler(this.gameModeClick);
             // 
             // editorSplitPanel1
             // 
@@ -250,8 +250,8 @@
         private System.Windows.Forms.ToolStripMenuItem leftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private DXControls.EditorSplitPanel editorSplitPanel1;
         private System.Windows.Forms.ToolStripMenuItem gameModeToolStripMenuItem;
+        private DXControls.EditorSplitPanel editorSplitPanel1;
     }
 }
 

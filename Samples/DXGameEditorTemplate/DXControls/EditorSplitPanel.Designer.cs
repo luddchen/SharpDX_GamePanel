@@ -1,4 +1,5 @@
-﻿namespace DXControls
+﻿using System.ComponentModel;
+namespace DXControls
 {
     partial class EditorSplitPanel
     {
@@ -99,6 +100,7 @@
             // 
             // splitTop
             // 
+            this.splitTop.AccessibleName = "";
             this.splitTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTop.Location = new System.Drawing.Point(0, 0);
             this.splitTop.Name = "splitTop";
