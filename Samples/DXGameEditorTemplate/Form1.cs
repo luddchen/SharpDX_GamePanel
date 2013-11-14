@@ -53,15 +53,25 @@ namespace GameEditorTemplate
             this.editorSplitPanel1.TopSplit.Panel1Collapsed = !this.editorSplitPanel1.TopSplit.Panel1Collapsed;
         }
 
-        private void centerVisible( object sender, EventArgs e )
-        {
-            this.editorSplitPanel1.TopSplit.Panel2Collapsed = !this.editorSplitPanel1.TopSplit.Panel2Collapsed;
-        }
-
         private void infoClick( object sender, EventArgs e )
         {
             DXControls.InfoForm info = new DXControls.InfoForm();
             info.ShowDialog();
+        }
+
+        private void gameModeClick( object sender, EventArgs e )
+        {
+            this.editorSplitPanel1.GameMode = this.gameModeToolStripMenuItem.Checked;
+            this.status.Visible = !this.gameModeToolStripMenuItem.Checked;
+            this.tools.Visible = !this.gameModeToolStripMenuItem.Checked;
+            if ( this.gameModeToolStripMenuItem.Checked )
+            {
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            }
+            else
+            {
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            }
         }
     }
 }

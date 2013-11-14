@@ -38,12 +38,12 @@
             this.bottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.centerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.infoHelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
+            this.gameModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -85,7 +85,7 @@
             this.bottomToolStripMenuItem,
             this.leftToolStripMenuItem,
             this.rightToolStripMenuItem,
-            this.centerToolStripMenuItem});
+            this.gameModeToolStripMenuItem});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "Window";
@@ -150,16 +150,6 @@
             this.rightToolStripMenuItem.Text = "Right";
             this.rightToolStripMenuItem.Click += new System.EventHandler(this.rightVisible);
             // 
-            // centerToolStripMenuItem
-            // 
-            this.centerToolStripMenuItem.Checked = true;
-            this.centerToolStripMenuItem.CheckOnClick = true;
-            this.centerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
-            this.centerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.centerToolStripMenuItem.Text = "Center";
-            this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerVisible);
-            // 
             // helpMenu
             // 
             this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -199,15 +189,28 @@
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
+            // gameModeToolStripMenuItem
+            // 
+            this.gameModeToolStripMenuItem.CheckOnClick = true;
+            this.gameModeToolStripMenuItem.Name = "gameModeToolStripMenuItem";
+            this.gameModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gameModeToolStripMenuItem.Text = "Game Mode";
+            this.gameModeToolStripMenuItem.Click += new System.EventHandler(this.gameModeClick);
+            // 
             // editorSplitPanel1
             // 
             this.editorSplitPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.editorSplitPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(70)))), ((int)(((byte)(90)))));
+            this.editorSplitPanel1.BottomPanelCollapsed = false;
             this.editorSplitPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.editorSplitPanel1.GameMode = false;
+            this.editorSplitPanel1.LeftPanelCollapsed = false;
             this.editorSplitPanel1.Location = new System.Drawing.Point(0, 49);
             this.editorSplitPanel1.Name = "editorSplitPanel1";
+            this.editorSplitPanel1.RightPanelCollapsed = false;
             this.editorSplitPanel1.Size = new System.Drawing.Size(584, 340);
             this.editorSplitPanel1.TabIndex = 3;
+            this.editorSplitPanel1.TopPanelCollapsed = false;
             // 
             // Form1
             // 
@@ -246,9 +249,9 @@
         private System.Windows.Forms.ToolStripMenuItem bottomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem leftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem centerToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private DXControls.EditorSplitPanel editorSplitPanel1;
+        private System.Windows.Forms.ToolStripMenuItem gameModeToolStripMenuItem;
     }
 }
 

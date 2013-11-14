@@ -9,6 +9,41 @@ namespace DXControls
             InitializeComponent();
         }
 
+        private bool leftCollapsed;
+        private bool rightCollapsed;
+        private bool topCollapsed;
+        private bool bottomCollapsed;
+        private bool gameMode = false;
+        public bool GameMode
+        {
+            get { return this.gameMode; }
+            set
+            {
+                if ( value != this.gameMode )
+                {
+                    if ( value )
+                    {
+                        this.leftCollapsed = LeftPanelCollapsed;
+                        this.rightCollapsed = RightPanelCollapsed;
+                        this.topCollapsed = TopPanelCollapsed;
+                        this.bottomCollapsed = BottomPanelCollapsed;
+                        LeftPanelCollapsed = true;
+                        RightPanelCollapsed = true;
+                        TopPanelCollapsed = true;
+                        BottomPanelCollapsed = true;
+                    }
+                    else
+                    {
+                        LeftPanelCollapsed = this.leftCollapsed;
+                        RightPanelCollapsed = this.rightCollapsed;
+                        TopPanelCollapsed = this.topCollapsed;
+                        BottomPanelCollapsed = this.bottomCollapsed;
+                    }
+                    this.gameMode = value;
+                }
+            }
+        }
+
         public Control LeftPanel { get { return this.splitLeft.Panel1; } }
 
         public Control TopPanel { get { return this.splitTop.Panel1; } }
