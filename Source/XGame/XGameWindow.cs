@@ -6,6 +6,8 @@ namespace XGame
     {
         public XGamePlatform Platform { get; private set; }
 
+        public bool IsEndDrawRequired { get; protected set; }
+
         private XGameWindowCursor cursor;
         public XGameWindowCursor Cursor
         {
@@ -51,13 +53,33 @@ namespace XGame
 
         #region IDisposable Member
 
-        public virtual void Dispose()
+        private bool disposed = false;
+
+        public void Dispose()
         {
             Console.WriteLine( "XGameWindow.Dispose .. start" );
-            this.cursor.Dispose();
-            this.cursor = null;
-            this.Platform = null;
+            Dispose(true);
+            GC.SuppressFinalize( this );
             Console.WriteLine( "XGameWindow.Dispose .. done" );
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if ( this.cursor != null )
+                {
+                    this.cursor.Dispose();
+                    this.cursor = null;
+                }
+                this.Platform = null;
+                disposed = true;
+            }
+        }
+
+        ~XGameWindow()
+        {
+            Dispose (false);
         }
 
         #endregion

@@ -6,17 +6,11 @@ namespace XGame
     public class XGame
     {
 
-        //public XGameServiceRegistry Services { get; private set; }
-
         private XGamePlatform platform;
 
         public XGamePlatform Platform
         {
-            get
-            {
-                if ( this.platform == null ) throw new MemberAccessException( "no Platform set" );
-                return this.platform; 
-            }
+            get { return this.platform; }
             set
             {
                 if ( this.platform != null ) throw new InvalidOperationException( "Platform can be set only once" );
@@ -86,24 +80,10 @@ namespace XGame
 
         public XGameWindow Window
         {
-            get
-            {
-                if ( this.Platform != null )
-                {
-                    return this.Platform.ActiveWindow;
-                }
-                return null;
-            }
-            set
-            {
-                if ( this.Platform != null )
-                {
-                    this.Platform.ActiveWindow = value;
-                }
-            }
+            get { return this.Platform.ActiveWindow; }
+            set { this.Platform.ActiveWindow = value; }
         }
 
-        // todo : global MouseVisibilty -> method in XGamePlatform
         public bool IsMouseVisible
         {
             get { return this.Platform.IsMouseVisible; }
@@ -112,7 +92,17 @@ namespace XGame
 
         public void Run() 
         { 
-            if (!this.IsRunning) this.Platform.Run(); 
+            if ( !this.IsRunning && CheckBeforeRun() ) this.Platform.Run(); 
+        }
+
+        private bool CheckBeforeRun()
+        {
+            if ( this.platform == null )
+            {
+                Console.WriteLine("platform not set");
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -150,7 +140,7 @@ namespace XGame
             this.LoadContentSystems();
             this.contentLoaded = true;
 
-            this.InitializePendingGameSystems( true );  // if any new GameSystem arrived, init and load content ?
+            this.InitializePendingGameSystems( true );
             this.IsRunning = true;
 
             this.BeginRun();
@@ -299,7 +289,7 @@ namespace XGame
 
                     this.Platform.MainWindow.BeginDraw();
                     Draw( this.gameTime );
-                    this.Platform.MainWindow.EndDraw();
+                    if (this.platform.MainWindow.IsEndDrawRequired) this.Platform.MainWindow.EndDraw();
 
                     DrawGameSystems( this.gameTime );
 
@@ -314,6 +304,7 @@ namespace XGame
 
         internal void CleanUpAfterRun()
         {
+            Console.WriteLine( "Memory before Cleanup : " + GC.GetTotalMemory( true ) );
             this.EndRun();
             if ( this.contentLoaded )
             {
@@ -327,6 +318,7 @@ namespace XGame
             //this.platform = null;
             Console.WriteLine( "XGame.CleanUp .. done" );
             this.IsCleanedUp = true;
+            Console.WriteLine( "Memory after Cleanup : " + GC.GetTotalMemory( true ) );
         }
 
 

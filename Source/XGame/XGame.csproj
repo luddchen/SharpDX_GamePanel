@@ -43,7 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XGame.cs" />
     <Compile Include="XGamePlatform.cs" />
-    <Compile Include="XGameServiceRegistry.cs" />
     <Compile Include="XGameTime.cs" />
     <Compile Include="XGameWindow.cs" />
     <Compile Include="XGameWindowCursor.cs" />

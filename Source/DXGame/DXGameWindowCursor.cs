@@ -70,17 +70,23 @@ namespace DXGame
             catch ( Exception ) { }
         }
 
-        public override void Dispose()
+
+        private bool disposed = false;
+
+        protected override void Dispose( bool disposing )
         {
-            Console.WriteLine( "DXGameWindowCursor.Dispose .. start" );
-            //this.control.MouseEnter -= this.MouseEnter;
-            //this.control.MouseLeave -= this.MouseLeave;
-            this.control = null;
-            this.invisibleCursor = null;
-            this.defaultCursor = null;
-            this.setCursor = null;
-            Console.WriteLine( "DXGameWindowCursor.Dispose .. done" );
-            base.Dispose();
+            if ( !disposed )
+            {
+                Console.WriteLine( "DXGameWindowCursor.Dispose .. start" );
+                this.control = null;
+                this.invisibleCursor = null;
+                this.defaultCursor = null;
+                this.setCursor = null;
+                Console.WriteLine( "DXGameWindowCursor.Dispose .. done" );
+                base.Dispose( disposing );
+
+                disposed = true;
+            }
         }
 
     }

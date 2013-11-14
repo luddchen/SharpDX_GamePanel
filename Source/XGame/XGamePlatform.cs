@@ -64,7 +64,7 @@ namespace XGame
                 this.isMouseVisible = value;
                 foreach ( XGameWindow window in this.allGameWindows )
                 {
-                    window.Cursor.IsMouseVisible = value;
+                    if (window.Cursor != null) window.Cursor.IsMouseVisible = value;
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace XGame
         {
             foreach ( XGameWindow window in this.allGameWindows )
             {
-                window.Cursor.Update( gameTime );
+                if (window.Cursor != null) window.Cursor.Update( gameTime );
             }
         }
 
@@ -99,6 +99,8 @@ namespace XGame
 
         internal void CreateDevice()
         {
+            if ( this.deviceManager == null ) throw new ArgumentNullException( "Platform.DeviceManager" );
+            if ( this.MainWindow == null ) throw new ArgumentNullException( "Platform.MainWindow" );
             this.DeviceManager.CreateDevice();
         }
 
@@ -119,30 +121,55 @@ namespace XGame
 
         #region IDisposable Member
 
-        public virtual void Dispose()
+        private bool disposed = false;
+
+        public void Dispose()
         {
             Console.WriteLine( "XGamePlatform.Dispose .. start" );
 
-            this.MainWindow = null;
-            this.ActiveWindow = null;
+            Dispose( true );
+            GC.SuppressFinalize( this );
 
-            foreach ( XGameWindow window in this.allGameWindows )
+            Console.WriteLine( "XGamePlatform.Dispose .. done" );
+        }
+
+        public virtual void Dispose( bool disposing )
+        {
+            if ( !this.disposed )
             {
-                window.Dispose();
+                if ( disposing )
+                {
+                    this.MainWindow = null;
+                    this.ActiveWindow = null; 
+                    this.Game = null;
+                    this.InitCallback = null;
+                    this.RunCallback = null;
+                    this.ExitCallback = null;
+                }
+
+                foreach ( XGameWindow window in this.allGameWindows )
+                {
+                    window.Dispose();
+                }
+
+                if ( this.deviceManager != null )
+                {
+                    this.deviceManager.Dispose();
+                    this.deviceManager = null;
+                }
+
+                this.allGameWindows.Clear();
+                this.allGameWindows = null;
+
+                this.disposed = true;
             }
 
-            this.allGameWindows.Clear();
-            this.allGameWindows = null;
+        }
 
-            this.Game = null;
 
-            this.deviceManager.Dispose();
-            this.deviceManager = null;
-
-            this.InitCallback = null;
-            this.RunCallback = null;
-            this.ExitCallback = null;
-            Console.WriteLine( "XGamePlatform.Dispose .. done" );
+        ~XGamePlatform()
+        {
+            Dispose (false);
         }
 
         #endregion

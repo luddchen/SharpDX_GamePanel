@@ -58,10 +58,22 @@ namespace XGame
 
         #region IDisposable Member
 
-        public virtual void Dispose() 
+        public void Dispose()
         {
-            Console.WriteLine( "XGameWindowCursor.Dispose" );
+            Console.WriteLine( "XGameWindowCursor.Dispose .. start" );
+            Dispose(true);
+            GC.SuppressFinalize( this );
+            Console.WriteLine( "XGameWindowCursor.Dispose .. done" );
         }
+
+        protected virtual void Dispose(bool disposing) { }
+
+        ~XGameWindowCursor()
+        {
+            Dispose (false);
+        }
+
+
 
         #endregion
     }

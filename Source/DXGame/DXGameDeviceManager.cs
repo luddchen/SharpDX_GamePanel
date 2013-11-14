@@ -71,8 +71,14 @@ namespace DXGame
         {
             Console.WriteLine( "DXGameDeviceManager.Dispose .. start" );
             this.GraphicsDevice.Dispose();
+            this.GraphicsDevice = null;
+
             this.Dx11Device.Dispose();
+            this.Dx11Device = null;
+
             this.Factory.Dispose();
+            this.Factory = null;
+
             this.platform = null;
             Console.WriteLine( "DXGameDeviceManager.Dispose .. done" );
         }

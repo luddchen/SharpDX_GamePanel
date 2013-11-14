@@ -97,18 +97,23 @@ namespace DXGame
             }
         }
 
-        public override void Dispose()
-        {
-            Console.WriteLine( "DXGameWindow.Dispose .. start" );
-            this.BufferDispose();
-            this.Control.Disposed -= this.Control_Disposed;
-            this.Control.ClientSizeChanged -= this.Control_ClientSizeChanged;
-            if ( this.Control.TopLevelControl is Form ) ( this.Control.TopLevelControl as Form ).Invoke( formClose );
-            this.Control = null;
-            Console.WriteLine( "DXGameWindow.Dispose .. done" );
-            base.Dispose();
-        }
 
+        private bool disposed = false;
+
+        protected override void Dispose( bool disposing )
+        {
+            if (!disposed)
+            {
+                Console.WriteLine( "DXGameWindow.Dispose .. start" );
+                this.BufferDispose();
+                if ( this.Control.TopLevelControl is Form ) ( this.Control.TopLevelControl as Form ).Invoke( formClose );
+                this.Control = null;
+                Console.WriteLine( "DXGameWindow.Dispose .. done" );
+
+                disposed = true;
+            }
+            base.Dispose(disposing);
+        }
 
     }
 
