@@ -69,6 +69,7 @@
     <Compile Include="DXGamePlatform.cs" />
     <Compile Include="DXGameWindow.cs" />
     <Compile Include="DXGameWindowCursor.cs" />
+    <Compile Include="DXTexture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DXGameDeviceManager.cs" />
   </ItemGroup>

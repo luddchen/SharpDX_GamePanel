@@ -11,7 +11,16 @@ namespace DXGame
         private Control control;
 
         Cursor invisibleCursor;
+        
         Cursor defaultCursor;
+        public Cursor DefaultCursor
+        {
+            set
+            {
+                this.defaultCursor = value;
+                SetControlCursor( value );
+            }
+        }
 
         private delegate void SetCursor( Cursor cursor );
         private SetCursor setCursor;

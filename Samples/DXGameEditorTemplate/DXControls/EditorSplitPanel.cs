@@ -66,75 +66,117 @@ namespace DXControls
         }
 
         [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
         [Description( "The panel left of the middle." )]
         public Control LeftPanel { get { return this.splitLeft.Panel1; } }
 
         [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
         [Description( "The panel above the middle." )]
         public Control TopPanel { get { return this.splitTop.Panel1; } }
 
         [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
         [Description( "The panel right the middle." )]
         public Control RightPanel { get { return this.splitRight.Panel2; } }
 
         [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
         [Description( "The panel below the middle." )]
         public Control BottomPanel { get { return this.splitBottom.Panel2; } }
 
         [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
         [Description( "The panel in the middle." )]
         public Control CenterPanel { get { return this.splitTop.Panel2; } }
 
 
-        [Description( "The left splitter." )]
+        [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
+        [Description( "The left split." )]
         public SplitContainer LeftSplit { get { return this.splitLeft; } }
 
-        [Description( "The right splitter." )]
+        [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
+        [Description( "The right split." )]
         public SplitContainer RightSplit { get { return this.splitRight; } }
 
-        [Description( "The top splitter." )]
+        [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
+        [Description( "The top split." )]
         public SplitContainer TopSplit { get { return this.splitTop; } }
 
-        [Description( "The bottom splitter." )]
+        [Browsable( false )]
+        [DesignerSerializationVisibility( DesignerSerializationVisibility.Content )]
+        [Description( "The bottom split." )]
         public SplitContainer BottomSplit { get { return this.splitBottom; } }
 
 
-        [Browsable( false )]
+        [Description( "The left splitter position." )]
+        public int LeftSplitPosition
+        { 
+            get { return this.splitLeft.SplitterDistance; }
+            set { this.splitLeft.SplitterDistance = value; }
+        }
+
+        [Description( "The right splitter position." )]
+        public int RightSplitPosition
+        {
+            get { return this.splitRight.SplitterDistance; }
+            set { this.splitRight.SplitterDistance = value; }
+        }
+
+        [Description( "The top splitter position." )]
+        public int TopSplitPosition
+        {
+            get { return this.splitTop.SplitterDistance; }
+            set { this.splitTop.SplitterDistance = value; }
+        }
+        
+        [Description( "The bottom splitter position." )]
+        public int BottomSplitPosition
+        {
+            get { return this.splitBottom.SplitterDistance; }
+            set { this.splitBottom.SplitterDistance = value; }
+        }
+
+
+        [Browsable( true )]
         [Description( "Indicates if the left panel is collapsed." )]
         public bool LeftPanelCollapsed
         {
-            get { return LeftSplit.Panel1Collapsed; }
-            set { LeftSplit.Panel1Collapsed = value; }
+            get { return this.splitLeft.Panel1Collapsed; }
+            set { this.splitLeft.Panel1Collapsed = value; }
         }
 
-        [Browsable( false )]
+        [Browsable( true )]
         [Description( "Indicates if the right panel is collapsed." )]
         public bool RightPanelCollapsed
         {
-            get { return RightSplit.Panel2Collapsed; }
-            set { RightSplit.Panel2Collapsed = value; }
+            get { return this.splitRight.Panel2Collapsed; }
+            set { this.splitRight.Panel2Collapsed = value; }
         }
 
-        [Browsable( false )]
+        [Browsable( true )]
         [Description( "Indicates if the top panel is collapsed." )]
         public bool TopPanelCollapsed
         {
-            get { return TopSplit.Panel1Collapsed; }
-            set { TopSplit.Panel1Collapsed = value; }
+            get { return this.splitTop.Panel1Collapsed; }
+            set { this.splitTop.Panel1Collapsed = value; }
         }
 
-        [Browsable( false )]
+        [Browsable( true )]
         [Description( "Indicates if the bottom panel is collapsed." )]
         public bool BottomPanelCollapsed
         {
-            get { return BottomSplit.Panel2Collapsed; }
-            set { BottomSplit.Panel2Collapsed = value; }
+            get { return this.splitBottom.Panel2Collapsed; }
+            set { this.splitBottom.Panel2Collapsed = value; }
         }
 
     }
 
 
-
+    [System.Security.Permissions.PermissionSet( System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust" )] 
     public class EditorSplitPanelDesigner : System.Windows.Forms.Design.ControlDesigner
     {
 
@@ -143,12 +185,16 @@ namespace DXControls
         public override void Initialize( IComponent component )
         {
             base.Initialize( component );
-            EditorSplitPanel panel = component as EditorSplitPanel; 
-            this.EnableDesignMode( panel.TopPanel, "Top" );
-            this.EnableDesignMode( panel.BottomPanel, "Bottom" );
-            this.EnableDesignMode( panel.LeftPanel, "Left" );
-            this.EnableDesignMode( panel.RightPanel, "Right" );
-            this.EnableDesignMode( panel.CenterPanel, "Center" );
+            EditorSplitPanel panel = component as EditorSplitPanel;
+            //this.EnableDesignMode( panel.TopPanel, "Top" );
+            //this.EnableDesignMode( panel.BottomPanel, "Bottom" );
+            //this.EnableDesignMode( panel.LeftPanel, "Left" );
+            //this.EnableDesignMode( panel.RightPanel, "Right" );
+            //this.EnableDesignMode( panel.CenterPanel, "Center" );
+            this.EnableDesignMode( panel.TopSplit, "Top" );
+            this.EnableDesignMode( panel.BottomSplit, "Bottom" );
+            this.EnableDesignMode( panel.LeftSplit, "Left" );
+            this.EnableDesignMode( panel.RightSplit, "Right" );
         }
 
     }

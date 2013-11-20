@@ -49,23 +49,26 @@ namespace DXControls
             // splitLeft
             // 
             this.splitLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitLeft.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitLeft.Location = new System.Drawing.Point(0, 0);
             this.splitLeft.Name = "splitLeft";
             // 
             // splitLeft.Panel1
             // 
             this.splitLeft.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.splitLeft.Panel1MinSize = 200;
             // 
             // splitLeft.Panel2
             // 
             this.splitLeft.Panel2.Controls.Add(this.splitBottom);
-            this.splitLeft.Size = new System.Drawing.Size(583, 370);
-            this.splitLeft.SplitterDistance = 25;
+            this.splitLeft.Size = new System.Drawing.Size(661, 421);
+            this.splitLeft.SplitterDistance = 200;
             this.splitLeft.TabIndex = 0;
             // 
             // splitBottom
             // 
             this.splitBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitBottom.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitBottom.Location = new System.Drawing.Point(0, 0);
             this.splitBottom.Name = "splitBottom";
             this.splitBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -77,13 +80,14 @@ namespace DXControls
             // splitBottom.Panel2
             // 
             this.splitBottom.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.splitBottom.Size = new System.Drawing.Size(554, 370);
-            this.splitBottom.SplitterDistance = 341;
+            this.splitBottom.Size = new System.Drawing.Size(457, 421);
+            this.splitBottom.SplitterDistance = 392;
             this.splitBottom.TabIndex = 0;
             // 
             // splitRight
             // 
             this.splitRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitRight.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitRight.Location = new System.Drawing.Point(0, 0);
             this.splitRight.Name = "splitRight";
             // 
@@ -94,14 +98,15 @@ namespace DXControls
             // splitRight.Panel2
             // 
             this.splitRight.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.splitRight.Size = new System.Drawing.Size(554, 341);
-            this.splitRight.SplitterDistance = 525;
+            this.splitRight.Size = new System.Drawing.Size(457, 392);
+            this.splitRight.SplitterDistance = 428;
             this.splitRight.TabIndex = 0;
             // 
             // splitTop
             // 
             this.splitTop.AccessibleName = "";
             this.splitTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTop.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitTop.Location = new System.Drawing.Point(0, 0);
             this.splitTop.Name = "splitTop";
             this.splitTop.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -113,7 +118,7 @@ namespace DXControls
             // splitTop.Panel2
             // 
             this.splitTop.Panel2.BackColor = System.Drawing.Color.Black;
-            this.splitTop.Size = new System.Drawing.Size(525, 341);
+            this.splitTop.Size = new System.Drawing.Size(428, 392);
             this.splitTop.SplitterDistance = 25;
             this.splitTop.TabIndex = 0;
             // 
@@ -125,7 +130,7 @@ namespace DXControls
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(70)))), ((int)(((byte)(90)))));
             this.Controls.Add(this.splitLeft);
             this.Name = "EditorSplitPanel";
-            this.Size = new System.Drawing.Size(583, 370);
+            this.Size = new System.Drawing.Size(661, 421);
             this.splitLeft.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitLeft)).EndInit();
             this.splitLeft.ResumeLayout(false);
@@ -143,9 +148,9 @@ namespace DXControls
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitLeft;
-        private System.Windows.Forms.SplitContainer splitBottom;
-        private System.Windows.Forms.SplitContainer splitRight;
-        private System.Windows.Forms.SplitContainer splitTop;
+        public System.Windows.Forms.SplitContainer splitLeft;
+        public System.Windows.Forms.SplitContainer splitBottom;
+        public System.Windows.Forms.SplitContainer splitRight;
+        public System.Windows.Forms.SplitContainer splitTop;
     }
 }
