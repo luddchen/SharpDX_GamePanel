@@ -10,24 +10,29 @@ namespace DXCharEditor.Controls
             InitializeComponent();
         }
 
-        protected virtual void AddNodeClick( object sender, EventArgs e )
+        protected virtual void AddNodeClick( object sender, EventArgs e ) 
         {
-            if ( this.Tree.SelectedNode != null )
+            if ( this.Tree.SelectedNode == null )
             {
-                if ( this.Tree.SelectedNode is TreeViewerNode )
-                {
-                    ( this.Tree.SelectedNode as TreeViewerNode ).AddNode(
-                        new TreeViewerNode( this.Tree.SelectedNode.Text + "." + ( this.Tree.SelectedNode as TreeViewerNode ).CumulatedChildCount ) );
-                }
+                this.Tree.Nodes.Add( new TreeViewerNode( "Node" ) );
             }
             else
-                this.Tree.Nodes.Add( new TreeViewerNode( "Pose" ) );
+            {
+                this.Tree.SelectedNode.Nodes.Add( new TreeViewerNode( "Node" ) );
+            }
         }
 
         protected virtual void RemoveNodeClick( object sender, EventArgs e )
         {
             if ( this.Tree.SelectedNode != null )
-                this.Tree.SelectedNode.Parent.Nodes.Remove( this.Tree.SelectedNode );
+                if ( this.Tree.SelectedNode.Parent != null )
+                {
+                    this.Tree.SelectedNode.Parent.Nodes.Remove( this.Tree.SelectedNode );
+                }
+                else
+                {
+                    this.Tree.Nodes.Remove( this.Tree.SelectedNode );
+                }
         }
 
         protected virtual void SearchNodeClick( object sender, EventArgs e )
@@ -96,6 +101,8 @@ namespace DXCharEditor.Controls
                 foreColor,
                 TextFormatFlags.GlyphOverhangPadding );
         }
+
+        protected virtual void DeselectButtonClick( object sender, EventArgs e ) { }
 
 
     }

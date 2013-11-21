@@ -69,6 +69,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharXML.cs" />
+    <Compile Include="Controls\NodeTreeViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PoseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PoseInfo.Designer.cs">
+      <DependentUpon>PoseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PoseTreeViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\TreeViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,12 +89,6 @@
     </Compile>
     <Compile Include="Controls\TreeViewerNode.cs" />
     <Compile Include="GameMode.cs" />
-    <Compile Include="NodeTreeView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="NodeTreeView.Designer.cs">
-      <DependentUpon>NodeTreeView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,14 +103,15 @@
     </Compile>
     <Compile Include="Game1.cs" />
     <Compile Include="PoseNode.cs" />
+    <Compile Include="PoseNodeValue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureNode.cs" />
+    <EmbeddedResource Include="Controls\PoseInfo.resx">
+      <DependentUpon>PoseInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TreeViewer.resx">
       <DependentUpon>TreeViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NodeTreeView.resx">
-      <DependentUpon>NodeTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

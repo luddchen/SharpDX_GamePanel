@@ -8,7 +8,7 @@ namespace DXCharEditor
 {
     public class Game1 : DXGame.DXGame
     {
-        private Form1 form;
+        public readonly Form1 form;
 
         public float ReferenceFactor { get; private set; }
         public Vector2 Scroll { get; private set; }
@@ -60,7 +60,7 @@ namespace DXCharEditor
             else
             {
                 this.ReferenceFactor *= reSize;
-                ( this.form.nodeTreeView1.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
+                ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
             }
         }
 
@@ -76,7 +76,7 @@ namespace DXCharEditor
                     {
                         case EditorMode.None:
                             this.Scroll += ( this.Mode.NewMousePos - this.Mode.OldMousePos );
-                            ( this.form.nodeTreeView1.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
+                            ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
                             break;
 
                         case EditorMode.Rotate:
@@ -120,7 +120,7 @@ namespace DXCharEditor
                             break;
                     }
 
-                    UpdateNodeInfo();
+                    //UpdateNodeInfo();
                 } 
             }
         }
@@ -159,8 +159,8 @@ namespace DXCharEditor
             spritebatch.End();
 
             spritebatch.Begin( spritemode: SpriteSortMode.BackToFront );
-            if ( ( this.form.nodeTreeView1.Tree.Nodes.Count > 0 ) )
-                ( this.form.nodeTreeView1.Tree.Nodes[ 0 ] as TextureNode ).Draw(spritebatch );
+            if ( ( this.form.nodeViewer.Tree.Nodes.Count > 0 ) )
+                ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Draw(spritebatch );
 
             spritebatch.End();
 

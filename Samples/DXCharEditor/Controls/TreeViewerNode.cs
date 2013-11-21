@@ -42,6 +42,15 @@ namespace DXCharEditor.Controls
             return null;
         }
 
+        public void Clear()
+        {
+            foreach ( TreeNode node in this.Nodes )
+            {
+                if ( node is TreeViewerNode ) ( node as TreeViewerNode ).Clear();
+            }
+            this.Nodes.Clear();
+        }
+
     }
 
 }

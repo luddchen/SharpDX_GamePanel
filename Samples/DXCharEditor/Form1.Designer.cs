@@ -1,4 +1,5 @@
-﻿namespace DXCharEditor
+﻿using DXCharEditor.Controls;
+namespace DXCharEditor
 {
     partial class Form1
     {
@@ -34,6 +35,8 @@
             this.fileMenuLoadItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileMenuSaveItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileMenuExitItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.poseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.poseMenuSaveValuesItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuInfoItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,14 +45,15 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
+            this.resetZoomScrollButton = new System.Windows.Forms.Button();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
+            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
+            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
+            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.resetZoomScrollButton = new System.Windows.Forms.Button();
-            this.nodeTreeView1 = new DXCharEditor.Controls.NodeTreeView();
-            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
-            this.treeViewer1 = new DXCharEditor.Controls.TreeViewer();
+            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).BeginInit();
@@ -73,6 +77,7 @@
             this.nodeSplit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.poseSplit)).BeginInit();
             this.poseSplit.Panel1.SuspendLayout();
+            this.poseSplit.Panel2.SuspendLayout();
             this.poseSplit.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +85,7 @@
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
+            this.poseMenu,
             this.helpMenu,
             this.modeBox});
             this.menu.Location = new System.Drawing.Point(0, 0);
@@ -126,6 +132,21 @@
             this.fileMenuExitItem.Size = new System.Drawing.Size(100, 22);
             this.fileMenuExitItem.Text = "Exit";
             this.fileMenuExitItem.Click += new System.EventHandler(this.exitClick);
+            // 
+            // poseMenu
+            // 
+            this.poseMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.poseMenuSaveValuesItem});
+            this.poseMenu.Name = "poseMenu";
+            this.poseMenu.Size = new System.Drawing.Size(44, 23);
+            this.poseMenu.Text = "Pose";
+            // 
+            // poseMenuSaveValuesItem
+            // 
+            this.poseMenuSaveValuesItem.Name = "poseMenuSaveValuesItem";
+            this.poseMenuSaveValuesItem.Size = new System.Drawing.Size(135, 22);
+            this.poseMenuSaveValuesItem.Text = "Save Values";
+            this.poseMenuSaveValuesItem.Click += new System.EventHandler(this.poseSaveValuesEvent);
             // 
             // helpMenu
             // 
@@ -273,56 +294,6 @@
             this.editorSplitPanel1.TopSplit.TabIndex = 0;
             this.editorSplitPanel1.TopSplitPosition = 25;
             // 
-            // nodeSplit
-            // 
-            this.nodeSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.nodeSplit.Location = new System.Drawing.Point(0, 0);
-            this.nodeSplit.Name = "nodeSplit";
-            this.nodeSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // nodeSplit.Panel1
-            // 
-            this.nodeSplit.Panel1.Controls.Add(this.nodeTreeView1);
-            this.nodeSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.nodeSplit.Panel1MinSize = 160;
-            // 
-            // nodeSplit.Panel2
-            // 
-            this.nodeSplit.Panel2.Controls.Add(this.nodeInfo1);
-            this.nodeSplit.Panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.nodeSplit.Panel2MinSize = 150;
-            this.nodeSplit.Size = new System.Drawing.Size(200, 448);
-            this.nodeSplit.SplitterDistance = 186;
-            this.nodeSplit.TabIndex = 0;
-            // 
-            // poseSplit
-            // 
-            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.poseSplit.Location = new System.Drawing.Point(0, 0);
-            this.poseSplit.Name = "poseSplit";
-            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // poseSplit.Panel1
-            // 
-            this.poseSplit.Panel1.Controls.Add(this.treeViewer1);
-            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.poseSplit.Panel1MinSize = 200;
-            this.poseSplit.Panel2MinSize = 150;
-            this.poseSplit.Size = new System.Drawing.Size(200, 418);
-            this.poseSplit.SplitterDistance = 200;
-            this.poseSplit.TabIndex = 0;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
-            // 
             // resetZoomScrollButton
             // 
             this.resetZoomScrollButton.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -335,16 +306,39 @@
             this.resetZoomScrollButton.UseVisualStyleBackColor = true;
             this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
             // 
-            // nodeTreeView1
+            // nodeSplit
             // 
-            this.nodeTreeView1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nodeTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeTreeView1.Location = new System.Drawing.Point(1, 1);
-            this.nodeTreeView1.MinimumSize = new System.Drawing.Size(160, 160);
-            this.nodeTreeView1.Name = "nodeTreeView1";
-            this.nodeTreeView1.Padding = new System.Windows.Forms.Padding(3);
-            this.nodeTreeView1.Size = new System.Drawing.Size(198, 184);
-            this.nodeTreeView1.TabIndex = 0;
+            this.nodeSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.nodeSplit.Location = new System.Drawing.Point(0, 0);
+            this.nodeSplit.Name = "nodeSplit";
+            this.nodeSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // nodeSplit.Panel1
+            // 
+            this.nodeSplit.Panel1.Controls.Add(this.nodeViewer);
+            this.nodeSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
+            this.nodeSplit.Panel1MinSize = 160;
+            // 
+            // nodeSplit.Panel2
+            // 
+            this.nodeSplit.Panel2.Controls.Add(this.nodeInfo1);
+            this.nodeSplit.Panel2.Padding = new System.Windows.Forms.Padding(1);
+            this.nodeSplit.Panel2MinSize = 150;
+            this.nodeSplit.Size = new System.Drawing.Size(200, 448);
+            this.nodeSplit.SplitterDistance = 186;
+            this.nodeSplit.TabIndex = 0;
+            // 
+            // nodeViewer
+            // 
+            this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nodeViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeViewer.Location = new System.Drawing.Point(1, 1);
+            this.nodeViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.nodeViewer.Name = "nodeViewer";
+            this.nodeViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.nodeViewer.Size = new System.Drawing.Size(198, 184);
+            this.nodeViewer.TabIndex = 0;
             // 
             // nodeInfo1
             // 
@@ -358,17 +352,57 @@
             this.nodeInfo1.Size = new System.Drawing.Size(200, 256);
             this.nodeInfo1.TabIndex = 0;
             // 
-            // treeViewer1
+            // poseSplit
             // 
-            this.treeViewer1.AutoSize = true;
-            this.treeViewer1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.treeViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewer1.Location = new System.Drawing.Point(1, 1);
-            this.treeViewer1.MinimumSize = new System.Drawing.Size(200, 200);
-            this.treeViewer1.Name = "treeViewer1";
-            this.treeViewer1.Padding = new System.Windows.Forms.Padding(2);
-            this.treeViewer1.Size = new System.Drawing.Size(200, 200);
-            this.treeViewer1.TabIndex = 0;
+            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.poseSplit.Location = new System.Drawing.Point(0, 0);
+            this.poseSplit.Name = "poseSplit";
+            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // poseSplit.Panel1
+            // 
+            this.poseSplit.Panel1.Controls.Add(this.poseViewer);
+            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
+            this.poseSplit.Panel1MinSize = 160;
+            // 
+            // poseSplit.Panel2
+            // 
+            this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
+            this.poseSplit.Panel2MinSize = 150;
+            this.poseSplit.Size = new System.Drawing.Size(200, 418);
+            this.poseSplit.SplitterDistance = 200;
+            this.poseSplit.TabIndex = 0;
+            // 
+            // poseViewer
+            // 
+            this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.poseViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseViewer.Location = new System.Drawing.Point(1, 1);
+            this.poseViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.poseViewer.Name = "poseViewer";
+            this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.poseViewer.Size = new System.Drawing.Size(198, 198);
+            this.poseViewer.TabIndex = 0;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
+            // 
+            // poseInfo1
+            // 
+            this.poseInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseInfo1.Location = new System.Drawing.Point(0, 0);
+            this.poseInfo1.Name = "poseInfo1";
+            this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
+            this.poseInfo1.SelectedNode = null;
+            this.poseInfo1.Size = new System.Drawing.Size(200, 214);
+            this.poseInfo1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -408,7 +442,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nodeSplit)).EndInit();
             this.nodeSplit.ResumeLayout(false);
             this.poseSplit.Panel1.ResumeLayout(false);
-            this.poseSplit.Panel1.PerformLayout();
+            this.poseSplit.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.poseSplit)).EndInit();
             this.poseSplit.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -432,14 +466,17 @@
         public Controls.NodeInfo nodeInfo1;
         private System.Windows.Forms.ToolStripComboBox modeBox;
         private System.Windows.Forms.SplitContainer poseSplit;
-        public Controls.NodeTreeView nodeTreeView1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuSaveItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuLoadItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuNewItem;
         private System.Windows.Forms.Button resetZoomScrollButton;
-        private Controls.TreeViewer treeViewer1;
+        public PoseTreeViewer poseViewer;
+        public NodeTreeViewer nodeViewer;
+        private System.Windows.Forms.ToolStripMenuItem poseMenu;
+        private System.Windows.Forms.ToolStripMenuItem poseMenuSaveValuesItem;
+        public PoseInfo poseInfo1;
     }
 }
 

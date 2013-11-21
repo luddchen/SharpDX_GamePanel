@@ -34,11 +34,12 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.AddButton = new System.Windows.Forms.ToolStripButton();
             this.RemoveButton = new System.Windows.Forms.ToolStripButton();
-            this.searchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.SearchButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.SearchButton = new System.Windows.Forms.ToolStripButton();
+            this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.Tree = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.DeselectButton = new System.Windows.Forms.ToolStripButton();
             this.tools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,15 +65,16 @@
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddButton,
             this.RemoveButton,
+            this.DeselectButton,
             this.toolStripSeparator1,
             this.SearchButton,
             this.searchBox});
             this.tools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.tools.Location = new System.Drawing.Point(3, 130);
+            this.tools.Location = new System.Drawing.Point(3, 139);
             this.tools.Name = "tools";
             this.tools.Padding = new System.Windows.Forms.Padding(2);
             this.tools.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tools.Size = new System.Drawing.Size(154, 27);
+            this.tools.Size = new System.Drawing.Size(189, 46);
             this.tools.TabIndex = 1;
             this.tools.Text = "tool";
             // 
@@ -96,14 +98,10 @@
             this.RemoveButton.Text = "remove node";
             this.RemoveButton.Click += new System.EventHandler(this.RemoveNodeClick);
             // 
-            // searchBox
+            // toolStripSeparator1
             // 
-            this.searchBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.searchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchBox.MaxLength = 30;
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(70, 23);
-            this.searchBox.TextChanged += new System.EventHandler(this.SearchTextChangedEvent);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
             // 
             // SearchButton
             // 
@@ -115,10 +113,14 @@
             this.SearchButton.Text = "search node";
             this.SearchButton.Click += new System.EventHandler(this.SearchNodeClick);
             // 
-            // toolStripSeparator1
+            // searchBox
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+            this.searchBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.searchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.searchBox.MaxLength = 30;
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(70, 23);
+            this.searchBox.TextChanged += new System.EventHandler(this.SearchTextChangedEvent);
             // 
             // Tree
             // 
@@ -128,7 +130,7 @@
             this.Tree.HideSelection = false;
             this.Tree.Location = new System.Drawing.Point(3, 18);
             this.Tree.Name = "Tree";
-            this.Tree.Size = new System.Drawing.Size(154, 112);
+            this.Tree.Size = new System.Drawing.Size(189, 121);
             this.Tree.TabIndex = 2;
             this.Tree.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.DrawNodeEvent);
             this.Tree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.BeforeSelectEvent);
@@ -139,6 +141,16 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // DeselectButton
+            // 
+            this.DeselectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DeselectButton.Image = ((System.Drawing.Image)(resources.GetObject("DeselectButton.Image")));
+            this.DeselectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DeselectButton.Name = "DeselectButton";
+            this.DeselectButton.Size = new System.Drawing.Size(23, 20);
+            this.DeselectButton.Text = "select nothing";
+            this.DeselectButton.Click += new System.EventHandler(this.DeselectButtonClick);
             // 
             // TreeViewer
             // 
@@ -151,7 +163,7 @@
             this.MinimumSize = new System.Drawing.Size(160, 160);
             this.Name = "TreeViewer";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(160, 160);
+            this.Size = new System.Drawing.Size(195, 188);
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
             this.ResumeLayout(false);
@@ -161,14 +173,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label InfoLabel;
-        private System.Windows.Forms.ToolStrip tools;
-        private System.Windows.Forms.ToolStripButton AddButton;
-        private System.Windows.Forms.ToolStripButton RemoveButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton SearchButton;
-        private System.Windows.Forms.ToolStripTextBox searchBox;
-        private System.Windows.Forms.TreeView Tree;
         private System.Windows.Forms.ImageList imageList1;
+        public System.Windows.Forms.TreeView Tree;
+        protected System.Windows.Forms.Label InfoLabel;
+        protected System.Windows.Forms.ToolStrip tools;
+        protected System.Windows.Forms.ToolStripButton AddButton;
+        protected System.Windows.Forms.ToolStripButton RemoveButton;
+        protected System.Windows.Forms.ToolStripButton SearchButton;
+        protected System.Windows.Forms.ToolStripTextBox searchBox;
+        private System.Windows.Forms.ToolStripButton DeselectButton;
     }
 }

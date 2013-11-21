@@ -124,30 +124,41 @@
   <data name="AddButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD8SURBVFhH7ZRNCsIwEIXfVpeKLYrn0ZW9j57Mosv+qOQm
-        dqt0UdB5NSKWtBpQBJnAR9NJpu8l6QS+bZqhN9phFmZYBylOJEwRj1LMxwZ9O+17TQ2oATWgBtTAxw3w
-        g54MRHwhohsRPxP2GeNYY+5LwNX4UIvvsBRhE2QoLYax8ICFK6cLcCu94Gpv4kd5r0jdl5jdCXdeC7if
-        oyelJFP8YqkYa8x5i98bkG2LvUiwlaeR5MKaoHjBmB1z57UAlo8PQYJIznwlok8/YR3LEblyugBr14fJ
-        HkOaEPePMsylL+Icc+V0YW+D9xtrl+UjW69XsRpQA2pADfyDAeAK5HxyjWnhORsAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEDSURBVFhH7ZRNCsIwEIXfVpfVNiieR1f1PnoyRTdKU3/o
+        TXSruCjovBpBJFYDiiAT+CCdZDovk5kgdPRyNOI1+ibHJFrgQIzFNLYYdAo03bbvDRWgAlSAClABHxfA
+        HwYSSfDUZJhJ8CPhnDauPex9CXiaEKrga4wSiyLKcSKc02a2SH0+dYCpDEJOy4Ati518l4TzSsQ1E36/
+        J+B2j0FYnMSZwc+Okjbv3hf8XgArOIgMc6a7vcTeiSg5d1cw9/rUALZPCEmGYZJjzID3RVjZVhj6fOoA
+        ezeE7gYtimDBSQqvbbiSwpTgXPP51OFeg/cHe5ftI6nXp1gFqAAVoAL+QQBwAb2+bxDHZ3U4AAAAAElF
+        TkSuQmCC
 </value>
   </data>
   <data name="RemoveButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVFhH7dSxDYAwAAPBb2GwsHLYIVUSMQA7pEdI7OCC
-        P+l7V0aSpBu2ZFxQkjGhJnsHrGT5AR3OZAw4ktFgT/a9gSTpt+ABevVUEGH7ihMAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVFhH7dSxDYAwAAPBb2GwsHLYIU2UiAHYIT1CYgcX
+        /EnfuzKSJN2wJeOCkowJNdk7YCXLD+hwJmPAkYwGe7LvDSRJvwUPkOZT8NFNloYAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="DeselectButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADUSURBVFhHxY5bEoQwCAS9/6VjwKDsJhKeZVflQxh6PDrt
+        71Uz9TWCD4tAPzG+nwFAIVgkg17OmL0ucJnEtmMbCKB2q4MGzE7zgYDb5T5khB0RQeT2B4/IcyNiEVqy
+        JjRiTSaEVCDtUnkt4tCsvxKmQg7tIVjJ8idoDoFqPv2BZTlBewhWMJVLs/5SkYqkXQqaAk3GhUVsyarw
+        CD03SyKiyC0SFnTcDvfhArPLfKBA7VQHHWzd20ACYscYXfBFMujljNkzpBAMi0A/Mb7v0ntQDOs62gnR
+        OpCaZmsfEgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="SearchButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFdSURBVFhH1ZXBcsIwDETz/7/Gj5Qbhx46Q5t2Ja+NIowt
-        h5gOb2aHWNqVTQiwvAu/AU2htlFPh7EZLKzr+gmtvBZkffVe6GnKMGzwpbt3gO/H5qDd2M2/OT+MzUPD
-        lHANdTjY2iBlozAl5N+5djvQWpCSUQg1y2fJGUpqxWBEkWdHSlSXbGQ8oZ1BGFVkadRETTj1mVkltcZg
-        VMG8VUpUk3yAcvtTeR8cofNkSTVRkyWV98ERwkWWVJMpBxi+A/KZMXvIAcD73YHdvwEZRhXMs39UTbKJ
-        0YR2BmFUkaVRFzXi1Jt/v9SKwYiCOeHfgEw2c8QN7XagdYOUqTAlVEMdDraqSNsoTAkdgZ0HhSkh/0w8
-        Ar4PXt5h50FhNkFscIVOmHfBq3xd5fUk195bw3nC+GBYNZxnCB+uKVNqNWwfmkbZpIbpT+XhIUxvOneH
-        sDXoJfhNs17Kv27eYFn+AH/9CavIUW9fAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFeSURBVFhH1ZXBcoMwDET5/1/rj7Q3Dj10KKXVymtXKI4t
+        U0gnb2ZnsLQrOwSS6Vn4DugSahv1dBq7wWBZlnfRxuuN60/vFf2ZMkw2+NDdO4jvy+ZEh7Gbr5wfxuZF
+        w5RwDXU42NqBslGYEvKfXLsdaC2gZBRCzfguOUNJrRiMKHh2UKK6ZCPjCe0MwqiCpVETNcmp35hVUmsM
+        RhWZt6FENckHKLc/lY/BEToPS6qJmiypfAyOADOWVJNLDjB8B/CdMXvKAYTnuwOHfwMyjCoyz/5RNckm
+        RhPaGYRRBUujLmqUU+/+/VIrBiMKnieUqBDZzBG/aLcDrTtQpsKUUA11ONiqgrZRmBI6AztPFKaE/DNx
+        D/G98vIGO08UZhfEK7Wu64vMm+Uar+uMNa69t4bzhPHBsGo4zxA+XFOm1GrYvugyyiY1TP9S7h7C9C7n
+        5hC2JnoIftOsh/KvmzeYph+dzghbAckdawAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

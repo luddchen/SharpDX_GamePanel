@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using DXCharEditor.Controls;
+using SharpDX;
 using SharpDX.Toolkit.Graphics;
 using System;
 using System.Windows.Forms;
@@ -6,33 +7,8 @@ using System.Windows.Forms;
 namespace DXCharEditor
 {
 
-    public class TextureNode : TreeNode
+    public class TextureNode : TreeViewerNode
     {
-        public int CumulatedChildCount { get; private set; }
-
-        public void AddNode( TreeNode node )
-        {
-            this.Nodes.Add( node );
-            this.CumulatedChildCount++;
-        }
-
-        public TextureNode SearchChild( string name )
-        {
-            if ( this.Text.Contains( name ) ) return this;
-
-            foreach ( TreeNode node in this.Nodes )
-            {
-                if ( node is TextureNode )
-                {
-                    TextureNode childNode = ( node as TextureNode ).SearchChild( name );
-                    if ( childNode != null )
-                    {
-                        return childNode;
-                    }
-                }
-            }
-            return null;
-        }
 
         public System.Drawing.Image Image;
 
@@ -157,8 +133,10 @@ namespace DXCharEditor
 
         public float Layer { get; set; }
 
-        public TextureNode( string name )
-            : base( name )
+        public TextureNode( string name ) : this( name, 0 ) { }
+
+        public TextureNode( string name, int lastCount )
+            : base( name, lastCount )
         {
             this.Layer = 0.5f;
             this.center = new Vector2( .5f, .5f );
@@ -172,15 +150,6 @@ namespace DXCharEditor
             System.Reflection.PropertyInfo prop = typeof( TextureNode ).GetProperty( propertyName );
             if ( prop != null ) prop.SetValue( this, value, null );
             else Console.WriteLine( "property not found : " + propertyName );
-        }
-
-        public void Clear()
-        {
-            foreach ( TreeNode node in this.Nodes )
-            {
-                if ( node is TextureNode ) ( node as TextureNode ).Clear();
-            }
-            this.Nodes.Clear();
         }
 
         public void Update( bool updateChilds )

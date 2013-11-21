@@ -13,6 +13,8 @@ namespace DXCharEditor.Controls
             this.splitContainer1.SplitterDistance = 20;
         }
 
+        public void UpdateSelected() { this.SelectedNode = this.selectedNode; }
+
         private TextureNode selectedNode;
         public TextureNode SelectedNode 
         {

@@ -163,6 +163,8 @@ namespace DXCharEditor
         private void control_MouseLeave( object sender, EventArgs e )
         {
             this.IsCurrentlyChanging = false;
+
+            ( this.window.Control.TopLevelControl as Form1 ).nodeInfo1.UpdateSelected();
         }
 
         private void control_MouseUp( object sender, MouseEventArgs e )
