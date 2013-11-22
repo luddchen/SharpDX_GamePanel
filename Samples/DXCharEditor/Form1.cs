@@ -15,9 +15,14 @@ namespace DXCharEditor
     {
         public readonly Game1 Game;
         System.Timers.Timer timer;
+        System.Timers.Timer timer2;
 
         public Form1()
         {
+            this.Opacity = 0.0;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Enabled = false;
+
             InitializeComponent();
 
             Game = new Game1( this, this.Editor.CenterPanel );
@@ -26,18 +31,45 @@ namespace DXCharEditor
             this.timer = new System.Timers.Timer();
             this.timer.Elapsed += timer_Elapsed;
             this.timer.Enabled = false;
+            this.timer2 = new System.Timers.Timer( 10 );
+            this.timer2.Elapsed += timer2_Elapsed;
+            this.timer2.Enabled = false;
+            setOpac = OpacSet;
 
             createRootItem();
             this.nodeViewer.SelectedChanged += this.nodeInfo1.OnSelectedChanged;
             this.poseViewer.SelectedChanged += this.poseInfo1.OnSelectedChanged;
             this.poseViewer.SelectedChanged += this.nodeInfo1.OnPoseChanged;
             this.poseViewer.SelectedChanged += this.nodeViewer.OnPoseChanged;
-
-            this.modeBox.SelectedIndex = 1;
-
             this.tools.Visible = false;
+            this.Editor.BottomPanelCollapsed = true;
 
             this.Editor.CenterPanel.ClientSizeChanged += CenterPanel_ClientSizeChanged;
+            this.HandleCreated += Form1_HandleCreated;
+        }
+
+        private void Form1_HandleCreated( object sender, EventArgs e )
+        {
+            this.timer2.Enabled = true;
+        }
+
+        private void timer2_Elapsed( object sender, System.Timers.ElapsedEventArgs e )
+        {
+            Invoke( setOpac );
+        }
+
+        delegate void SetOpac();
+        SetOpac setOpac;
+
+        private void OpacSet()
+        {
+            if ( this.Opacity < 1.0 ) this.Opacity += 0.01;
+            else
+            {
+                this.timer2.Enabled = false;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                this.Enabled = true;
+            }
         }
 
         private void CenterPanel_ClientSizeChanged( object sender, EventArgs e )
@@ -129,33 +161,6 @@ namespace DXCharEditor
             }
         }
 
-        private void modeBoxSelectionChanged( object sender, EventArgs e )
-        {
-            switch ( this.modeBox.SelectedIndex )
-            {
-                case 0: SetNodeMode();
-                    break;
-                case 1: SetPoseMode();
-                    break;
-            }
-        }
-
-        private void SetNodeMode()
-        {
-            this.Editor.LeftPanelCollapsed = false;
-            this.Editor.RightPanelCollapsed = true;
-            this.Editor.TopPanelCollapsed = true;
-            this.Editor.BottomPanelCollapsed = true;
-        }
-
-        private void SetPoseMode()
-        {
-            this.Editor.LeftPanelCollapsed = false;
-            this.Editor.RightPanelCollapsed = false;
-            this.Editor.TopPanelCollapsed = true;
-            this.Editor.BottomPanelCollapsed = true;
-        }
-
         private void saveClickEvent( object sender, EventArgs e )
         {
             this.saveFileDialog1.ShowDialog();
@@ -202,6 +207,11 @@ namespace DXCharEditor
         {
             this.Game.ResetZoomScroll();
             this.nodeViewer.Root.Update( true );
+        }
+
+        private void gridShowChangeEvent( object sender, EventArgs e )
+        {
+            this.Game.DrawGrid = this.gridButton.Checked;
         }
 
     }

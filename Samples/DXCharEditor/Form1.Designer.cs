@@ -38,16 +38,17 @@ namespace DXCharEditor
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuInfoItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeBox = new System.Windows.Forms.ToolStripComboBox();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
-            this.resetZoomScrollButton = new System.Windows.Forms.Button();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.editorTools = new System.Windows.Forms.ToolStrip();
+            this.gridButton = new System.Windows.Forms.ToolStripButton();
+            this.resetZoomScrollButton = new System.Windows.Forms.ToolStripButton();
             this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
             this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
@@ -57,7 +58,6 @@ namespace DXCharEditor
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).BeginInit();
             this.editorSplitPanel1.BottomSplit.Panel1.SuspendLayout();
             this.editorSplitPanel1.BottomSplit.SuspendLayout();
-            this.editorSplitPanel1.CenterPanel.SuspendLayout();
             this.editorSplitPanel1.LeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.LeftSplit)).BeginInit();
             this.editorSplitPanel1.LeftSplit.Panel2.SuspendLayout();
@@ -66,6 +66,7 @@ namespace DXCharEditor
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.RightSplit)).BeginInit();
             this.editorSplitPanel1.RightSplit.Panel1.SuspendLayout();
             this.editorSplitPanel1.RightSplit.SuspendLayout();
+            this.editorSplitPanel1.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.TopSplit)).BeginInit();
             this.editorSplitPanel1.TopSplit.SuspendLayout();
             this.editorSplitPanel1.SuspendLayout();
@@ -77,17 +78,17 @@ namespace DXCharEditor
             this.poseSplit.Panel1.SuspendLayout();
             this.poseSplit.Panel2.SuspendLayout();
             this.poseSplit.SuspendLayout();
+            this.editorTools.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
-            this.helpMenu,
-            this.modeBox});
+            this.helpMenu});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Size = new System.Drawing.Size(889, 27);
+            this.menu.Size = new System.Drawing.Size(889, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
             // 
@@ -99,7 +100,7 @@ namespace DXCharEditor
             this.fileMenuSaveItem,
             this.fileMenuExitItem});
             this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(37, 23);
+            this.fileMenu.Size = new System.Drawing.Size(37, 20);
             this.fileMenu.Text = "File";
             // 
             // fileMenuNewItem
@@ -136,7 +137,7 @@ namespace DXCharEditor
             this.helpMenuInfoItem,
             this.testModeToolStripMenuItem});
             this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(44, 23);
+            this.helpMenu.Size = new System.Drawing.Size(44, 20);
             this.helpMenu.Text = "Help";
             // 
             // helpMenuInfoItem
@@ -152,17 +153,6 @@ namespace DXCharEditor
             this.testModeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.testModeToolStripMenuItem.Text = "TestMode";
             this.testModeToolStripMenuItem.Click += new System.EventHandler(this.testModeClick);
-            // 
-            // modeBox
-            // 
-            this.modeBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.modeBox.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.modeBox.Items.AddRange(new object[] {
-            "Node Mode",
-            "Pose Mode"});
-            this.modeBox.Name = "modeBox";
-            this.modeBox.Size = new System.Drawing.Size(121, 23);
-            this.modeBox.SelectedIndexChanged += new System.EventHandler(this.modeBoxSelectionChanged);
             // 
             // status
             // 
@@ -182,8 +172,7 @@ namespace DXCharEditor
             // 
             // tools
             // 
-            this.tools.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.tools.Location = new System.Drawing.Point(0, 27);
+            this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(889, 25);
             this.tools.TabIndex = 2;
@@ -206,15 +195,14 @@ namespace DXCharEditor
             this.editorSplitPanel1.BottomSplit.Location = new System.Drawing.Point(0, 0);
             this.editorSplitPanel1.BottomSplit.Name = "Bottom";
             this.editorSplitPanel1.BottomSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.editorSplitPanel1.BottomSplit.Size = new System.Drawing.Size(685, 448);
-            this.editorSplitPanel1.BottomSplit.SplitterDistance = 418;
+            this.editorSplitPanel1.BottomSplit.Size = new System.Drawing.Size(685, 451);
+            this.editorSplitPanel1.BottomSplit.SplitterDistance = 421;
             this.editorSplitPanel1.BottomSplit.TabIndex = 0;
-            this.editorSplitPanel1.BottomSplitPosition = 418;
+            this.editorSplitPanel1.BottomSplitPosition = 421;
             // 
             // editorSplitPanel1.Top.Panel2
             // 
             this.editorSplitPanel1.CenterPanel.BackColor = System.Drawing.Color.Black;
-            this.editorSplitPanel1.CenterPanel.Controls.Add(this.resetZoomScrollButton);
             this.editorSplitPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editorSplitPanel1.GameMode = false;
             // 
@@ -231,11 +219,11 @@ namespace DXCharEditor
             this.editorSplitPanel1.LeftSplit.Location = new System.Drawing.Point(0, 0);
             this.editorSplitPanel1.LeftSplit.Name = "Left";
             this.editorSplitPanel1.LeftSplit.Panel1MinSize = 200;
-            this.editorSplitPanel1.LeftSplit.Size = new System.Drawing.Size(889, 448);
+            this.editorSplitPanel1.LeftSplit.Size = new System.Drawing.Size(889, 451);
             this.editorSplitPanel1.LeftSplit.SplitterDistance = 200;
             this.editorSplitPanel1.LeftSplit.TabIndex = 0;
             this.editorSplitPanel1.LeftSplitPosition = 200;
-            this.editorSplitPanel1.Location = new System.Drawing.Point(0, 52);
+            this.editorSplitPanel1.Location = new System.Drawing.Point(0, 49);
             this.editorSplitPanel1.Name = "editorSplitPanel1";
             // 
             // editorSplitPanel1.Right.Panel2
@@ -251,42 +239,36 @@ namespace DXCharEditor
             this.editorSplitPanel1.RightSplit.Location = new System.Drawing.Point(0, 0);
             this.editorSplitPanel1.RightSplit.Name = "Right";
             this.editorSplitPanel1.RightSplit.Panel2MinSize = 200;
-            this.editorSplitPanel1.RightSplit.Size = new System.Drawing.Size(685, 418);
+            this.editorSplitPanel1.RightSplit.Size = new System.Drawing.Size(685, 421);
             this.editorSplitPanel1.RightSplit.SplitterDistance = 481;
             this.editorSplitPanel1.RightSplit.TabIndex = 0;
             this.editorSplitPanel1.RightSplitPosition = 481;
-            this.editorSplitPanel1.Size = new System.Drawing.Size(889, 448);
+            this.editorSplitPanel1.Size = new System.Drawing.Size(889, 451);
             this.editorSplitPanel1.TabIndex = 3;
             // 
             // editorSplitPanel1.Top.Panel1
             // 
             this.editorSplitPanel1.TopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.editorSplitPanel1.TopPanel.Controls.Add(this.editorTools);
             this.editorSplitPanel1.TopPanelCollapsed = false;
             // 
             // editorSplitPanel1.Top
             // 
             this.editorSplitPanel1.TopSplit.AccessibleName = "";
+            this.editorSplitPanel1.TopSplit.BackColor = System.Drawing.Color.Black;
             this.editorSplitPanel1.TopSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editorSplitPanel1.TopSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.editorSplitPanel1.TopSplit.IsSplitterFixed = true;
             this.editorSplitPanel1.TopSplit.Location = new System.Drawing.Point(0, 0);
+            this.editorSplitPanel1.TopSplit.Margin = new System.Windows.Forms.Padding(0);
             this.editorSplitPanel1.TopSplit.Name = "Top";
             this.editorSplitPanel1.TopSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.editorSplitPanel1.TopSplit.Size = new System.Drawing.Size(481, 418);
-            this.editorSplitPanel1.TopSplit.SplitterDistance = 25;
+            this.editorSplitPanel1.TopSplit.Panel1MinSize = 32;
+            this.editorSplitPanel1.TopSplit.Size = new System.Drawing.Size(481, 421);
+            this.editorSplitPanel1.TopSplit.SplitterDistance = 32;
+            this.editorSplitPanel1.TopSplit.SplitterWidth = 1;
             this.editorSplitPanel1.TopSplit.TabIndex = 0;
-            this.editorSplitPanel1.TopSplitPosition = 25;
-            // 
-            // resetZoomScrollButton
-            // 
-            this.resetZoomScrollButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.resetZoomScrollButton.Image = global::DXCharEditor.Properties.Resources.resetZoomScroll1;
-            this.resetZoomScrollButton.Location = new System.Drawing.Point(1, 1);
-            this.resetZoomScrollButton.Name = "resetZoomScrollButton";
-            this.resetZoomScrollButton.Size = new System.Drawing.Size(40, 40);
-            this.resetZoomScrollButton.TabIndex = 0;
-            this.resetZoomScrollButton.Text = " ";
-            this.resetZoomScrollButton.UseVisualStyleBackColor = true;
-            this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
+            this.editorSplitPanel1.TopSplitPosition = 32;
             // 
             // nodeSplit
             // 
@@ -307,7 +289,7 @@ namespace DXCharEditor
             this.nodeSplit.Panel2.Controls.Add(this.nodeInfo1);
             this.nodeSplit.Panel2.Padding = new System.Windows.Forms.Padding(1);
             this.nodeSplit.Panel2MinSize = 150;
-            this.nodeSplit.Size = new System.Drawing.Size(200, 448);
+            this.nodeSplit.Size = new System.Drawing.Size(200, 451);
             this.nodeSplit.SplitterDistance = 186;
             this.nodeSplit.TabIndex = 0;
             // 
@@ -329,7 +311,7 @@ namespace DXCharEditor
             // 
             this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
             this.poseSplit.Panel2MinSize = 150;
-            this.poseSplit.Size = new System.Drawing.Size(200, 418);
+            this.poseSplit.Size = new System.Drawing.Size(200, 421);
             this.poseSplit.SplitterDistance = 200;
             this.poseSplit.TabIndex = 0;
             // 
@@ -341,6 +323,43 @@ namespace DXCharEditor
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
+            // 
+            // editorTools
+            // 
+            this.editorTools.GripMargin = new System.Windows.Forms.Padding(0);
+            this.editorTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.editorTools.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.editorTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridButton,
+            this.resetZoomScrollButton});
+            this.editorTools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.editorTools.Location = new System.Drawing.Point(0, 0);
+            this.editorTools.Name = "editorTools";
+            this.editorTools.Padding = new System.Windows.Forms.Padding(0);
+            this.editorTools.Size = new System.Drawing.Size(481, 31);
+            this.editorTools.TabIndex = 0;
+            this.editorTools.Text = "Editor Tools";
+            // 
+            // gridButton
+            // 
+            this.gridButton.CheckOnClick = true;
+            this.gridButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.gridButton.Image = global::DXCharEditor.Properties.Resources.background;
+            this.gridButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.gridButton.Name = "gridButton";
+            this.gridButton.Size = new System.Drawing.Size(28, 28);
+            this.gridButton.Text = "showGrid";
+            this.gridButton.CheckedChanged += new System.EventHandler(this.gridShowChangeEvent);
+            // 
+            // resetZoomScrollButton
+            // 
+            this.resetZoomScrollButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.resetZoomScrollButton.Image = global::DXCharEditor.Properties.Resources.resetZoomScroll1;
+            this.resetZoomScrollButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.resetZoomScrollButton.Name = "resetZoomScrollButton";
+            this.resetZoomScrollButton.Size = new System.Drawing.Size(28, 28);
+            this.resetZoomScrollButton.Text = "reset zoom and scroll";
+            this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
             // 
             // nodeViewer
             // 
@@ -362,7 +381,7 @@ namespace DXCharEditor
             this.nodeInfo1.MinimumSize = new System.Drawing.Size(200, 150);
             this.nodeInfo1.Name = "nodeInfo1";
             this.nodeInfo1.SelectedNode = null;
-            this.nodeInfo1.Size = new System.Drawing.Size(200, 256);
+            this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
             this.nodeInfo1.TabIndex = 0;
             // 
             // poseViewer
@@ -383,7 +402,7 @@ namespace DXCharEditor
             this.poseInfo1.Name = "poseInfo1";
             this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
             this.poseInfo1.SelectedNode = null;
-            this.poseInfo1.Size = new System.Drawing.Size(200, 214);
+            this.poseInfo1.Size = new System.Drawing.Size(200, 217);
             this.poseInfo1.TabIndex = 0;
             // 
             // Form1
@@ -408,7 +427,6 @@ namespace DXCharEditor
             this.editorSplitPanel1.BottomSplit.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).EndInit();
             this.editorSplitPanel1.BottomSplit.ResumeLayout(false);
-            this.editorSplitPanel1.CenterPanel.ResumeLayout(false);
             this.editorSplitPanel1.LeftPanel.ResumeLayout(false);
             this.editorSplitPanel1.LeftSplit.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.LeftSplit)).EndInit();
@@ -417,6 +435,8 @@ namespace DXCharEditor
             this.editorSplitPanel1.RightSplit.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.RightSplit)).EndInit();
             this.editorSplitPanel1.RightSplit.ResumeLayout(false);
+            this.editorSplitPanel1.TopPanel.ResumeLayout(false);
+            this.editorSplitPanel1.TopPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.TopSplit)).EndInit();
             this.editorSplitPanel1.TopSplit.ResumeLayout(false);
             this.editorSplitPanel1.ResumeLayout(false);
@@ -429,6 +449,8 @@ namespace DXCharEditor
             this.poseSplit.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.poseSplit)).EndInit();
             this.poseSplit.ResumeLayout(false);
+            this.editorTools.ResumeLayout(false);
+            this.editorTools.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -448,17 +470,18 @@ namespace DXCharEditor
         private DXControls.EditorSplitPanel editorSplitPanel1;
         private System.Windows.Forms.SplitContainer nodeSplit;
         public Controls.NodeInfo nodeInfo1;
-        private System.Windows.Forms.ToolStripComboBox modeBox;
         private System.Windows.Forms.SplitContainer poseSplit;
         private System.Windows.Forms.ToolStripMenuItem fileMenuSaveItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuLoadItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem fileMenuNewItem;
-        private System.Windows.Forms.Button resetZoomScrollButton;
         public PoseTreeViewer poseViewer;
         public NodeTreeViewer nodeViewer;
         public PoseInfo poseInfo1;
+        private System.Windows.Forms.ToolStrip editorTools;
+        private System.Windows.Forms.ToolStripButton gridButton;
+        private System.Windows.Forms.ToolStripButton resetZoomScrollButton;
     }
 }
 

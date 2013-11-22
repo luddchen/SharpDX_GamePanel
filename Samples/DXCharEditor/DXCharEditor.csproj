@@ -110,6 +110,9 @@
     <EmbeddedResource Include="Controls\PoseInfo.resx">
       <DependentUpon>PoseInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PoseTreeViewer.resx">
+      <DependentUpon>PoseTreeViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TreeViewer.resx">
       <DependentUpon>TreeViewer.cs</DependentUpon>
     </EmbeddedResource>

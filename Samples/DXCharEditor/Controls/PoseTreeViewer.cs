@@ -16,6 +16,7 @@ namespace DXCharEditor.Controls
             this.Tree.BeforeLabelEdit += Tree_BeforeLabelEdit;
             this.Tree.AfterLabelEdit += Tree_AfterLabelEdit;
             this.DeselectButton.Enabled = false;
+            this.DeselectButton.Visible = false;
         }
 
         public bool IsLoading = false;
@@ -114,6 +115,23 @@ namespace DXCharEditor.Controls
         {
             this.Tree.SelectedNode = null;
             ( this.TopLevelControl as Form1 ).poseInfo1.SelectedNode = null;
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Tree
+            // 
+            this.Tree.LineColor = System.Drawing.Color.Black;
+            // 
+            // PoseTreeViewer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Name = "PoseTreeViewer";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
     }

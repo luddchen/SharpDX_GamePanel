@@ -14,6 +14,7 @@ namespace DXCharEditor
 
         public float ReferenceFactor { get; private set; }
         public Vector2 Scroll { get; private set; }
+        public bool DrawGrid { get; set; }
 
         public void ResetZoomScroll()
         {
@@ -170,30 +171,30 @@ namespace DXCharEditor
         protected override void Draw( XGame.XGameTime gameTime )
         {
             this.GraphicsDevice.Clear( Color.Black );
-            Vector2 bSize = this.background.Size * this.ReferenceFactor * 5;
 
-            if ( this.Window != null )
+            if ( this.DrawGrid && this.Window != null )
             {
-                RectangleF dest = 
+                float bSize = this.ReferenceLength * 4;
+                while ( bSize < 256 ) bSize *= 2;
+                while ( bSize > 512 ) bSize /= 2;
+                RectangleF dest =
                     new RectangleF(
                         this.Scroll.X + ( this.Window as DXGameWindow ).Control.ClientSize.Width / 2,
-                        this.Scroll.Y + ( this.Window as DXGameWindow ).Control.ClientSize.Height / 2, 
-                        bSize.X, 
-                        bSize.Y );
-                while ( dest.X > 0 ) dest.X -= bSize.X;
-                while ( dest.Y > 0 ) dest.Y -= bSize.Y;
+                        this.Scroll.Y + ( this.Window as DXGameWindow ).Control.ClientSize.Height / 2,
+                        bSize, bSize );
+                while ( dest.X > 0 ) dest.X -= bSize;
+                while ( dest.Y > 0 ) dest.Y -= bSize;
 
                 spritebatch.Begin();
 
-                for ( ; dest.X < ( this.Window as DXGameWindow ).Control.ClientSize.Width; dest.X += bSize.X )
+                for ( ; dest.X < ( this.Window as DXGameWindow ).Control.ClientSize.Width; dest.X += bSize )
                 {
                     RectangleF dest2 = new RectangleF( dest.X, dest.Y, dest.Width, dest.Height );
-                    for ( ; dest2.Y < ( this.Window as DXGameWindow ).Control.ClientSize.Height; dest2.Y += bSize.Y )
+                    for ( ; dest2.Y < ( this.Window as DXGameWindow ).Control.ClientSize.Height; dest2.Y += bSize )
                     {
                         spritebatch.Draw( this.background.Texture, dest2, backColor );
                     }
                 }
-
                 spritebatch.End();
             }
 
