@@ -52,14 +52,14 @@ namespace DXCharEditor
         public float NodeSize 
         {
             get { return this.nodeSize; }
-            set { this.nodeSize = value; Update( true ); }
+            set { this.nodeSize = Clamp( 0.01f, value, 100f ); Update( true ); }
         }
 
         private float aspectRatio;
         public float AspectRatio
         {
             get { return this.aspectRatio; }
-            set { this.aspectRatio = value; Update( true ); }
+            set { this.aspectRatio = Clamp( 0.01f, value, 100f ); Update( true ); }
         }
 
 
@@ -77,13 +77,13 @@ namespace DXCharEditor
         public float xLocation
         {
             get { return this.position.X; }
-            set { this.position.X = value; Update( true ); }
+            set { this.position.X = Clamp( -1000f, value, 1000f); Update( true ); }
         }
 
         public float yLocation
         {
             get { return this.position.Y; }
-            set { this.position.Y = value; Update( true ); }
+            set { this.position.Y = Clamp( -1000f, value, 1000f ); Update( true ); }
         }
 
         private Vector2 center;
@@ -96,13 +96,13 @@ namespace DXCharEditor
         public float xCenter
         {
             get { return this.center.X; }
-            set { this.center.X = value; Update( true ); }
+            set { this.center.X = Clamp( -1000f, value, 1000f ); Update( true ); }
         }
 
         public float yCenter
         {
             get { return this.center.Y; }
-            set { this.center.Y = value; Update( true ); }
+            set { this.center.Y = Clamp( -1000f, value, 1000f ); Update( true ); }
         }
 
         public Color Color = Color.White;
@@ -117,7 +117,7 @@ namespace DXCharEditor
         public float Rotation 
         {
             get { return this.rotation; }
-            set { this.rotation = value; Update( true ); }
+            set { this.rotation = RotWrap( value, (float)( 2 * Math.PI ) ); Update( true ); }
         }
 
         public float RotationDegree
@@ -131,7 +131,8 @@ namespace DXCharEditor
         private RectangleF dest;
         public RectangleF Destination { get { return this.dest; } }
 
-        public float Layer { get; set; }
+        private float layer;
+        public float Layer { get { return this.layer; } set { this.layer = Clamp( 0f, value, 1f ); } }
 
         public TextureNode( string name ) : this( name, 0 ) { }
 
@@ -150,6 +151,13 @@ namespace DXCharEditor
             System.Reflection.PropertyInfo prop = typeof( TextureNode ).GetProperty( propertyName );
             if ( prop != null ) prop.SetValue( this, value, null );
             else Console.WriteLine( "property not found : " + propertyName );
+        }
+
+        public object GetProperty( string propertyName )
+        {
+            System.Reflection.PropertyInfo prop = typeof( TextureNode ).GetProperty( propertyName );
+            if ( prop != null ) return prop.GetValue( this, null );
+            else throw new Exception( "property not found : " + propertyName );
         }
 
         public void Update( bool updateChilds )
@@ -196,7 +204,7 @@ namespace DXCharEditor
 
         public void Draw( SpriteBatch spriteBatch )
         {
-            if ( Texture != null && this.Checked )
+            if ( Texture != null )//&& this.Checked )
                 spriteBatch.Draw( this.texture, this.dest, null, this.Color, this.GlobalRotation, this.Origin, SpriteEffects.None, this.Layer );
 
             foreach ( TreeNode node in this.Nodes )
@@ -205,7 +213,26 @@ namespace DXCharEditor
 
         }
 
+        public override void Clear()
+        {
+            if ( this.Image != null ) this.Image.Dispose();
+            if ( this.texture != null ) this.texture.Dispose();
 
+            base.Clear();
+        }
+
+        public static float Clamp( float min, float value, float max )
+        {
+            return Math.Max( min, Math.Min( value, max ) );
+        }
+
+        private static float RotWrap( float value, float max )
+        {
+            float result = value;
+            while ( result >= max ) result -= max;
+            while ( result < 0 ) result += max;
+            return result;
+        }
     }
 
 }

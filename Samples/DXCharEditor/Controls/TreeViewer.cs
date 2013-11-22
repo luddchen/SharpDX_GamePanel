@@ -5,6 +5,13 @@ namespace DXCharEditor.Controls
 {
     public partial class TreeViewer : UserControl
     {
+
+        protected bool rootSelected;
+
+        public delegate void SelectedChangedEvent( object sender, TreeViewerEventArgs args );
+
+        public event SelectedChangedEvent SelectedChanged;
+
         public TreeViewer()
         {
             InitializeComponent();
@@ -64,7 +71,12 @@ namespace DXCharEditor.Controls
 
         protected virtual void AfterSelectEvent( object sender, TreeViewEventArgs e )
         {
-
+            this.rootSelected = false;
+            if ( this.Tree.Nodes.Count > 0 ) this.rootSelected = ( this.Tree.Nodes[ 0 ] == e.Node );
+            if ( this.SelectedChanged != null )
+            {
+                this.SelectedChanged( this, new TreeViewerEventArgs( e.Node, this.rootSelected ) );
+            }
         }
 
         protected virtual void BeforeSelectEvent( object sender, TreeViewCancelEventArgs e )
@@ -102,8 +114,24 @@ namespace DXCharEditor.Controls
                 TextFormatFlags.GlyphOverhangPadding );
         }
 
-        protected virtual void DeselectButtonClick( object sender, EventArgs e ) { }
-
+        protected virtual void DeselectButtonClick( object sender, EventArgs e ) 
+        {
+            this.BeforeSelectEvent( sender, new TreeViewCancelEventArgs( this.Tree.SelectedNode, false, TreeViewAction.Unknown ) );
+            this.Tree.SelectedNode = null;
+            this.AfterSelectEvent( sender, new TreeViewEventArgs( null ) );
+        }
 
     }
+
+    public class TreeViewerEventArgs : TreeViewEventArgs
+    {
+        public bool IsRoot { get; set; }
+
+        public TreeViewerEventArgs( TreeNode selected, bool isRoot ) : base( selected )
+        {
+            this.IsRoot = isRoot;
+        }
+
+    }
+
 }

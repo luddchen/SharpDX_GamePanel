@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.nodeName = new System.Windows.Forms.TextBox();
             this.parameterTablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.textureBox = new System.Windows.Forms.PictureBox();
@@ -64,10 +63,6 @@
             this.layerLabel = new System.Windows.Forms.Label();
             this.Layer = new System.Windows.Forms.NumericUpDown();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.parameterTablePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textureBox)).BeginInit();
             this.locationTablePanel.SuspendLayout();
@@ -86,31 +81,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Layer)).BeginInit();
             this.SuspendLayout();
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Maroon;
-            this.splitContainer1.Panel1.Controls.Add(this.nodeName);
-            this.splitContainer1.Panel1MinSize = 1;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.splitContainer1.Panel2.Controls.Add(this.parameterTablePanel);
-            this.splitContainer1.Size = new System.Drawing.Size(200, 150);
-            this.splitContainer1.SplitterDistance = 25;
-            this.splitContainer1.SplitterWidth = 1;
-            this.splitContainer1.TabIndex = 0;
-            // 
             // nodeName
             // 
             this.nodeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -127,7 +97,9 @@
             // 
             // parameterTablePanel
             // 
+            this.parameterTablePanel.AutoScroll = true;
             this.parameterTablePanel.AutoSize = true;
+            this.parameterTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.parameterTablePanel.ColumnCount = 1;
             this.parameterTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.parameterTablePanel.Controls.Add(this.textureBox, 0, 0);
@@ -142,8 +114,8 @@
             this.parameterTablePanel.Controls.Add(this.colorLabel, 0, 8);
             this.parameterTablePanel.Controls.Add(this.otherLabel, 0, 10);
             this.parameterTablePanel.Controls.Add(this.rotationTablePanel, 0, 11);
-            this.parameterTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.parameterTablePanel.Location = new System.Drawing.Point(0, 0);
+            this.parameterTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parameterTablePanel.Location = new System.Drawing.Point(0, 20);
             this.parameterTablePanel.Name = "parameterTablePanel";
             this.parameterTablePanel.RowCount = 12;
             this.parameterTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -158,16 +130,16 @@
             this.parameterTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.parameterTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.parameterTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.parameterTablePanel.Size = new System.Drawing.Size(183, 523);
+            this.parameterTablePanel.Size = new System.Drawing.Size(200, 130);
             this.parameterTablePanel.TabIndex = 6;
             // 
             // textureBox
             // 
             this.textureBox.BackColor = System.Drawing.Color.Gray;
             this.textureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.textureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.textureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.textureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textureBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.textureBox.Location = new System.Drawing.Point(6, 3);
             this.textureBox.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this.textureBox.MinimumSize = new System.Drawing.Size(100, 100);
@@ -206,7 +178,8 @@
             // locationTablePanel
             // 
             this.locationTablePanel.AutoSize = true;
-            this.locationTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.locationTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.locationTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.locationTablePanel.ColumnCount = 2;
             this.locationTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.locationTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -214,7 +187,7 @@
             this.locationTablePanel.Controls.Add(this.yLocationLabel, 0, 1);
             this.locationTablePanel.Controls.Add(this.yLocation, 1, 1);
             this.locationTablePanel.Controls.Add(this.xLocation, 1, 0);
-            this.locationTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.locationTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.locationTablePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.locationTablePanel.Location = new System.Drawing.Point(20, 149);
             this.locationTablePanel.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
@@ -222,7 +195,7 @@
             this.locationTablePanel.RowCount = 2;
             this.locationTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.locationTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.locationTablePanel.Size = new System.Drawing.Size(160, 50);
+            this.locationTablePanel.Size = new System.Drawing.Size(177, 47);
             this.locationTablePanel.TabIndex = 15;
             // 
             // xLocationLabel
@@ -230,7 +203,7 @@
             this.xLocationLabel.AutoSize = true;
             this.xLocationLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.xLocationLabel.ForeColor = System.Drawing.Color.White;
-            this.xLocationLabel.Location = new System.Drawing.Point(5, 2);
+            this.xLocationLabel.Location = new System.Drawing.Point(4, 1);
             this.xLocationLabel.Name = "xLocationLabel";
             this.xLocationLabel.Size = new System.Drawing.Size(14, 22);
             this.xLocationLabel.TabIndex = 8;
@@ -242,7 +215,7 @@
             this.yLocationLabel.AutoSize = true;
             this.yLocationLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.yLocationLabel.ForeColor = System.Drawing.Color.White;
-            this.yLocationLabel.Location = new System.Drawing.Point(5, 26);
+            this.yLocationLabel.Location = new System.Drawing.Point(4, 24);
             this.yLocationLabel.Name = "yLocationLabel";
             this.yLocationLabel.Size = new System.Drawing.Size(14, 22);
             this.yLocationLabel.TabIndex = 9;
@@ -260,19 +233,19 @@
             0,
             0,
             131072});
-            this.yLocation.Location = new System.Drawing.Point(84, 29);
+            this.yLocation.Location = new System.Drawing.Point(92, 27);
             this.yLocation.Maximum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             0});
             this.yLocation.Minimum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             -2147483648});
             this.yLocation.Name = "yLocation";
-            this.yLocation.Size = new System.Drawing.Size(71, 16);
+            this.yLocation.Size = new System.Drawing.Size(81, 16);
             this.yLocation.TabIndex = 11;
             this.yLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yLocation.ValueChanged += new System.EventHandler(this.NumericValueChanged);
@@ -288,19 +261,19 @@
             0,
             0,
             131072});
-            this.xLocation.Location = new System.Drawing.Point(84, 5);
+            this.xLocation.Location = new System.Drawing.Point(92, 4);
             this.xLocation.Maximum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             0});
             this.xLocation.Minimum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             -2147483648});
             this.xLocation.Name = "xLocation";
-            this.xLocation.Size = new System.Drawing.Size(71, 16);
+            this.xLocation.Size = new System.Drawing.Size(81, 16);
             this.xLocation.TabIndex = 10;
             this.xLocation.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.xLocation.ValueChanged += new System.EventHandler(this.NumericValueChanged);
@@ -309,7 +282,7 @@
             // 
             this.dimensionLabel.AutoSize = true;
             this.dimensionLabel.ForeColor = System.Drawing.Color.White;
-            this.dimensionLabel.Location = new System.Drawing.Point(3, 202);
+            this.dimensionLabel.Location = new System.Drawing.Point(3, 199);
             this.dimensionLabel.MinimumSize = new System.Drawing.Size(0, 20);
             this.dimensionLabel.Name = "dimensionLabel";
             this.dimensionLabel.Size = new System.Drawing.Size(56, 20);
@@ -321,7 +294,7 @@
             // 
             this.sizeTablePanel.AutoSize = true;
             this.sizeTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.sizeTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.sizeTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.sizeTablePanel.ColumnCount = 2;
             this.sizeTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.sizeTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -329,15 +302,15 @@
             this.sizeTablePanel.Controls.Add(this.sizeLabel, 0, 0);
             this.sizeTablePanel.Controls.Add(this.NodeSize, 1, 0);
             this.sizeTablePanel.Controls.Add(this.AspectRatio, 1, 1);
-            this.sizeTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sizeTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.sizeTablePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.sizeTablePanel.Location = new System.Drawing.Point(20, 225);
+            this.sizeTablePanel.Location = new System.Drawing.Point(20, 222);
             this.sizeTablePanel.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.sizeTablePanel.Name = "sizeTablePanel";
             this.sizeTablePanel.RowCount = 2;
             this.sizeTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.sizeTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.sizeTablePanel.Size = new System.Drawing.Size(160, 50);
+            this.sizeTablePanel.Size = new System.Drawing.Size(177, 47);
             this.sizeTablePanel.TabIndex = 13;
             // 
             // aspectLabel
@@ -345,7 +318,7 @@
             this.aspectLabel.AutoSize = true;
             this.aspectLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.aspectLabel.ForeColor = System.Drawing.Color.White;
-            this.aspectLabel.Location = new System.Drawing.Point(5, 26);
+            this.aspectLabel.Location = new System.Drawing.Point(4, 24);
             this.aspectLabel.Name = "aspectLabel";
             this.aspectLabel.Size = new System.Drawing.Size(68, 22);
             this.aspectLabel.TabIndex = 4;
@@ -357,7 +330,7 @@
             this.sizeLabel.AutoSize = true;
             this.sizeLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.sizeLabel.ForeColor = System.Drawing.Color.White;
-            this.sizeLabel.Location = new System.Drawing.Point(5, 2);
+            this.sizeLabel.Location = new System.Drawing.Point(4, 1);
             this.sizeLabel.Name = "sizeLabel";
             this.sizeLabel.Size = new System.Drawing.Size(27, 22);
             this.sizeLabel.TabIndex = 5;
@@ -371,18 +344,18 @@
             this.NodeSize.DecimalPlaces = 2;
             this.NodeSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NodeSize.Increment = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             131072});
-            this.NodeSize.Location = new System.Drawing.Point(84, 5);
-            this.NodeSize.Maximum = new decimal(new int[] {
-            10,
+            this.NodeSize.Location = new System.Drawing.Point(92, 4);
+            this.NodeSize.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
-            0});
+            131072});
             this.NodeSize.Name = "NodeSize";
-            this.NodeSize.Size = new System.Drawing.Size(71, 16);
+            this.NodeSize.Size = new System.Drawing.Size(81, 16);
             this.NodeSize.TabIndex = 6;
             this.NodeSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.NodeSize.Value = new decimal(new int[] {
@@ -403,14 +376,14 @@
             0,
             0,
             131072});
-            this.AspectRatio.Location = new System.Drawing.Point(84, 29);
-            this.AspectRatio.Maximum = new decimal(new int[] {
-            10,
+            this.AspectRatio.Location = new System.Drawing.Point(92, 27);
+            this.AspectRatio.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
-            0});
+            131072});
             this.AspectRatio.Name = "AspectRatio";
-            this.AspectRatio.Size = new System.Drawing.Size(71, 16);
+            this.AspectRatio.Size = new System.Drawing.Size(81, 16);
             this.AspectRatio.TabIndex = 7;
             this.AspectRatio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.AspectRatio.Value = new decimal(new int[] {
@@ -424,7 +397,7 @@
             // 
             this.centerLabel.AutoSize = true;
             this.centerLabel.ForeColor = System.Drawing.Color.White;
-            this.centerLabel.Location = new System.Drawing.Point(3, 278);
+            this.centerLabel.Location = new System.Drawing.Point(3, 272);
             this.centerLabel.MinimumSize = new System.Drawing.Size(0, 20);
             this.centerLabel.Name = "centerLabel";
             this.centerLabel.Size = new System.Drawing.Size(38, 20);
@@ -436,7 +409,7 @@
             // 
             this.centerTablePanel.AutoSize = true;
             this.centerTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.centerTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.centerTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.centerTablePanel.ColumnCount = 2;
             this.centerTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.centerTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -444,15 +417,15 @@
             this.centerTablePanel.Controls.Add(this.yCenterLabel, 0, 1);
             this.centerTablePanel.Controls.Add(this.xCenter, 1, 0);
             this.centerTablePanel.Controls.Add(this.yCenter, 1, 1);
-            this.centerTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.centerTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.centerTablePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.centerTablePanel.Location = new System.Drawing.Point(20, 301);
+            this.centerTablePanel.Location = new System.Drawing.Point(20, 295);
             this.centerTablePanel.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.centerTablePanel.Name = "centerTablePanel";
             this.centerTablePanel.RowCount = 2;
             this.centerTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.centerTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.centerTablePanel.Size = new System.Drawing.Size(160, 58);
+            this.centerTablePanel.Size = new System.Drawing.Size(177, 55);
             this.centerTablePanel.TabIndex = 11;
             // 
             // xCenterLabel
@@ -460,7 +433,7 @@
             this.xCenterLabel.AutoSize = true;
             this.xCenterLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.xCenterLabel.ForeColor = System.Drawing.Color.White;
-            this.xCenterLabel.Location = new System.Drawing.Point(5, 2);
+            this.xCenterLabel.Location = new System.Drawing.Point(4, 1);
             this.xCenterLabel.Name = "xCenterLabel";
             this.xCenterLabel.Size = new System.Drawing.Size(14, 26);
             this.xCenterLabel.TabIndex = 15;
@@ -472,7 +445,7 @@
             this.yCenterLabel.AutoSize = true;
             this.yCenterLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.yCenterLabel.ForeColor = System.Drawing.Color.White;
-            this.yCenterLabel.Location = new System.Drawing.Point(5, 30);
+            this.yCenterLabel.Location = new System.Drawing.Point(4, 28);
             this.yCenterLabel.Name = "yCenterLabel";
             this.yCenterLabel.Size = new System.Drawing.Size(14, 26);
             this.yCenterLabel.TabIndex = 16;
@@ -489,19 +462,19 @@
             0,
             0,
             131072});
-            this.xCenter.Location = new System.Drawing.Point(84, 5);
+            this.xCenter.Location = new System.Drawing.Point(92, 4);
             this.xCenter.Maximum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             0});
             this.xCenter.Minimum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             -2147483648});
             this.xCenter.Name = "xCenter";
-            this.xCenter.Size = new System.Drawing.Size(71, 20);
+            this.xCenter.Size = new System.Drawing.Size(81, 20);
             this.xCenter.TabIndex = 17;
             this.xCenter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.xCenter.ValueChanged += new System.EventHandler(this.NumericValueChanged);
@@ -516,28 +489,27 @@
             0,
             0,
             131072});
-            this.yCenter.Location = new System.Drawing.Point(84, 33);
+            this.yCenter.Location = new System.Drawing.Point(92, 31);
             this.yCenter.Maximum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             0});
             this.yCenter.Minimum = new decimal(new int[] {
-            10,
+            1000,
             0,
             0,
             -2147483648});
             this.yCenter.Name = "yCenter";
-            this.yCenter.Size = new System.Drawing.Size(71, 20);
+            this.yCenter.Size = new System.Drawing.Size(81, 20);
             this.yCenter.TabIndex = 18;
             this.yCenter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.yCenter.ValueChanged += new System.EventHandler(this.NumericValueChanged);
             // 
             // colorTablePanel
             // 
-            this.colorTablePanel.AutoSize = true;
             this.colorTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.colorTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.colorTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.colorTablePanel.ColumnCount = 2;
             this.colorTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.colorTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -545,16 +517,16 @@
             this.colorTablePanel.Controls.Add(this.alphaLabel, 0, 1);
             this.colorTablePanel.Controls.Add(this.colorButton, 1, 0);
             this.colorTablePanel.Controls.Add(this.colorValueLabel, 0, 0);
-            this.colorTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colorTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.colorTablePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.colorTablePanel.Location = new System.Drawing.Point(20, 385);
+            this.colorTablePanel.Location = new System.Drawing.Point(20, 376);
             this.colorTablePanel.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.colorTablePanel.Name = "colorTablePanel";
             this.colorTablePanel.RowCount = 2;
             this.colorTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.colorTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.colorTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.colorTablePanel.Size = new System.Drawing.Size(160, 57);
+            this.colorTablePanel.Size = new System.Drawing.Size(177, 57);
             this.colorTablePanel.TabIndex = 10;
             // 
             // Alpha
@@ -568,14 +540,14 @@
             0,
             0,
             131072});
-            this.Alpha.Location = new System.Drawing.Point(84, 36);
+            this.Alpha.Location = new System.Drawing.Point(92, 34);
             this.Alpha.Maximum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.Alpha.Name = "Alpha";
-            this.Alpha.Size = new System.Drawing.Size(71, 16);
+            this.Alpha.Size = new System.Drawing.Size(81, 16);
             this.Alpha.TabIndex = 13;
             this.Alpha.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Alpha.Value = new decimal(new int[] {
@@ -590,9 +562,9 @@
             this.alphaLabel.AutoSize = true;
             this.alphaLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.alphaLabel.ForeColor = System.Drawing.Color.White;
-            this.alphaLabel.Location = new System.Drawing.Point(5, 33);
+            this.alphaLabel.Location = new System.Drawing.Point(4, 31);
             this.alphaLabel.Name = "alphaLabel";
-            this.alphaLabel.Size = new System.Drawing.Size(34, 22);
+            this.alphaLabel.Size = new System.Drawing.Size(34, 25);
             this.alphaLabel.TabIndex = 14;
             this.alphaLabel.Text = "Alpha";
             this.alphaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -602,10 +574,10 @@
             this.colorButton.AutoSize = true;
             this.colorButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.colorButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.colorButton.Location = new System.Drawing.Point(84, 5);
+            this.colorButton.Location = new System.Drawing.Point(92, 4);
             this.colorButton.MinimumSize = new System.Drawing.Size(5, 5);
             this.colorButton.Name = "colorButton";
-            this.colorButton.Size = new System.Drawing.Size(71, 23);
+            this.colorButton.Size = new System.Drawing.Size(81, 23);
             this.colorButton.TabIndex = 15;
             this.colorButton.Text = " ";
             this.colorButton.UseVisualStyleBackColor = true;
@@ -616,7 +588,7 @@
             this.colorValueLabel.AutoSize = true;
             this.colorValueLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.colorValueLabel.ForeColor = System.Drawing.Color.White;
-            this.colorValueLabel.Location = new System.Drawing.Point(5, 2);
+            this.colorValueLabel.Location = new System.Drawing.Point(4, 1);
             this.colorValueLabel.Name = "colorValueLabel";
             this.colorValueLabel.Size = new System.Drawing.Size(31, 29);
             this.colorValueLabel.TabIndex = 16;
@@ -628,7 +600,7 @@
             this.colorLabel.AutoSize = true;
             this.colorLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.colorLabel.ForeColor = System.Drawing.Color.White;
-            this.colorLabel.Location = new System.Drawing.Point(3, 362);
+            this.colorLabel.Location = new System.Drawing.Point(3, 353);
             this.colorLabel.MinimumSize = new System.Drawing.Size(0, 20);
             this.colorLabel.Name = "colorLabel";
             this.colorLabel.Size = new System.Drawing.Size(31, 20);
@@ -641,7 +613,7 @@
             this.otherLabel.AutoSize = true;
             this.otherLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.otherLabel.ForeColor = System.Drawing.Color.White;
-            this.otherLabel.Location = new System.Drawing.Point(3, 445);
+            this.otherLabel.Location = new System.Drawing.Point(3, 436);
             this.otherLabel.MinimumSize = new System.Drawing.Size(0, 20);
             this.otherLabel.Name = "otherLabel";
             this.otherLabel.Size = new System.Drawing.Size(33, 20);
@@ -652,7 +624,7 @@
             // rotationTablePanel
             // 
             this.rotationTablePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.rotationTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.rotationTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.rotationTablePanel.ColumnCount = 2;
             this.rotationTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.rotationTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -660,13 +632,14 @@
             this.rotationTablePanel.Controls.Add(this.rotationValueLabel, 0, 0);
             this.rotationTablePanel.Controls.Add(this.layerLabel, 0, 1);
             this.rotationTablePanel.Controls.Add(this.Layer, 1, 1);
-            this.rotationTablePanel.Location = new System.Drawing.Point(20, 468);
+            this.rotationTablePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rotationTablePanel.Location = new System.Drawing.Point(20, 459);
             this.rotationTablePanel.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.rotationTablePanel.Name = "rotationTablePanel";
             this.rotationTablePanel.RowCount = 2;
             this.rotationTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.rotationTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.rotationTablePanel.Size = new System.Drawing.Size(160, 52);
+            this.rotationTablePanel.Size = new System.Drawing.Size(177, 52);
             this.rotationTablePanel.TabIndex = 20;
             // 
             // RotationDegree
@@ -674,19 +647,14 @@
             this.RotationDegree.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RotationDegree.DecimalPlaces = 2;
             this.RotationDegree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RotationDegree.Location = new System.Drawing.Point(84, 5);
+            this.RotationDegree.Location = new System.Drawing.Point(92, 4);
             this.RotationDegree.Maximum = new decimal(new int[] {
-            365,
+            360,
             0,
             0,
             0});
-            this.RotationDegree.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147483648});
             this.RotationDegree.Name = "RotationDegree";
-            this.RotationDegree.Size = new System.Drawing.Size(71, 16);
+            this.RotationDegree.Size = new System.Drawing.Size(81, 16);
             this.RotationDegree.TabIndex = 0;
             this.RotationDegree.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.RotationDegree.ValueChanged += new System.EventHandler(this.NumericValueChanged);
@@ -696,7 +664,7 @@
             this.rotationValueLabel.AutoSize = true;
             this.rotationValueLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.rotationValueLabel.ForeColor = System.Drawing.Color.White;
-            this.rotationValueLabel.Location = new System.Drawing.Point(5, 2);
+            this.rotationValueLabel.Location = new System.Drawing.Point(4, 1);
             this.rotationValueLabel.Name = "rotationValueLabel";
             this.rotationValueLabel.Size = new System.Drawing.Size(47, 22);
             this.rotationValueLabel.TabIndex = 1;
@@ -708,9 +676,9 @@
             this.layerLabel.AutoSize = true;
             this.layerLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.layerLabel.ForeColor = System.Drawing.Color.White;
-            this.layerLabel.Location = new System.Drawing.Point(5, 26);
+            this.layerLabel.Location = new System.Drawing.Point(4, 24);
             this.layerLabel.Name = "layerLabel";
-            this.layerLabel.Size = new System.Drawing.Size(33, 24);
+            this.layerLabel.Size = new System.Drawing.Size(33, 27);
             this.layerLabel.TabIndex = 2;
             this.layerLabel.Text = "Layer";
             this.layerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -724,7 +692,7 @@
             0,
             0,
             131072});
-            this.Layer.Location = new System.Drawing.Point(84, 29);
+            this.Layer.Location = new System.Drawing.Point(92, 27);
             this.Layer.Maximum = new decimal(new int[] {
             1,
             0,
@@ -745,16 +713,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.parameterTablePanel);
+            this.Controls.Add(this.nodeName);
             this.MinimumSize = new System.Drawing.Size(200, 150);
             this.Name = "NodeInfo";
             this.Size = new System.Drawing.Size(200, 150);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.parameterTablePanel.ResumeLayout(false);
             this.parameterTablePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textureBox)).EndInit();
@@ -778,12 +741,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.RotationDegree)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Layer)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TableLayoutPanel parameterTablePanel;
         private System.Windows.Forms.Label colorLabel;
         private System.Windows.Forms.TableLayoutPanel colorTablePanel;

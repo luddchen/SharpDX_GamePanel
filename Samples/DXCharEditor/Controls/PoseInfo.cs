@@ -5,8 +5,16 @@ namespace DXCharEditor.Controls
 {
     public partial class PoseInfo : UserControl
     {
-        private PoseNode selectedNode;
-        public PoseNode SelectedNode
+        private bool selectedIsRoot;
+
+        public void OnSelectedChanged( object sender, DXCharEditor.Controls.TreeViewerEventArgs args )
+        {
+            this.selectedIsRoot = args.IsRoot;
+            this.SelectedNode = args.Node as Pose;
+        }
+
+        private Pose selectedNode;
+        public Pose SelectedNode
         {
             get { return this.selectedNode; }
             set
@@ -14,7 +22,6 @@ namespace DXCharEditor.Controls
                 this.selectedNode = value;
                 if ( value != null )
                 {
-                    CalculateDifferentNodeCount();
                     this.nameBox.Text = value.Text;
                     this.poseMode.Checked = value.Mode == PoseMode.Collection;
                 }
@@ -24,20 +31,6 @@ namespace DXCharEditor.Controls
                     this.poseMode.Checked = false;
                 }
             }
-        }
-
-        private void CalculateDifferentNodeCount()
-        {
-            int count = 0;
-            for ( int i = 0; i < this.selectedNode.NodeValues.Count; i++ )
-            {
-                if ( (float)this.selectedNode.NodeValues[ i ].Properties[ "Rotation" ] 
-                    != (float)( this.TopLevelControl as Form1 ).poseViewer.BasePose.NodeValues[ i ].Properties[ "Rotation" ] )
-                {
-                    ++count;
-                }
-            }
-            Console.WriteLine( count );
         }
 
         public PoseInfo()

@@ -1,61 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
-using DXCharEditor.Controls;
-using System.Windows.Forms;
 
 namespace DXCharEditor
 {
 
-    public enum PoseMode
-    {
-        Pose,       // contains a intern ?tree? structure of changed Nodes and Values 
-        Collection  // contains via TreeNode.Nodes PoseNodes
-    }
-
-    public class PoseNode : TreeViewerNode
+    public class PoseNode
     {
 
-        public PoseMode Mode = PoseMode.Pose;
+        public TextureNode Node;
 
-        public readonly List<PoseNodeValue> NodeValues;
+        public Dictionary<string, object> Properties;
 
-        public PoseNode( string name = "Pose" )
-            : base( name )
+
+        public PoseNode( TextureNode node )
         {
-            this.NodeValues = new List<PoseNodeValue>();
+            this.Node = node;
+            this.Properties = new Dictionary<string, object>();
         }
 
-        public void InitFromRoot( TextureNode root )
+
+        public void SetProperty( string name, object value )
         {
-            this.NodeValues.Clear();
-
-            List<TextureNode> nodes = new List<TextureNode>();
-            nodes.Add( root );
-            while ( nodes.Count > 0 )
+            if ( this.Properties.ContainsKey( name ) )
             {
-                PoseNodeValue pnv = new PoseNodeValue( nodes[ 0 ] );
-                pnv.SetProperty( "Rotation", nodes[ 0 ].Rotation );
-                this.NodeValues.Add( pnv );
+                this.Properties[ name ] = value;
+            }
+            else
+            {
+                this.Properties.Add( name, value );
+            }
+        }
 
-                foreach ( TreeNode child in nodes[ 0 ].Nodes )
+        public object GetProperty( string name )
+        {
+            if ( this.Properties.ContainsKey( name ) ) return this.Properties[ name ];
+            return null;
+        }
+
+        public void InitializeNode()
+        {
+            foreach ( string name in this.Properties.Keys )
+            {
+                this.Node.SetProperty( name, this.Properties[ name ] );
+            }
+        }
+
+        public List<string> GetKeysOfDifferentValues( PoseNode poseNode )
+        {
+            List<string> keys = new List<string>();
+            if ( this.Node == poseNode.Node )
+            {
+                foreach ( string property in this.Properties.Keys )
                 {
-                    nodes.Add( child as TextureNode );
+                    if ( poseNode.Properties.ContainsKey( property ) )
+                    {
+                        if ( (float)this.Properties[ property ] != (float)poseNode.Properties[ property ] )
+                        {
+                            keys.Add( property );
+                        }
+                    }
                 }
-                nodes.RemoveAt( 0 );
             }
 
+            return keys;
         }
 
-        public void RestorePose()
+        public override bool Equals( object obj )
         {
-            foreach ( PoseNodeValue pose in this.NodeValues )
+            if ( !(obj is PoseNode) ) return false;
+            if ( this.Node != ( obj as PoseNode ).Node ) return false; 
+
+            bool equals = true;
+            foreach ( string property in this.Properties.Keys )
             {
-                pose.InitializeNode();
+                if ( ( obj as PoseNode ).Properties.ContainsKey( property ) )
+                {
+                    if ( (float)this.Properties[ property ] != (float)( obj as PoseNode ).Properties[ property ] )
+                    {
+                        equals = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    equals = false;
+                    break;
+                }
             }
+
+            return equals;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
 
+        public void Clear()
+        {
+            this.Node = null;
+            this.Properties.Clear();
+        }
     }
 
 }

@@ -34,12 +34,12 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.AddButton = new System.Windows.Forms.ToolStripButton();
             this.RemoveButton = new System.Windows.Forms.ToolStripButton();
+            this.DeselectButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.SearchButton = new System.Windows.Forms.ToolStripButton();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.Tree = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.DeselectButton = new System.Windows.Forms.ToolStripButton();
             this.tools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,6 +98,16 @@
             this.RemoveButton.Text = "remove node";
             this.RemoveButton.Click += new System.EventHandler(this.RemoveNodeClick);
             // 
+            // DeselectButton
+            // 
+            this.DeselectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DeselectButton.Image = ((System.Drawing.Image)(resources.GetObject("DeselectButton.Image")));
+            this.DeselectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DeselectButton.Name = "DeselectButton";
+            this.DeselectButton.Size = new System.Drawing.Size(23, 20);
+            this.DeselectButton.Text = "select nothing";
+            this.DeselectButton.Click += new System.EventHandler(this.DeselectButtonClick);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -142,16 +152,6 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // DeselectButton
-            // 
-            this.DeselectButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DeselectButton.Image = ((System.Drawing.Image)(resources.GetObject("DeselectButton.Image")));
-            this.DeselectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DeselectButton.Name = "DeselectButton";
-            this.DeselectButton.Size = new System.Drawing.Size(23, 20);
-            this.DeselectButton.Text = "select nothing";
-            this.DeselectButton.Click += new System.EventHandler(this.DeselectButtonClick);
-            // 
             // TreeViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,6 +182,6 @@
         protected System.Windows.Forms.ToolStripButton RemoveButton;
         protected System.Windows.Forms.ToolStripButton SearchButton;
         protected System.Windows.Forms.ToolStripTextBox searchBox;
-        private System.Windows.Forms.ToolStripButton DeselectButton;
+        protected System.Windows.Forms.ToolStripButton DeselectButton;
     }
 }

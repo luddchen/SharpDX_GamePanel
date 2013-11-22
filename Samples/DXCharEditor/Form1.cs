@@ -28,19 +28,28 @@ namespace DXCharEditor
             this.timer.Enabled = false;
 
             createRootItem();
-            this.nodeViewer.Tree.AfterSelect += NodeTree_AfterSelect;
-            this.poseViewer.Tree.AfterSelect += PoseTreeAfterSelect;
+            this.nodeViewer.SelectedChanged += this.nodeInfo1.OnSelectedChanged;
+            this.poseViewer.SelectedChanged += this.poseInfo1.OnSelectedChanged;
+            this.poseViewer.SelectedChanged += this.nodeInfo1.OnPoseChanged;
+            this.poseViewer.SelectedChanged += this.nodeViewer.OnPoseChanged;
 
             this.modeBox.SelectedIndex = 1;
 
             this.tools.Visible = false;
+
+            this.Editor.CenterPanel.ClientSizeChanged += CenterPanel_ClientSizeChanged;
+        }
+
+        private void CenterPanel_ClientSizeChanged( object sender, EventArgs e )
+        {
+            resetZoomScrollClickEvent( this, EventArgs.Empty );
         }
 
         private void PoseTreeAfterSelect( object sender, TreeViewEventArgs e )
         {
-            if ( e.Node != null && e.Node is PoseNode )
+            if ( e.Node != null && e.Node is Pose )
             {
-                this.poseInfo1.SelectedNode = e.Node as PoseNode;
+                this.poseInfo1.SelectedNode = e.Node as Pose;
             }
         }
 
@@ -52,17 +61,9 @@ namespace DXCharEditor
             this.nodeViewer.Tree.SelectedNode = root;
             //this.nodeViewer.Tree.ExpandAll();
 
-            PoseNode basePose = new PoseNode( "Base" );
+            Pose basePose = new Pose( "Base" );
             this.poseViewer.Tree.Nodes.Add( basePose );
             this.poseViewer.Tree.SelectedNode = basePose;
-        }
-
-        private void NodeTree_AfterSelect( object sender, TreeViewEventArgs e )
-        {
-            if ( e.Node != null && e.Node is TextureNode )
-            {
-                this.nodeInfo1.SelectedNode = e.Node as TextureNode;
-            }
         }
 
         public DXControls.EditorSplitPanel Editor
@@ -162,7 +163,7 @@ namespace DXCharEditor
 
         private void SaveFileOkEvent( object sender, CancelEventArgs e )
         {
-            CharXML.WriteChar( this.saveFileDialog1.FileName, this.nodeViewer.Root, this.poseViewer.GetAllPoses() );
+            CharXML.WriteChar( this.saveFileDialog1.FileName, this.nodeViewer.Root, this.poseViewer.GetAllPoses(), this.poseViewer.BasePose );
             this.statusLabel.Text = Path.GetFileName( this.saveFileDialog1.FileName );
         }
 
@@ -178,6 +179,7 @@ namespace DXCharEditor
             this.nodeViewer.Tree.ExpandAll();
             this.nodeViewer.Root.Update( true );
             this.statusLabel.Text = this.openFileDialog1.SafeFileName;
+            this.nodeViewer.SelectNothing();
         }
 
         private void newClickEvent( object sender, EventArgs e )
@@ -200,14 +202,6 @@ namespace DXCharEditor
         {
             this.Game.ResetZoomScroll();
             this.nodeViewer.Root.Update( true );
-        }
-
-        private void poseSaveValuesEvent( object sender, EventArgs e )
-        {
-            if ( this.poseViewer.Tree.SelectedNode != null )
-            {
-                ( this.poseViewer.Tree.SelectedNode as PoseNode ).InitFromRoot( this.nodeViewer.Root );
-            }
         }
 
     }

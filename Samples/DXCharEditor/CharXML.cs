@@ -11,60 +11,61 @@ namespace DXCharEditor
     public class CharXML
     {
 
-        public static void WriteChar( string fileName, TextureNode root, List<PoseNode> poses )
+        public static void WriteChar( string fileName, TextureNode root, List<Pose> poseList, Pose basePose )
         {
             XmlTextWriter writer = new XmlTextWriter( fileName, null );
 
             writer.WriteStartDocument();
             writer.Formatting = Formatting.Indented;
-            writer.WriteStartElement( "Char" );
+            writer.WriteStartElement( "Char" ); // + char name ?
 
                 writer.WriteStartElement( "Nodes" );
                     WriteNode( writer, root, Path.GetFullPath(fileName) );
                 writer.WriteEndElement();
 
-                writer.WriteStartElement( "Poses" );
-                foreach ( PoseNode node in poses )
-                {
-                    writePose( writer, node, root );
-                }
-                writer.WriteEndElement();
+                //writer.WriteStartElement( "Poses" );
+                //foreach ( Pose pose in poseList ) { writePose( writer, pose, basePose, root ); }
+                //writer.WriteEndElement();
 
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Close();
         }
 
-        private static void writePose( XmlTextWriter writer, PoseNode pose, TextureNode root )
+        private static void writePose( XmlTextWriter writer, Pose pose, Pose basePose, TextureNode root )
         {
-            writer.WriteStartElement( "Pose" );
-            writer.WriteAttributeString( "name", pose.Text );
+            PoseMode poseMode = pose.Mode;
+            WriteElement( writer, "Pose", new string[] { "name", "type" }, new string[] { pose.Text, poseMode.ToString() } );
 
-            foreach ( PoseNodeValue poseNodeValue in pose.NodeValues )
+            // exclude properties for BasePose and unchanged poses
+            if ( basePose != pose )//&& basePose.CalculateDifferentNodeCounts( pose ) > 0 )
             {
-                writer.WriteStartElement( "PoseNode" );
-                writer.WriteAttributeString( "name", poseNodeValue.Node.Text );
-                string path = "";
-                TreeNode t = poseNodeValue.Node;
-                int cancelCounter = 0;
-                while ( t != root && ++cancelCounter < 100 )
+                foreach ( PoseNode poseNode in pose.PoseNodes )
                 {
-                    path = t.Parent.Nodes.IndexOf( t ) + "." + path;
-                    t = t.Parent;
-                }
-                writer.WriteAttributeString( "path", path );
-                PoseMode poseMode = pose.Mode;
-                writer.WriteAttributeString( "type", poseMode.ToString() );
+                    PoseNode baseNode = basePose.GetNode( poseNode.Node );  // check null ?
 
-                foreach ( string property in poseNodeValue.Properties.Keys )
-                {
-                    writer.WriteStartElement( "Property" );
-                    writer.WriteAttributeString( "name", property );
-                    writer.WriteAttributeString( "value", poseNodeValue.Properties[property].ToString() );
-                    writer.WriteEndElement();
-                }
+                    // save only Nodes that differ from BasePos
+                    if ( !( poseNode.Equals( baseNode ) ) )
+                    {
+                        string[] values = { poseNode.Node.Text, poseNode.Node.GetIndexPath() };
+                        WriteElement( writer, "PoseNode", new string[] { "name", "path" }, values );
 
-                writer.WriteEndElement();
+                            // save only properties that differ from BasePose
+                            foreach ( string property in poseNode.GetKeysOfDifferentValues( baseNode ) )
+                            {
+                                WriteElement( writer, "Property", new string[] { "name", "value" }, new string[] { property, poseNode.Properties[ property ].ToString() }, true );
+                            }
+
+                        writer.WriteEndElement();
+                    }
+                }
+            }
+            else// only for easy parsing -> create EndElement for Pose
+                { WriteElement( writer, "Equals", new string[] { "Pose" }, new string[] { basePose.Text }, true ); }
+
+            foreach ( TreeNode subPose in pose.Nodes )
+            {
+                writePose( writer, subPose as Pose, basePose, root );
             }
 
             writer.WriteEndElement();
@@ -72,53 +73,26 @@ namespace DXCharEditor
 
         private static void WriteNode( XmlTextWriter writer, TextureNode node, string filePath )
         {
-            writer.WriteStartElement( "Node" );
-            writer.WriteAttributeString( "name", node.Text );
+            WriteElement( writer, "Node", new string[] { "name" }, new string[] { node.Text } );
 
-            writer.WriteStartElement( "Position" );
-            writer.WriteAttributeString( "x", node.xLocation.ToString() );
-            writer.WriteAttributeString( "y", node.yLocation.ToString() );
-            writer.WriteEndElement();
+                WriteElement( writer, "Position", new string[] { "x", "y" }, new string[] { node.xLocation.ToString(), node.yLocation.ToString() }, true );
+                WriteElement( writer, "Center", new string[] { "x", "y" }, new string[] { node.xCenter.ToString(), node.yCenter.ToString() }, true );
 
-            writer.WriteStartElement( "Center" );
-            writer.WriteAttributeString( "x", node.xCenter.ToString() );
-            writer.WriteAttributeString( "y", node.yCenter.ToString() );
-            writer.WriteEndElement();
+                if ( node.Texture != null )
+                {
+                    WriteElement( writer, "Texture", new string[] { "name", "safeName" }, new string[] { GetRelativPath( node.TextureName, filePath ), node.SafeTextureName }, true );
+                }
 
-            if ( node.Texture != null )
-            {
-                writer.WriteStartElement( "Texture" );
-                writer.WriteAttributeString( "name", GetRelativPath( node.TextureName, filePath ) );
-                Console.WriteLine( node.TextureName + "  " + filePath + "  " + GetRelativPath( node.TextureName, filePath ) );
-                writer.WriteAttributeString( "safeName", node.SafeTextureName );
-                writer.WriteEndElement();
-            }
+                Color color = node.Color;
+                WriteElement( writer, "Color", new string[] { "A", "R", "G", "B" }, new string[] { color.A.ToString(), color.R.ToString(), color.G.ToString(), color.B.ToString() }, true );
+                WriteElement( writer, "Dimension", new string[] { "Size", "Aspect" }, new string[] { node.NodeSize.ToString(), node.AspectRatio.ToString() }, true );
+                WriteElement( writer, "Rotation", new string[] { "value" }, new string[] { node.Rotation.ToString() }, true );
+                WriteElement( writer, "Layer", new string[] { "value" }, new string[] { node.Layer.ToString() }, true );
 
-            writer.WriteStartElement( "Color" );
-            Color color = node.Color;
-            writer.WriteAttributeString( "A", color.A.ToString() );
-            writer.WriteAttributeString( "R", color.R.ToString() );
-            writer.WriteAttributeString( "G", color.G.ToString() );
-            writer.WriteAttributeString( "B", color.B.ToString() );
-            writer.WriteEndElement();
-
-            writer.WriteStartElement( "Dimension" );
-            writer.WriteAttributeString( "Size", node.NodeSize.ToString() );
-            writer.WriteAttributeString( "Aspect", node.AspectRatio.ToString() );
-            writer.WriteEndElement();
-
-            writer.WriteStartElement( "Rotation" );
-            writer.WriteAttributeString( "value", node.Rotation.ToString() );
-            writer.WriteEndElement();
-
-            writer.WriteStartElement( "Layer" );
-            writer.WriteAttributeString( "value", node.Layer.ToString() );
-            writer.WriteEndElement();
-
-            foreach ( TreeNode child in node.Nodes )
-            {
-                WriteNode( writer, child as TextureNode, filePath );
-            }
+                foreach ( TreeNode child in node.Nodes )
+                {
+                    WriteNode( writer, child as TextureNode, filePath );
+                }
 
             writer.WriteEndElement();
         }
@@ -127,7 +101,7 @@ namespace DXCharEditor
         public static TextureNode ReadChar( string fileName, Form1 form )
         {
             TextureNode root = null;
-
+            //Pose basePose = null;
             XmlTextReader reader = new XmlTextReader( fileName );
 
             try
@@ -136,22 +110,20 @@ namespace DXCharEditor
                 {
                     if ( reader.NodeType == XmlNodeType.Element )
                     {
-                        if ( reader.Name == "Node" )
-                        {
-                            root = ReadNode( reader, Path.GetFullPath( fileName ), form );
-                        }
+                        if ( reader.Name == "Node" ) { root = ReadNode( reader, Path.GetFullPath( fileName ), form ); }
 
-                        if ( reader.Name == "Pose" && root != null )
-                        {
-                            form.poseViewer.IsLoading = true;
+                        //if ( reader.Name == "Pose" && root != null )
+                        //{
+                        //    form.poseViewer.IsLoading = true;
 
-                            PoseNode pose = ReadPose( reader, root );
-                            form.poseViewer.Tree.Nodes.Add( pose );
-                            form.poseViewer.Tree.SelectedNode = pose;
-                            pose.RestorePose();
+                        //    Pose pose = ReadPose( reader, root, basePose );
+                        //    form.poseViewer.Tree.Nodes.Add( pose );
+                        //    pose.TreeView.SelectedNode = pose;
+                        //    pose.RestorePose();
 
-                            form.poseViewer.IsLoading = false;
-                        }
+                        //    form.poseViewer.IsLoading = false;
+                        //    if ( basePose == null ) basePose = pose;
+                        //}
                     }
                 }
 
@@ -165,9 +137,16 @@ namespace DXCharEditor
             return root;
         }
 
-        private static PoseNode ReadPose( XmlTextReader reader, TextureNode root )
+        private static Pose ReadPose( XmlTextReader reader, TextureNode root, Pose basePose )
         {
-            PoseNode pose = new PoseNode( reader.GetAttribute( 0 ) );
+            Pose pose = new Pose( reader.GetAttribute( 0 ) );
+
+            if ( basePose != null )
+            {
+                basePose.RestorePose();
+            }
+            //pose.InitFromRoot( root );  // base init all nodes
+
 
             while ( reader.Read() ) 
             {
@@ -197,23 +176,26 @@ namespace DXCharEditor
                                 }
                             }
                         }
-                        PoseNodeValue poseNode = new PoseNodeValue( node as TextureNode );
+                        PoseNode poseNode = new PoseNode( node as TextureNode );
 
                         ReadProperty( reader, poseNode );
-                        pose.NodeValues.Add( poseNode );
+                        pose.MergeAdd( poseNode );
                     }
 
-                    if ( reader.Name == "Pose" )
+                    if ( reader.Name == "Pose" )    // if Pose is collection // todo init/restore
                     {
-                        PoseNode pose2 = ReadPose( reader, root );
-                        pose.Nodes.Add( pose2 );
+                        Pose pose2 = ReadPose( reader, root, basePose );    // assume base pose has no childs
+                        pose.Nodes.Add( pose2 ); 
+                        pose.TreeView.SelectedNode = pose;
+                        pose.RestorePose();
                     }
                 }
             }
+
             return pose;
         }
 
-        private static void ReadProperty( XmlTextReader reader, PoseNodeValue poseNode )
+        private static void ReadProperty( XmlTextReader reader, PoseNode poseNode )
         {
             while ( reader.Read() )
             {
@@ -312,6 +294,7 @@ namespace DXCharEditor
             return output;
         }
 
+        #region intern help methods
 
         private static string GetRelativPath( string filePath, string appPath )
         {
@@ -342,6 +325,15 @@ namespace DXCharEditor
 
             return Path.Combine(prePath, filePathRest);
         }
+        
+        private static void WriteElement( XmlTextWriter writer, string element, string[] attr, string[] value, bool close = false )
+        {
+            writer.WriteStartElement( element );
+            for ( int index = 0; index < attr.Length && index < value.Length; index++ ) writer.WriteAttributeString( attr[index], value[index] );
+            if ( close ) writer.WriteEndElement();
+        }
+
+        #endregion
 
     }
 

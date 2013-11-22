@@ -6,10 +6,18 @@ namespace DXCharEditor.Controls
     public class NodeTreeViewer : TreeViewer
     {
 
+        private bool basePoseSelected = true;
+
         public NodeTreeViewer()
             : base()
         {
             this.InfoLabel.Text = "Node View";
+        }
+
+        public void OnPoseChanged( object sender, DXCharEditor.Controls.TreeViewerEventArgs args )
+        {
+            this.basePoseSelected = args.IsRoot;
+            CaclculateButtonVisibility();
         }
 
         public TextureNode Root
@@ -31,6 +39,7 @@ namespace DXCharEditor.Controls
                 newNode.Checked = true;
                 selected.AddNode( newNode );
                 selected.Expand();
+                newNode.Update( false );
             }
         }
 
@@ -44,17 +53,29 @@ namespace DXCharEditor.Controls
 
         protected override void AfterSelectEvent( object sender, System.Windows.Forms.TreeViewEventArgs e )
         {
-            if ( e.Node != null )
+            base.AfterSelectEvent( sender, e );
+
+            CaclculateButtonVisibility();
+        }
+
+        private void CaclculateButtonVisibility()
+        {
+            if ( this.Tree.SelectedNode != null )
             {
-                if ( e.Node.Level != 0 )
-                {
-                    this.RemoveButton.Enabled = true;
-                }
-                else
-                {
-                    this.RemoveButton.Enabled = false;
-                }
+                this.AddButton.Enabled = this.basePoseSelected;
+                this.RemoveButton.Enabled = this.basePoseSelected & !this.rootSelected;
             }
+            else
+            {
+                this.AddButton.Enabled = false;
+                this.RemoveButton.Enabled = false;
+            }
+        }
+
+        public void SelectNothing()
+        {
+            this.Tree.SelectedNode = null;
+            this.AfterSelectEvent( this, new System.Windows.Forms.TreeViewEventArgs( null ) );
         }
 
     }

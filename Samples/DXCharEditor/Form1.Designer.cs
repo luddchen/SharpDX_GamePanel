@@ -35,8 +35,6 @@ namespace DXCharEditor
             this.fileMenuLoadItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileMenuSaveItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileMenuExitItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.poseMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.poseMenuSaveValuesItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuInfoItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,12 +45,12 @@ namespace DXCharEditor
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.resetZoomScrollButton = new System.Windows.Forms.Button();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
-            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
-            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
-            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
+            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
+            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
             this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -85,7 +83,6 @@ namespace DXCharEditor
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
-            this.poseMenu,
             this.helpMenu,
             this.modeBox});
             this.menu.Location = new System.Drawing.Point(0, 0);
@@ -132,21 +129,6 @@ namespace DXCharEditor
             this.fileMenuExitItem.Size = new System.Drawing.Size(100, 22);
             this.fileMenuExitItem.Text = "Exit";
             this.fileMenuExitItem.Click += new System.EventHandler(this.exitClick);
-            // 
-            // poseMenu
-            // 
-            this.poseMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.poseMenuSaveValuesItem});
-            this.poseMenu.Name = "poseMenu";
-            this.poseMenu.Size = new System.Drawing.Size(44, 23);
-            this.poseMenu.Text = "Pose";
-            // 
-            // poseMenuSaveValuesItem
-            // 
-            this.poseMenuSaveValuesItem.Name = "poseMenuSaveValuesItem";
-            this.poseMenuSaveValuesItem.Size = new System.Drawing.Size(135, 22);
-            this.poseMenuSaveValuesItem.Text = "Save Values";
-            this.poseMenuSaveValuesItem.Click += new System.EventHandler(this.poseSaveValuesEvent);
             // 
             // helpMenu
             // 
@@ -329,6 +311,37 @@ namespace DXCharEditor
             this.nodeSplit.SplitterDistance = 186;
             this.nodeSplit.TabIndex = 0;
             // 
+            // poseSplit
+            // 
+            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.poseSplit.Location = new System.Drawing.Point(0, 0);
+            this.poseSplit.Name = "poseSplit";
+            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // poseSplit.Panel1
+            // 
+            this.poseSplit.Panel1.Controls.Add(this.poseViewer);
+            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
+            this.poseSplit.Panel1MinSize = 160;
+            // 
+            // poseSplit.Panel2
+            // 
+            this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
+            this.poseSplit.Panel2MinSize = 150;
+            this.poseSplit.Size = new System.Drawing.Size(200, 418);
+            this.poseSplit.SplitterDistance = 200;
+            this.poseSplit.TabIndex = 0;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
+            // 
             // nodeViewer
             // 
             this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -352,28 +365,6 @@ namespace DXCharEditor
             this.nodeInfo1.Size = new System.Drawing.Size(200, 256);
             this.nodeInfo1.TabIndex = 0;
             // 
-            // poseSplit
-            // 
-            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.poseSplit.Location = new System.Drawing.Point(0, 0);
-            this.poseSplit.Name = "poseSplit";
-            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // poseSplit.Panel1
-            // 
-            this.poseSplit.Panel1.Controls.Add(this.poseViewer);
-            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.poseSplit.Panel1MinSize = 160;
-            // 
-            // poseSplit.Panel2
-            // 
-            this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
-            this.poseSplit.Panel2MinSize = 150;
-            this.poseSplit.Size = new System.Drawing.Size(200, 418);
-            this.poseSplit.SplitterDistance = 200;
-            this.poseSplit.TabIndex = 0;
-            // 
             // poseViewer
             // 
             this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -384,15 +375,6 @@ namespace DXCharEditor
             this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
             this.poseViewer.Size = new System.Drawing.Size(198, 198);
             this.poseViewer.TabIndex = 0;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
             // 
             // poseInfo1
             // 
@@ -416,6 +398,8 @@ namespace DXCharEditor
             this.MainMenuStrip = this.menu;
             this.MinimumSize = new System.Drawing.Size(450, 450);
             this.Name = "Form1";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DX Char Editor";
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
@@ -474,8 +458,6 @@ namespace DXCharEditor
         private System.Windows.Forms.Button resetZoomScrollButton;
         public PoseTreeViewer poseViewer;
         public NodeTreeViewer nodeViewer;
-        private System.Windows.Forms.ToolStripMenuItem poseMenu;
-        private System.Windows.Forms.ToolStripMenuItem poseMenuSaveValuesItem;
         public PoseInfo poseInfo1;
     }
 }

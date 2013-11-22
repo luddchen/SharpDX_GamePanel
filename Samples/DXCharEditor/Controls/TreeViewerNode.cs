@@ -42,13 +42,27 @@ namespace DXCharEditor.Controls
             return null;
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             foreach ( TreeNode node in this.Nodes )
             {
                 if ( node is TreeViewerNode ) ( node as TreeViewerNode ).Clear();
             }
             this.Nodes.Clear();
+        }
+
+        public string GetIndexPath()
+        {
+            string path = "";
+            TreeNode t = this;
+            int cancelCounter = 0;
+
+            while ( t.Level > 0 && ++cancelCounter < 100 )
+            {
+                path = t.Parent.Nodes.IndexOf( t ) + ( (path.Length > 0) ? "." + path : "" );
+                t = t.Parent;
+            }
+            return path;
         }
 
     }

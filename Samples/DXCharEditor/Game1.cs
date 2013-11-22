@@ -8,6 +8,8 @@ namespace DXCharEditor
 {
     public class Game1 : DXGame.DXGame
     {
+        private TextureNode selectedNode;
+
         public readonly Form1 form;
 
         public float ReferenceFactor { get; private set; }
@@ -26,7 +28,7 @@ namespace DXCharEditor
 
         SpriteBatch spritebatch;
 
-        DXTexture xGameTex, centerTex, overlayTex, circleTex;
+        DXTexture xGameTex, centerTex, overlayTex, circleTex, background;
         
         public Game1( Form1 form, Control control )
             : base( control )
@@ -35,6 +37,18 @@ namespace DXCharEditor
             this.IsMouseVisible = true;
             ResetZoomScroll();
             this.Mode = new GameMode();
+            this.form.nodeViewer.SelectedChanged += nodeViewer_SelectedChanged;
+            this.form.poseViewer.SelectedChanged += poseViewer_SelectedChanged;
+        }
+
+        private void poseViewer_SelectedChanged( object sender, Controls.TreeViewerEventArgs args )
+        {
+            this.Mode.BasePoseSelected = args.IsRoot;
+        }
+
+        private void nodeViewer_SelectedChanged( object sender, Controls.TreeViewerEventArgs args )
+        {
+            this.selectedNode = args.Node as TextureNode;
         }
 
         protected override void BeginRun()
@@ -66,9 +80,9 @@ namespace DXCharEditor
 
         private void OnMouseMove()
         {
-            if ( this.form.nodeInfo1.SelectedNode != null )
+            if ( this.selectedNode != null )
             {
-                TextureNode n = this.form.nodeInfo1.SelectedNode;
+                TextureNode n = this.selectedNode;
 
                 if ( this.Mode.CurrentlyChanging( n ) )
                 {
@@ -132,6 +146,7 @@ namespace DXCharEditor
             this.centerTex = new DXTexture( Content.Load<Texture2D>( "Content//center.png" ) );
             this.overlayTex = new DXTexture( Content.Load<Texture2D>( "Content//overlay.png" ) );
             this.circleTex = new DXTexture( Content.Load<Texture2D>( "Content//OuterCircle.png" ) );
+            this.background = new DXTexture( Content.Load<Texture2D>( "Content//background.png" ) );
         }
 
         protected override void UnloadContent()
@@ -146,27 +161,49 @@ namespace DXCharEditor
 
         public float ReferenceLength 
         { 
-            get { return this.Window.Height * this.ReferenceFactor; } 
+            get 
+            { 
+                return (this.Window != null) ? this.Window.Height * this.ReferenceFactor : 1f; 
+            } 
         }
 
         protected override void Draw( XGame.XGameTime gameTime )
         {
             this.GraphicsDevice.Clear( Color.Black );
-            Rectangle dest = new Rectangle( 0, 0, (int)this.Window.Width, (int)this.Window.Height );
+            Vector2 bSize = this.background.Size * this.ReferenceFactor * 5;
 
-            spritebatch.Begin();
-            spritebatch.Draw( this.xGameTex.Texture, dest, backColor );
-            spritebatch.End();
+            if ( this.Window != null )
+            {
+                RectangleF dest = 
+                    new RectangleF(
+                        this.Scroll.X + ( this.Window as DXGameWindow ).Control.ClientSize.Width / 2,
+                        this.Scroll.Y + ( this.Window as DXGameWindow ).Control.ClientSize.Height / 2, 
+                        bSize.X, 
+                        bSize.Y );
+                while ( dest.X > 0 ) dest.X -= bSize.X;
+                while ( dest.Y > 0 ) dest.Y -= bSize.Y;
+
+                spritebatch.Begin();
+
+                for ( ; dest.X < ( this.Window as DXGameWindow ).Control.ClientSize.Width; dest.X += bSize.X )
+                {
+                    RectangleF dest2 = new RectangleF( dest.X, dest.Y, dest.Width, dest.Height );
+                    for ( ; dest2.Y < ( this.Window as DXGameWindow ).Control.ClientSize.Height; dest2.Y += bSize.Y )
+                    {
+                        spritebatch.Draw( this.background.Texture, dest2, backColor );
+                    }
+                }
+
+                spritebatch.End();
+            }
 
             spritebatch.Begin( spritemode: SpriteSortMode.BackToFront );
-            if ( ( this.form.nodeViewer.Tree.Nodes.Count > 0 ) )
-                ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Draw(spritebatch );
-
+            if ( ( this.form.nodeViewer.Tree.Nodes.Count > 0 ) ) this.form.nodeViewer.Root.Draw(spritebatch );
             spritebatch.End();
 
-            if ( this.form.nodeInfo1.SelectedNode != null )
+            if ( this.selectedNode != null )
             {
-                TextureNode n = this.form.nodeInfo1.SelectedNode;
+                TextureNode n = this.selectedNode;
 
                 spritebatch.Begin();
 
@@ -181,14 +218,18 @@ namespace DXCharEditor
                     spritebatch.Draw( n.Texture, n.Destination, null, c, n.GlobalRotation, n.Origin, SpriteEffects.None, 0.5f );
                 }
 
-                spritebatch.Draw(
-                    this.centerTex.Texture, n.GlobalPosition, null, Color.Red, 0,
-                    this.centerTex.Origin, 0.25f, SpriteEffects.None, 0f );
+                if ( this.Mode.BasePoseSelected )
+                {
+                    spritebatch.Draw(
+                        this.centerTex.Texture, n.GlobalPosition, null, Color.Red, 0,
+                        this.centerTex.Origin, 0.25f, SpriteEffects.None, 0f );
+                }
 
                 Vector4 point;
-
-                foreach ( Vector2 vec in GameMode.ModePoints )
+                Vector2 vec;
+                for ( int index = 0; index < ( this.Mode.BasePoseSelected ? 8 : 4 ); index++ )
                 {
+                    vec = GameMode.ModePoints[index];
                     point = Vector2.Transform( new Vector2( vec.X * n.Destination.Width, vec.Y * n.Destination.Height ), n.Transform );
                     spritebatch.Draw( 
                         this.circleTex.Texture, new Vector2( point.X, point.Y ), null, Color.White, 

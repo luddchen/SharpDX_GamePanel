@@ -52,6 +52,17 @@ namespace DXCharEditor
 
         public bool IsCurrentlyChanging { get; private set; }
 
+        private bool basePoseSelected;
+        public bool BasePoseSelected
+        {
+            get { return this.basePoseSelected; }
+            set
+            {
+                this.basePoseSelected = value;
+                SetMode( EditorSubMode.None );
+            }
+        }
+
         public bool TextureHovered { get; private set; }
 
         public Vector2 OldMousePos { get; private set; }
@@ -86,19 +97,19 @@ namespace DXCharEditor
                 switch ( newMode )
                 {
                     case EditorSubMode.PosMoveMode:
-                        SetMode( EditorMode.Move, newMode, positionCursor );
+                        if ( this.basePoseSelected ) SetMode( EditorMode.Move, newMode, positionCursor );
                         break;
                     case EditorSubMode.RotateMode:
                         SetMode( EditorMode.Rotate, newMode, rotCursor );
                         break;
                     case EditorSubMode.CenterMoveMode:
-                        SetMode( EditorMode.Move, newMode, centerCursor );
+                        if ( this.basePoseSelected ) SetMode( EditorMode.Move, newMode, centerCursor );
                         break;
                     case EditorSubMode.AspectXMode:
-                        SetMode( EditorMode.Aspect, newMode, aspectXCursor );
+                        if ( this.basePoseSelected ) SetMode( EditorMode.Aspect, newMode, aspectXCursor );
                         break;
                     case EditorSubMode.AspectYMode:
-                        SetMode( EditorMode.Aspect, newMode, aspectYCursor );
+                        if ( this.basePoseSelected ) SetMode( EditorMode.Aspect, newMode, aspectYCursor );
                         break;
                     case EditorSubMode.None:
                         SetMode( EditorMode.None, newMode, Cursors.Default );
@@ -120,7 +131,7 @@ namespace DXCharEditor
                 && mousePos.Y > -radius && mousePos.Y < textureSize.Y + radius )
             {
                 int index = 0;
-                for ( ; index < GameMode.ModePoints.Length; ++index )
+                for ( ; index < (this.basePoseSelected ? GameMode.ModePoints.Length : 4); ++index )
                 {
                     if ( Vector2.Distance( mousePos, textureSize * GameMode.ModePoints[ index ] ) < radius ) break;
                 }

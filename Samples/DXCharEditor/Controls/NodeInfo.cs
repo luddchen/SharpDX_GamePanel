@@ -7,13 +7,32 @@ namespace DXCharEditor.Controls
 {
     public partial class NodeInfo : UserControl
     {
+        private bool selectedIsRoot;
+
         public NodeInfo()
         {
             InitializeComponent();
-            this.splitContainer1.SplitterDistance = 20;
         }
 
         public void UpdateSelected() { this.SelectedNode = this.selectedNode; }
+
+        public void OnSelectedChanged( object sender, DXCharEditor.Controls.TreeViewerEventArgs args )
+        {
+            this.selectedIsRoot = args.IsRoot;
+            this.SelectedNode = args.Node as TextureNode;
+        }
+
+        public void OnPoseChanged( object sender, DXCharEditor.Controls.TreeViewerEventArgs args )
+        {
+            this.locationLabel.Visible = args.IsRoot;
+            this.locationTablePanel.Visible = args.IsRoot;
+            this.centerLabel.Visible = args.IsRoot;
+            this.centerTablePanel.Visible = args.IsRoot;
+            this.textureBox.Enabled = args.IsRoot;
+            this.textureLabel.Visible = args.IsRoot;
+            this.colorLabel.Visible = args.IsRoot;
+            this.colorTablePanel.Visible = args.IsRoot;
+        }
 
         private TextureNode selectedNode;
         public TextureNode SelectedNode 
@@ -24,10 +43,10 @@ namespace DXCharEditor.Controls
                 this.selectedNode = value;
                 if ( value != null )
                 {
+                    this.parameterTablePanel.Visible = true;
                     if ( this.selectedNode.Image != null )
                     {
                         this.textureBox.BackgroundImage = this.selectedNode.Image;
-                        //this.textureBox.BackgroundImage = System.Drawing.Image.FromHbitmap( this.selectedNode.Texture.re
                     }
                     else
                     {
@@ -44,10 +63,15 @@ namespace DXCharEditor.Controls
                     this.colorButton.BackColor = Color.FromArgb( nodeColor.R, nodeColor.G, nodeColor.B );
                     this.Alpha.Value = (decimal)( (float)nodeColor.A / byte.MaxValue );
                     this.RotationDegree.Value = (decimal)this.selectedNode.RotationDegree;
-                    this.Layer.Value = (decimal)( this.selectedNode.Layer );
+                    this.Layer.Value = (decimal)this.selectedNode.Layer;
 
                     this.nodeName.Text = this.selectedNode.Text;
-                    this.nodeName.Enabled = this.selectedNode.Level > 0;
+                    this.nodeName.Enabled = !this.selectedIsRoot;
+                }
+                else
+                {
+                    this.nodeName.Text = "";
+                    this.parameterTablePanel.Visible = false;
                 }
             }
         }
@@ -81,7 +105,6 @@ namespace DXCharEditor.Controls
         {
             if ( this.selectedNode != null )
             {
-                //Console.WriteLine( ( sender as Control ).Name );  // for debug
                 this.selectedNode.SetProperty( ( sender as Control ).Name, (float)( sender as NumericUpDown ).Value );
             }
         }
@@ -111,8 +134,7 @@ namespace DXCharEditor.Controls
                     this.selectedNode.Texture = tex;
                     this.selectedNode.TextureName = this.openFileDialog1.FileName;
                     this.selectedNode.SafeTextureName = this.openFileDialog1.SafeFileName;
-                    //update
-                    this.SelectedNode = this.selectedNode;
+                    this.UpdateSelected();
                 }
             }
         }
