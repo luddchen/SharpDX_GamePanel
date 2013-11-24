@@ -19,14 +19,7 @@ namespace DXCharEditor.Controls
 
         protected virtual void AddNodeClick( object sender, EventArgs e ) 
         {
-            if ( this.Tree.SelectedNode == null )
-            {
-                this.Tree.Nodes.Add( new TreeViewerNode( "Node" ) );
-            }
-            else
-            {
-                this.Tree.SelectedNode.Nodes.Add( new TreeViewerNode( "Node" ) );
-            }
+            this.Tree.ExpandAll();
         }
 
         protected virtual void RemoveNodeClick( object sender, EventArgs e )
@@ -116,9 +109,37 @@ namespace DXCharEditor.Controls
 
         protected virtual void DeselectButtonClick( object sender, EventArgs e ) 
         {
-            this.BeforeSelectEvent( sender, new TreeViewCancelEventArgs( this.Tree.SelectedNode, false, TreeViewAction.Unknown ) );
-            this.Tree.SelectedNode = null;
-            this.AfterSelectEvent( sender, new TreeViewEventArgs( null ) );
+            this.Selected = null;
+        }
+
+
+        public TreeNode Selected
+        {
+            get { return this.Tree.SelectedNode; }
+            set
+            {
+                if ( value != this.Tree.SelectedNode )
+                {
+                    if ( value == null || value.TreeView == this.Tree )
+                    {
+                        this.BeforeSelectEvent( this, new TreeViewCancelEventArgs( this.Tree.SelectedNode, false, TreeViewAction.Unknown ) );
+                        this.Tree.SelectedNode = value;
+                        this.AfterSelectEvent( this, new TreeViewEventArgs( value ) );
+                    }
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            foreach ( TreeNode node in this.Tree.Nodes )
+            {
+                if ( node is TreeViewerNode )
+                {
+                    ( node as TreeViewerNode ).Clear();
+                }
+            }
+            this.Tree.Nodes.Clear();
         }
 
     }

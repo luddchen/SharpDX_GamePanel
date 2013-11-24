@@ -29,12 +29,12 @@ namespace DXCharEditor
 
         public void Create( TextureNode root, string[] properties, Pose basePose = null )
         {
+            this.ClearPoseNodes();
             this.DifferentPropertiesCount = 0;
-            foreach ( PoseNode poseNode in this.PoseNodes ) poseNode.Clear();
-            this.PoseNodes.Clear();
             List<TextureNode> nodes = new List<TextureNode>();
             nodes.Add( root );
             int baseIndex = 0;
+
             while ( nodes.Count > 0 )
             {
                 PoseNode pnv = new PoseNode( nodes[ 0 ] );
@@ -46,9 +46,13 @@ namespace DXCharEditor
                     }
                     else
                     {
-                        float val1 = (float)nodes[ 0 ].GetProperty( property );
-                        float val2 = (float)basePose.PoseNodes[ baseIndex ].Properties[ property ];
-                        if ( val1 != val2 ) pnv.SetProperty( property, val1 );
+                        if ( basePose.PoseNodes.Count > baseIndex && basePose.PoseNodes[ baseIndex ].Properties.ContainsKey( property ) )
+                        {
+                            float val1 = (float)nodes[ 0 ].GetProperty( property );
+                            float val2 = (float)basePose.PoseNodes[ baseIndex ].Properties[ property ];
+                            if ( val1 != val2 ) pnv.SetProperty( property, val1 );
+                        }
+                        else throw new IndexOutOfRangeException( "base pose is not correct initialized" );
                     }
                 }
                 if ( pnv.Properties.Count > 0 )
@@ -104,6 +108,16 @@ namespace DXCharEditor
                 if ( node == pnv.Node ) return pnv;
             }
             return null;
+        }
+
+
+        private void ClearPoseNodes() 
+        {
+            foreach ( PoseNode node in this.PoseNodes )
+            {
+                node.Clear();
+            }
+            this.PoseNodes.Clear();
         }
 
     }

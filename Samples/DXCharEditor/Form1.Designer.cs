@@ -29,6 +29,7 @@ namespace DXCharEditor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.fileMenuNewItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,16 +44,16 @@ namespace DXCharEditor
             this.tools = new System.Windows.Forms.ToolStrip();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
+            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
+            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
+            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.editorTools = new System.Windows.Forms.ToolStrip();
             this.gridButton = new System.Windows.Forms.ToolStripButton();
             this.resetZoomScrollButton = new System.Windows.Forms.ToolStripButton();
-            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
-            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
-            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
-            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).BeginInit();
@@ -293,6 +294,31 @@ namespace DXCharEditor
             this.nodeSplit.SplitterDistance = 186;
             this.nodeSplit.TabIndex = 0;
             // 
+            // nodeViewer
+            // 
+            this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nodeViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeViewer.Location = new System.Drawing.Point(1, 1);
+            this.nodeViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.nodeViewer.Name = "nodeViewer";
+            this.nodeViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.nodeViewer.Root = null;
+            this.nodeViewer.Selected = null;
+            this.nodeViewer.Size = new System.Drawing.Size(198, 184);
+            this.nodeViewer.TabIndex = 0;
+            // 
+            // nodeInfo1
+            // 
+            this.nodeInfo1.AutoSize = true;
+            this.nodeInfo1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nodeInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeInfo1.Location = new System.Drawing.Point(1, 1);
+            this.nodeInfo1.MinimumSize = new System.Drawing.Size(200, 150);
+            this.nodeInfo1.Name = "nodeInfo1";
+            this.nodeInfo1.SelectedNode = null;
+            this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
+            this.nodeInfo1.TabIndex = 0;
+            // 
             // poseSplit
             // 
             this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -315,14 +341,28 @@ namespace DXCharEditor
             this.poseSplit.SplitterDistance = 200;
             this.poseSplit.TabIndex = 0;
             // 
-            // saveFileDialog1
+            // poseViewer
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
+            this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.poseViewer.BasePose = null;
+            this.poseViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseViewer.Location = new System.Drawing.Point(1, 1);
+            this.poseViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.poseViewer.Name = "poseViewer";
+            this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.poseViewer.Poses = ((System.Collections.Generic.List<DXCharEditor.Pose>)(resources.GetObject("poseViewer.Poses")));
+            this.poseViewer.Selected = null;
+            this.poseViewer.Size = new System.Drawing.Size(198, 198);
+            this.poseViewer.TabIndex = 0;
             // 
-            // openFileDialog1
+            // poseInfo1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
+            this.poseInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseInfo1.Location = new System.Drawing.Point(0, 0);
+            this.poseInfo1.Name = "poseInfo1";
+            this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
+            this.poseInfo1.Size = new System.Drawing.Size(200, 217);
+            this.poseInfo1.TabIndex = 0;
             // 
             // editorTools
             // 
@@ -361,49 +401,18 @@ namespace DXCharEditor
             this.resetZoomScrollButton.Text = "reset zoom and scroll";
             this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
             // 
-            // nodeViewer
+            // saveFileDialog1
             // 
-            this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nodeViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeViewer.Location = new System.Drawing.Point(1, 1);
-            this.nodeViewer.MinimumSize = new System.Drawing.Size(160, 160);
-            this.nodeViewer.Name = "nodeViewer";
-            this.nodeViewer.Padding = new System.Windows.Forms.Padding(3);
-            this.nodeViewer.Size = new System.Drawing.Size(198, 184);
-            this.nodeViewer.TabIndex = 0;
+            this.saveFileDialog1.DefaultExt = "xml";
+            this.saveFileDialog1.Filter = "Chars|*.xml";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
             // 
-            // nodeInfo1
+            // openFileDialog1
             // 
-            this.nodeInfo1.AutoSize = true;
-            this.nodeInfo1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nodeInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeInfo1.Location = new System.Drawing.Point(1, 1);
-            this.nodeInfo1.MinimumSize = new System.Drawing.Size(200, 150);
-            this.nodeInfo1.Name = "nodeInfo1";
-            this.nodeInfo1.SelectedNode = null;
-            this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
-            this.nodeInfo1.TabIndex = 0;
-            // 
-            // poseViewer
-            // 
-            this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.poseViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseViewer.Location = new System.Drawing.Point(1, 1);
-            this.poseViewer.MinimumSize = new System.Drawing.Size(160, 160);
-            this.poseViewer.Name = "poseViewer";
-            this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
-            this.poseViewer.Size = new System.Drawing.Size(198, 198);
-            this.poseViewer.TabIndex = 0;
-            // 
-            // poseInfo1
-            // 
-            this.poseInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseInfo1.Location = new System.Drawing.Point(0, 0);
-            this.poseInfo1.Name = "poseInfo1";
-            this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
-            this.poseInfo1.SelectedNode = null;
-            this.poseInfo1.Size = new System.Drawing.Size(200, 217);
-            this.poseInfo1.TabIndex = 0;
+            this.openFileDialog1.DefaultExt = "xml";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Chars|*.xml";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
             // 
             // Form1
             // 

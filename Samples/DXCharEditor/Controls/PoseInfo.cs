@@ -14,7 +14,7 @@ namespace DXCharEditor.Controls
         }
 
         private Pose selectedNode;
-        public Pose SelectedNode
+        private Pose SelectedNode
         {
             get { return this.selectedNode; }
             set
@@ -24,6 +24,7 @@ namespace DXCharEditor.Controls
                 {
                     this.nameBox.Text = value.Text;
                     this.poseMode.Checked = value.Mode == PoseMode.Collection;
+                    this.poseMode.Enabled = !this.selectedIsRoot;
                 }
                 else
                 {

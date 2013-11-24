@@ -21,16 +21,44 @@ namespace DXCharEditor.Controls
 
         public bool IsLoading = false;
 
-        public Pose BasePose { get { return this.Tree.Nodes[ 0 ] as Pose; } }
-
-        public List<Pose> GetAllPoses()
-        {
-            List<Pose> poses = new List<Pose>();
-            foreach ( TreeNode node in this.Tree.Nodes )
-            {
-                poses.Add( node as Pose );
+        public Pose BasePose 
+        { 
+            get 
+            { 
+                return this.Tree.Nodes.Count > 0 ? this.Tree.Nodes[ 0 ] as Pose : null;
             }
-            return poses;
+            set
+            {
+                if ( value != null && this.Tree.Nodes.Count == 0 )
+                {
+                    this.Tree.Nodes.Add( value );
+                    this.Tree.ExpandAll();
+                }
+            }
+        }
+
+        public List<Pose> Poses
+        {
+            get
+            {
+                List<Pose> poses = new List<Pose>();
+                foreach ( TreeNode node in this.Tree.Nodes )
+                {
+                    if ( node is Pose ) poses.Add( node as Pose );
+                }
+                return poses;
+            }
+            set
+            {
+                if ( value != null )
+                {
+                    Clear();
+                    foreach ( Pose pose in value )
+                    {
+                        this.Tree.Nodes.Add( pose );
+                    }
+                }
+            }
         }
 
         private void Tree_AfterLabelEdit( object sender, System.Windows.Forms.NodeLabelEditEventArgs e )
@@ -45,18 +73,21 @@ namespace DXCharEditor.Controls
 
         protected override void AddNodeClick( object sender, EventArgs e )
         {
-            if ( this.Tree.SelectedNode != null && ( this.Tree.SelectedNode as Pose ).Mode == PoseMode.Collection )
+            if ( this.Tree.SelectedNode != null && this.Tree.SelectedNode is Pose )
             {
-                Pose n = new Pose( "Pose" );
-                this.Tree.SelectedNode.Nodes.Add( n );
-                this.Tree.SelectedNode = n;
-            }
-            else
-            {
-                string name = this.Tree.Nodes.Count == 0 ? "Base" : "Pose";
-                Pose n = new Pose( name );
-                this.Tree.Nodes.Add( n );
-                this.Tree.SelectedNode = n;
+                Pose selected = this.Tree.SelectedNode as Pose;
+                if ( selected.Mode == PoseMode.Collection )
+                {
+                    Pose newPose = new Pose( "Pose" + "." + ( selected.CumulatedChildCount + 1 ) );
+                    selected.AddNode( newPose );
+                    selected.Expand();
+                }
+                else
+                {
+                    Pose n = new Pose( this.Tree.Nodes.Count == 0 ? "Base" : "Pose" );
+                    this.Tree.Nodes.Add( n );
+                    this.Selected = n;
+                }
             }
         }
 
@@ -83,8 +114,6 @@ namespace DXCharEditor.Controls
 
                 if ( !this.IsLoading )
                 {
-                    //( e.Node as Pose ).RestorePose();
-                    //( this.TopLevelControl as Form1 ).nodeInfo1.UpdateSelected();
                     if ( this.BasePose != null ) this.BasePose.RestorePose();
                     ( e.Node as Pose ).RestorePose();
                 }
@@ -97,7 +126,6 @@ namespace DXCharEditor.Controls
             base.BeforeSelectEvent( sender, e );
             if ( this.Tree.SelectedNode != null && this.Tree.SelectedNode != e.Node && !this.IsLoading )
             {
-                //( this.Tree.SelectedNode as Pose ).InitFromRoot( ( this.TopLevelControl as Form1 ).nodeViewer.Root );
                 if ( ( this.Tree.SelectedNode as Pose ) == this.BasePose )
                 {
                     ( this.Tree.SelectedNode as Pose ).Create( 
@@ -111,28 +139,7 @@ namespace DXCharEditor.Controls
             }
         }
 
-        protected override void DeselectButtonClick( object sender, EventArgs e )
-        {
-            this.Tree.SelectedNode = null;
-            ( this.TopLevelControl as Form1 ).poseInfo1.SelectedNode = null;
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // Tree
-            // 
-            this.Tree.LineColor = System.Drawing.Color.Black;
-            // 
-            // PoseTreeViewer
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.Name = "PoseTreeViewer";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-        }
+        protected override void DeselectButtonClick( object sender, EventArgs e ) { }
 
     }
 

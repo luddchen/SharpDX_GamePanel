@@ -22,7 +22,18 @@ namespace DXCharEditor.Controls
 
         public TextureNode Root
         {
-            get { return this.Tree.Nodes[ 0 ] as TextureNode; }
+            get 
+            {
+                return this.Tree.Nodes.Count > 0 ? this.Tree.Nodes[ 0 ] as TextureNode : null;
+            }
+            set
+            {
+                if ( value != null && this.Tree.Nodes.Count == 0 )
+                {
+                    this.Tree.Nodes.Add( value );
+                    this.Tree.ExpandAll();
+                }
+            }
         }
 
         protected override void AddNodeClick( object sender, EventArgs e )
@@ -40,6 +51,7 @@ namespace DXCharEditor.Controls
                 selected.AddNode( newNode );
                 selected.Expand();
                 newNode.Update( false );
+                base.AddNodeClick( sender, e );
             }
         }
 
@@ -74,8 +86,7 @@ namespace DXCharEditor.Controls
 
         public void SelectNothing()
         {
-            this.Tree.SelectedNode = null;
-            this.AfterSelectEvent( this, new System.Windows.Forms.TreeViewEventArgs( null ) );
+            this.Selected = null;
         }
 
     }

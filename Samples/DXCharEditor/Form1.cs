@@ -77,25 +77,18 @@ namespace DXCharEditor
             resetZoomScrollClickEvent( this, EventArgs.Empty );
         }
 
-        private void PoseTreeAfterSelect( object sender, TreeViewEventArgs e )
-        {
-            if ( e.Node != null && e.Node is Pose )
-            {
-                this.poseInfo1.SelectedNode = e.Node as Pose;
-            }
-        }
-
         private void createRootItem()
         {
             TextureNode root = new TextureNode( "Root" );
             root.Checked = true;
-            this.nodeViewer.Tree.Nodes.Add( root );
-            this.nodeViewer.Tree.SelectedNode = root;
-            //this.nodeViewer.Tree.ExpandAll();
+            this.nodeViewer.Root = root;
+            this.nodeViewer.Selected = root;
 
             Pose basePose = new Pose( "Base" );
-            this.poseViewer.Tree.Nodes.Add( basePose );
-            this.poseViewer.Tree.SelectedNode = basePose;
+            this.poseViewer.BasePose = basePose;
+            this.poseViewer.Selected = basePose;
+
+            resetZoomScrollClickEvent( this, EventArgs.Empty );
         }
 
         public DXControls.EditorSplitPanel Editor
@@ -168,7 +161,8 @@ namespace DXCharEditor
 
         private void SaveFileOkEvent( object sender, CancelEventArgs e )
         {
-            CharXML.WriteChar( this.saveFileDialog1.FileName, this.nodeViewer.Root, this.poseViewer.GetAllPoses(), this.poseViewer.BasePose );
+            this.poseViewer.Selected = this.poseViewer.BasePose;
+            CharXML.WriteChar( this.saveFileDialog1.FileName, this.nodeViewer.Root, this.poseViewer.Poses, this.poseViewer.BasePose );
             this.statusLabel.Text = Path.GetFileName( this.saveFileDialog1.FileName );
         }
 
@@ -180,10 +174,18 @@ namespace DXCharEditor
         private void LoadFileOkEvent( object sender, CancelEventArgs e )
         {
             clearTree();
-            this.nodeViewer.Tree.Nodes.Add( CharXML.ReadChar( this.openFileDialog1.FileName, this ) );
-            this.nodeViewer.Tree.ExpandAll();
-            this.nodeViewer.Root.Update( true );
-            this.statusLabel.Text = this.openFileDialog1.SafeFileName;
+            TextureNode newRoot = CharXML.ReadChar( this.openFileDialog1.FileName, this );
+            if ( newRoot != null )
+            {
+                this.nodeViewer.Root = newRoot;
+                this.nodeViewer.Root.Update( true );
+                this.statusLabel.Text = this.openFileDialog1.SafeFileName;
+            }
+            else
+            {
+                clearTree();
+                createRootItem();
+            }
             this.nodeViewer.SelectNothing();
         }
 
@@ -196,11 +198,13 @@ namespace DXCharEditor
         private void clearTree()
         {
             // todo ask if sure
-            this.nodeViewer.Root.Clear();
-            this.nodeViewer.Tree.Nodes.Clear();
+            this.Game.Pause();
+            while ( this.Game.IsActive ) { }
 
-            // todo clean up node references
-            this.poseViewer.Tree.Nodes.Clear();
+            this.nodeViewer.Clear();
+            this.poseViewer.Clear();
+
+            this.Game.Pause();
         }
 
         private void resetZoomScrollClickEvent( object sender, EventArgs e )

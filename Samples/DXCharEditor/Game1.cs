@@ -75,7 +75,7 @@ namespace DXCharEditor
             else
             {
                 this.ReferenceFactor *= reSize;
-                ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
+                this.form.nodeViewer.Root.Update( true );
             }
         }
 
@@ -91,7 +91,7 @@ namespace DXCharEditor
                     {
                         case EditorMode.None:
                             this.Scroll += ( this.Mode.NewMousePos - this.Mode.OldMousePos );
-                            ( this.form.nodeViewer.Tree.Nodes[ 0 ] as TextureNode ).Update( true );
+                            this.form.nodeViewer.Root.Update( true );
                             break;
 
                         case EditorMode.Rotate:
@@ -199,7 +199,7 @@ namespace DXCharEditor
             }
 
             spritebatch.Begin( spritemode: SpriteSortMode.BackToFront );
-            if ( ( this.form.nodeViewer.Tree.Nodes.Count > 0 ) ) this.form.nodeViewer.Root.Draw(spritebatch );
+            if ( ( this.form.nodeViewer.Root != null ) ) this.form.nodeViewer.Root.Draw(spritebatch );
             spritebatch.End();
 
             if ( this.selectedNode != null )
