@@ -32,6 +32,7 @@ namespace DXCharEditor.Controls
             this.textureLabel.Visible = args.IsRoot;
             this.colorLabel.Visible = args.IsRoot;
             this.colorTablePanel.Visible = args.IsRoot;
+            UpdateSelected();
         }
 
         private TextureNode selectedNode;
@@ -127,7 +128,7 @@ namespace DXCharEditor.Controls
         {
             if ( this.selectedNode != null )
             {
-                Texture2D tex = Texture2D.Load( ( this.TopLevelControl as Form1 ).Game.GraphicsDevice, this.openFileDialog1.FileName );
+                Texture2D tex = ( this.TopLevelControl as Form1 ).Game.Content.Load<Texture2D>( this.openFileDialog1.FileName );
                 if ( tex != null )
                 {
                     this.selectedNode.Image = System.Drawing.Image.FromFile( this.openFileDialog1.FileName );

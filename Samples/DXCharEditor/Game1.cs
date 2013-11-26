@@ -16,6 +16,8 @@ namespace DXCharEditor
         public Vector2 Scroll { get; private set; }
         public bool DrawGrid { get; set; }
 
+        public EventHandler OnDraw;
+
         public void ResetZoomScroll()
         {
             this.ReferenceFactor = 0.2f;
@@ -157,7 +159,9 @@ namespace DXCharEditor
 
         public Vector2 GameCenter
         {
-            get { return new Vector2( this.Window.Width * 0.5f, this.Window.Height * 0.5f ) + this.Scroll; }
+            get {
+                return ( this.Window != null ) ? new Vector2( this.Window.Width * 0.5f, this.Window.Height * 0.5f ) + this.Scroll : Vector2.Zero;
+        }
         }
 
         public float ReferenceLength 
@@ -171,6 +175,8 @@ namespace DXCharEditor
         protected override void Draw( XGame.XGameTime gameTime )
         {
             this.GraphicsDevice.Clear( Color.Black );
+
+            if ( this.OnDraw != null ) this.OnDraw( this, EventArgs.Empty );
 
             if ( this.DrawGrid && this.Window != null )
             {

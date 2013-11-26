@@ -120,6 +120,12 @@ namespace DXCharEditor
             this.PoseNodes.Clear();
         }
 
+        public override void Clear()
+        {
+            ClearPoseNodes();
+            base.Clear();
+        }
+
     }
 
 }

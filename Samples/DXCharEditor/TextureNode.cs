@@ -216,7 +216,6 @@ namespace DXCharEditor
         public override void Clear()
         {
             if ( this.Image != null ) this.Image.Dispose();
-            if ( this.texture != null ) this.texture.Dispose();
 
             base.Clear();
         }

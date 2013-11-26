@@ -173,6 +173,7 @@ namespace DXCharEditor
 
         private void LoadFileOkEvent( object sender, CancelEventArgs e )
         {
+            this.nodeViewer.SelectNothing();
             clearTree();
             TextureNode newRoot = CharXML.ReadChar( this.openFileDialog1.FileName, this );
             if ( newRoot != null )
@@ -201,8 +202,8 @@ namespace DXCharEditor
             this.Game.Pause();
             while ( this.Game.IsActive ) { }
 
-            this.nodeViewer.Clear();
             this.poseViewer.Clear();
+            this.nodeViewer.Clear();
 
             this.Game.Pause();
         }

@@ -137,6 +137,7 @@ namespace DXCharEditor
         private static Pose ReadPose( XmlTextReader reader, TextureNode root )
         {
             Pose pose = new Pose( reader.GetAttribute( 0 ) );
+            pose.Mode = reader.GetAttribute( 1 ).Equals( PoseMode.Collection.ToString() ) ? PoseMode.Collection : PoseMode.Pose;
 
             while ( reader.Read() ) 
             {
@@ -245,7 +246,7 @@ namespace DXCharEditor
                     {
                         output.TextureName = Path.GetFullPath( Path.Combine( path, reader.GetAttribute( 0 ) ) );
                         output.SafeTextureName = reader.GetAttribute( 1 );
-                        output.Texture =  SharpDX.Toolkit.Graphics.Texture2D.Load( form.Game.GraphicsDevice, output.TextureName );
+                        output.Texture = form.Game.Content.Load<SharpDX.Toolkit.Graphics.Texture2D>( output.TextureName );
                         output.Image = System.Drawing.Image.FromFile( output.TextureName );
                         output.Checked = true;
                     }
