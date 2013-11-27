@@ -75,7 +75,7 @@ namespace DXCharEditor
             }
         }
 
-        public void MergeAdd( PoseNode poseNode )
+        public void MergeAdd( PoseNode poseNode, bool deepCopy = false )
         {
             PoseNode target = poseNode;
             foreach ( PoseNode node in this.PoseNodes )
@@ -89,13 +89,52 @@ namespace DXCharEditor
 
             if ( target == poseNode )
             {
-                this.PoseNodes.Add( poseNode );
+                if ( deepCopy )
+                {
+                    PoseNode newNode = new PoseNode( poseNode.Node );
+                    foreach ( string property in poseNode.Properties.Keys )
+                    {
+                        newNode.SetProperty( property, poseNode.Properties[ property ] );
+                    }
+                    this.PoseNodes.Add( newNode );
+                }
+                else
+                {
+                    this.PoseNodes.Add( poseNode );
+                }
             }
             else
             {
                 foreach ( string property in poseNode.Properties.Keys )
                 {
                     target.SetProperty( property, poseNode.Properties[ property ] );
+                }
+            }
+        }
+
+        public void ComplementaryAdd( Pose pose )
+        {
+            foreach ( PoseNode poseNode in pose.PoseNodes )
+            {
+                PoseNode ownNode = this.GetNode( poseNode.Node );
+                if ( ownNode == null )
+                {
+                    PoseNode newNode = new PoseNode( poseNode.Node );
+                    foreach ( string property in poseNode.Properties.Keys )
+                    {
+                        newNode.SetProperty( property, poseNode.Properties[ property ] );
+                    }
+                    this.PoseNodes.Add( newNode );
+                }
+                else
+                {
+                    foreach ( string property in poseNode.Properties.Keys )
+                    {
+                        if ( !ownNode.Properties.ContainsKey( property ) )
+                        {
+                            ownNode.SetProperty( property, poseNode.Properties[ property ] );
+                        }
+                    }
                 }
             }
         }
@@ -124,6 +163,45 @@ namespace DXCharEditor
         {
             ClearPoseNodes();
             base.Clear();
+        }
+
+
+        public void CreatePartialRoot()
+        {
+            ClearPoseNodes();
+            int counter = 0;
+            if ( this.TreeView != null && this.TreeView.Nodes.Count > 0 )
+            {
+                Pose basePose = ( this.TreeView.Nodes[ 0 ] ) as Pose;
+
+                foreach ( TreeNode child in this.Nodes )
+                {
+                    foreach ( PoseNode childNode in ( child as Pose ).PoseNodes )
+                    {
+                        this.MergeAdd( childNode, true );
+                    }
+                }
+
+                foreach ( PoseNode poseNode in this.PoseNodes )
+                {
+                    PoseNode baseNode = basePose.GetNode( poseNode.Node );
+                    if ( baseNode != null )
+                    {
+                        List<string> keys = new List<string>( poseNode.Properties.Keys );
+
+                        foreach ( string property in keys )
+                        {
+                            poseNode.Properties[ property ] = baseNode.Properties[ property ];
+                            counter++;
+                        }
+                    }
+                }
+
+                foreach ( TreeNode child in this.Nodes )
+                {
+                    ( child as Pose ).ComplementaryAdd( this );
+                }
+            }
         }
 
     }

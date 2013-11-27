@@ -30,8 +30,8 @@ namespace DXCharEditor.Controls
                 {
                     this.nameBox.Text = value.Text;
                     this.poseMode.Checked = value.Mode == PoseMode.Collection;
-                    this.poseMode.Enabled = !this.selectedIsRoot;
-                    this.playPanel.Visible = value.Mode == PoseMode.Collection;
+                    this.poseMode.Enabled = !this.selectedIsRoot && value.Nodes.Count == 0;
+                    this.playPanel.Visible = value.Mode == PoseMode.Collection && value.Nodes.Count > 1;
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace DXCharEditor.Controls
             if ( this.selectedNode != null )
             {
                 this.selectedNode.Mode = this.poseMode.Checked ? PoseMode.Collection : PoseMode.Pose;
-                this.playPanel.Visible = this.poseMode.Checked;
+                ( this.TopLevelControl as Form1 ).poseViewer.Selected = this.selectedNode;  // ->replace by update ?
             }
         }
 

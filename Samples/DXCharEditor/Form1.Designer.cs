@@ -44,16 +44,16 @@ namespace DXCharEditor
             this.tools = new System.Windows.Forms.ToolStrip();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
-            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
-            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
-            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
-            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.editorTools = new System.Windows.Forms.ToolStrip();
             this.gridButton = new System.Windows.Forms.ToolStripButton();
             this.resetZoomScrollButton = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
+            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
+            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
+            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).BeginInit();
@@ -294,31 +294,6 @@ namespace DXCharEditor
             this.nodeSplit.SplitterDistance = 186;
             this.nodeSplit.TabIndex = 0;
             // 
-            // nodeViewer
-            // 
-            this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nodeViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeViewer.Location = new System.Drawing.Point(1, 1);
-            this.nodeViewer.MinimumSize = new System.Drawing.Size(160, 160);
-            this.nodeViewer.Name = "nodeViewer";
-            this.nodeViewer.Padding = new System.Windows.Forms.Padding(3);
-            this.nodeViewer.Root = null;
-            this.nodeViewer.Selected = null;
-            this.nodeViewer.Size = new System.Drawing.Size(198, 184);
-            this.nodeViewer.TabIndex = 0;
-            // 
-            // nodeInfo1
-            // 
-            this.nodeInfo1.AutoSize = true;
-            this.nodeInfo1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nodeInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nodeInfo1.Location = new System.Drawing.Point(1, 1);
-            this.nodeInfo1.MinimumSize = new System.Drawing.Size(200, 150);
-            this.nodeInfo1.Name = "nodeInfo1";
-            this.nodeInfo1.SelectedNode = null;
-            this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
-            this.nodeInfo1.TabIndex = 0;
-            // 
             // poseSplit
             // 
             this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -340,29 +315,6 @@ namespace DXCharEditor
             this.poseSplit.Size = new System.Drawing.Size(200, 421);
             this.poseSplit.SplitterDistance = 200;
             this.poseSplit.TabIndex = 0;
-            // 
-            // poseViewer
-            // 
-            this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.poseViewer.BasePose = null;
-            this.poseViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseViewer.Location = new System.Drawing.Point(1, 1);
-            this.poseViewer.MinimumSize = new System.Drawing.Size(160, 160);
-            this.poseViewer.Name = "poseViewer";
-            this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
-            this.poseViewer.Poses = ((System.Collections.Generic.List<DXCharEditor.Pose>)(resources.GetObject("poseViewer.Poses")));
-            this.poseViewer.Selected = null;
-            this.poseViewer.Size = new System.Drawing.Size(198, 198);
-            this.poseViewer.TabIndex = 0;
-            // 
-            // poseInfo1
-            // 
-            this.poseInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseInfo1.Location = new System.Drawing.Point(0, 0);
-            this.poseInfo1.Name = "poseInfo1";
-            this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
-            this.poseInfo1.Size = new System.Drawing.Size(200, 217);
-            this.poseInfo1.TabIndex = 0;
             // 
             // editorTools
             // 
@@ -414,6 +366,54 @@ namespace DXCharEditor
             this.openFileDialog1.Filter = "Chars|*.xml";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
             // 
+            // nodeViewer
+            // 
+            this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nodeViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeViewer.Location = new System.Drawing.Point(1, 1);
+            this.nodeViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.nodeViewer.Name = "nodeViewer";
+            this.nodeViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.nodeViewer.Root = null;
+            this.nodeViewer.Selected = null;
+            this.nodeViewer.Size = new System.Drawing.Size(198, 184);
+            this.nodeViewer.TabIndex = 0;
+            // 
+            // nodeInfo1
+            // 
+            this.nodeInfo1.AutoSize = true;
+            this.nodeInfo1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nodeInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nodeInfo1.Location = new System.Drawing.Point(1, 1);
+            this.nodeInfo1.MinimumSize = new System.Drawing.Size(200, 150);
+            this.nodeInfo1.Name = "nodeInfo1";
+            this.nodeInfo1.SelectedNode = null;
+            this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
+            this.nodeInfo1.TabIndex = 0;
+            // 
+            // poseViewer
+            // 
+            this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.poseViewer.BasePose = null;
+            this.poseViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseViewer.Location = new System.Drawing.Point(1, 1);
+            this.poseViewer.MinimumSize = new System.Drawing.Size(160, 160);
+            this.poseViewer.Name = "poseViewer";
+            this.poseViewer.Padding = new System.Windows.Forms.Padding(3);
+            this.poseViewer.Poses = ((System.Collections.Generic.List<DXCharEditor.Pose>)(resources.GetObject("poseViewer.Poses")));
+            this.poseViewer.Selected = null;
+            this.poseViewer.Size = new System.Drawing.Size(198, 198);
+            this.poseViewer.TabIndex = 0;
+            // 
+            // poseInfo1
+            // 
+            this.poseInfo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseInfo1.Location = new System.Drawing.Point(0, 0);
+            this.poseInfo1.Name = "poseInfo1";
+            this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
+            this.poseInfo1.Size = new System.Drawing.Size(200, 217);
+            this.poseInfo1.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,10 +423,10 @@ namespace DXCharEditor
             this.Controls.Add(this.tools);
             this.Controls.Add(this.status);
             this.Controls.Add(this.menu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.MinimumSize = new System.Drawing.Size(450, 450);
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DX Char Editor";
             this.menu.ResumeLayout(false);

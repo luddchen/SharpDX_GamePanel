@@ -41,7 +41,7 @@ namespace DXCharEditor
                 PoseMode poseMode = pose.Mode;
                 WriteElement( writer, "Pose", new string[] { "name", "type" }, new string[] { pose.Text, poseMode.ToString() } );
 
-                if ( pose.PoseNodes.Count > 0 ) {
+                if ( pose.PoseNodes.Count > 0 && poseMode == PoseMode.Pose ) {
                     foreach ( PoseNode poseNode in pose.PoseNodes ) {
                         PoseNode baseNode = basePose.GetNode( poseNode.Node );  // check null ?
 

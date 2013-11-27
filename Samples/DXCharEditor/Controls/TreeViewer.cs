@@ -118,15 +118,15 @@ namespace DXCharEditor.Controls
             get { return this.Tree.SelectedNode; }
             set
             {
-                if ( value != this.Tree.SelectedNode )
-                {
+                //if ( value != this.Tree.SelectedNode )
+                //{
                     if ( value == null || value.TreeView == this.Tree )
                     {
                         this.BeforeSelectEvent( this, new TreeViewCancelEventArgs( this.Tree.SelectedNode, false, TreeViewAction.Unknown ) );
                         this.Tree.SelectedNode = value;
                         this.AfterSelectEvent( this, new TreeViewEventArgs( value ) );
                     }
-                }
+                //}
             }
         }
 

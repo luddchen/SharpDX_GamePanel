@@ -103,9 +103,10 @@ namespace DXCharEditor.Controls
         {
             if ( e.Node != null )
             {
-                if ( e.Node == this.Tree.Nodes[0] )
+                if ( e.Node == this.Tree.Nodes[0] || (e.Node as Pose).Mode == PoseMode.Collection )
                 {
                     this.RemoveButton.Enabled = false;
+                    ( e.Node as Pose ).CreatePartialRoot();
                 }
                 else
                 {
