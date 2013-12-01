@@ -44,16 +44,20 @@ namespace DXCharEditor
             this.tools = new System.Windows.Forms.ToolStrip();
             this.editorSplitPanel1 = new DXControls.EditorSplitPanel();
             this.nodeSplit = new System.Windows.Forms.SplitContainer();
+            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
+            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
             this.poseSplit = new System.Windows.Forms.SplitContainer();
+            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
+            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.editorTools = new System.Windows.Forms.ToolStrip();
-            this.gridButton = new System.Windows.Forms.ToolStripButton();
+            this.gridSelectButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.gridOffItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridX2Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridX5Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridX10Item = new System.Windows.Forms.ToolStripMenuItem();
             this.resetZoomScrollButton = new System.Windows.Forms.ToolStripButton();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.nodeViewer = new DXCharEditor.Controls.NodeTreeViewer();
-            this.nodeInfo1 = new DXCharEditor.Controls.NodeInfo();
-            this.poseViewer = new DXCharEditor.Controls.PoseTreeViewer();
-            this.poseInfo1 = new DXCharEditor.Controls.PoseInfo();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorSplitPanel1.BottomSplit)).BeginInit();
@@ -294,78 +298,6 @@ namespace DXCharEditor
             this.nodeSplit.SplitterDistance = 186;
             this.nodeSplit.TabIndex = 0;
             // 
-            // poseSplit
-            // 
-            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.poseSplit.Location = new System.Drawing.Point(0, 0);
-            this.poseSplit.Name = "poseSplit";
-            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // poseSplit.Panel1
-            // 
-            this.poseSplit.Panel1.Controls.Add(this.poseViewer);
-            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.poseSplit.Panel1MinSize = 160;
-            // 
-            // poseSplit.Panel2
-            // 
-            this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
-            this.poseSplit.Panel2MinSize = 150;
-            this.poseSplit.Size = new System.Drawing.Size(200, 421);
-            this.poseSplit.SplitterDistance = 200;
-            this.poseSplit.TabIndex = 0;
-            // 
-            // editorTools
-            // 
-            this.editorTools.GripMargin = new System.Windows.Forms.Padding(0);
-            this.editorTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.editorTools.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.editorTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gridButton,
-            this.resetZoomScrollButton});
-            this.editorTools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.editorTools.Location = new System.Drawing.Point(0, 0);
-            this.editorTools.Name = "editorTools";
-            this.editorTools.Padding = new System.Windows.Forms.Padding(0);
-            this.editorTools.Size = new System.Drawing.Size(481, 31);
-            this.editorTools.TabIndex = 0;
-            this.editorTools.Text = "Editor Tools";
-            // 
-            // gridButton
-            // 
-            this.gridButton.CheckOnClick = true;
-            this.gridButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.gridButton.Image = global::DXCharEditor.Properties.Resources.background;
-            this.gridButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.gridButton.Name = "gridButton";
-            this.gridButton.Size = new System.Drawing.Size(28, 28);
-            this.gridButton.Text = "showGrid";
-            this.gridButton.CheckedChanged += new System.EventHandler(this.gridShowChangeEvent);
-            // 
-            // resetZoomScrollButton
-            // 
-            this.resetZoomScrollButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.resetZoomScrollButton.Image = global::DXCharEditor.Properties.Resources.resetZoomScroll1;
-            this.resetZoomScrollButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.resetZoomScrollButton.Name = "resetZoomScrollButton";
-            this.resetZoomScrollButton.Size = new System.Drawing.Size(28, 28);
-            this.resetZoomScrollButton.Text = "reset zoom and scroll";
-            this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "xml";
-            this.saveFileDialog1.Filter = "Chars|*.xml";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.DefaultExt = "xml";
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Chars|*.xml";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
-            // 
             // nodeViewer
             // 
             this.nodeViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -391,6 +323,28 @@ namespace DXCharEditor
             this.nodeInfo1.Size = new System.Drawing.Size(200, 259);
             this.nodeInfo1.TabIndex = 0;
             // 
+            // poseSplit
+            // 
+            this.poseSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.poseSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.poseSplit.Location = new System.Drawing.Point(0, 0);
+            this.poseSplit.Name = "poseSplit";
+            this.poseSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // poseSplit.Panel1
+            // 
+            this.poseSplit.Panel1.Controls.Add(this.poseViewer);
+            this.poseSplit.Panel1.Padding = new System.Windows.Forms.Padding(1);
+            this.poseSplit.Panel1MinSize = 160;
+            // 
+            // poseSplit.Panel2
+            // 
+            this.poseSplit.Panel2.Controls.Add(this.poseInfo1);
+            this.poseSplit.Panel2MinSize = 150;
+            this.poseSplit.Size = new System.Drawing.Size(200, 421);
+            this.poseSplit.SplitterDistance = 200;
+            this.poseSplit.TabIndex = 0;
+            // 
             // poseViewer
             // 
             this.poseViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -413,6 +367,90 @@ namespace DXCharEditor
             this.poseInfo1.Padding = new System.Windows.Forms.Padding(3);
             this.poseInfo1.Size = new System.Drawing.Size(200, 217);
             this.poseInfo1.TabIndex = 0;
+            // 
+            // editorTools
+            // 
+            this.editorTools.GripMargin = new System.Windows.Forms.Padding(0);
+            this.editorTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.editorTools.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.editorTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridSelectButton,
+            this.resetZoomScrollButton});
+            this.editorTools.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.editorTools.Location = new System.Drawing.Point(0, 0);
+            this.editorTools.Name = "editorTools";
+            this.editorTools.Padding = new System.Windows.Forms.Padding(0);
+            this.editorTools.Size = new System.Drawing.Size(481, 31);
+            this.editorTools.TabIndex = 0;
+            this.editorTools.Text = "Editor Tools";
+            // 
+            // gridSelectButton
+            // 
+            this.gridSelectButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridOffItem,
+            this.gridX2Item,
+            this.gridX5Item,
+            this.gridX10Item});
+            this.gridSelectButton.ForeColor = System.Drawing.Color.Red;
+            this.gridSelectButton.Image = global::DXCharEditor.Properties.Resources.background;
+            this.gridSelectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.gridSelectButton.Name = "gridSelectButton";
+            this.gridSelectButton.Size = new System.Drawing.Size(37, 28);
+            this.gridSelectButton.Text = " ";
+            this.gridSelectButton.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            // 
+            // gridOffItem
+            // 
+            this.gridOffItem.Checked = true;
+            this.gridOffItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.gridOffItem.Name = "gridOffItem";
+            this.gridOffItem.Size = new System.Drawing.Size(152, 22);
+            this.gridOffItem.Text = "Grid off";
+            this.gridOffItem.Click += new System.EventHandler(this.gridOffItemClicked);
+            // 
+            // gridX2Item
+            // 
+            this.gridX2Item.Name = "gridX2Item";
+            this.gridX2Item.Size = new System.Drawing.Size(152, 22);
+            this.gridX2Item.Text = "x2";
+            this.gridX2Item.Click += new System.EventHandler(this.gridX2ItemClicked);
+            // 
+            // gridX5Item
+            // 
+            this.gridX5Item.Name = "gridX5Item";
+            this.gridX5Item.Size = new System.Drawing.Size(152, 22);
+            this.gridX5Item.Text = "x5";
+            this.gridX5Item.Click += new System.EventHandler(this.gridX5ItemClicked);
+            // 
+            // gridX10Item
+            // 
+            this.gridX10Item.Name = "gridX10Item";
+            this.gridX10Item.Size = new System.Drawing.Size(152, 22);
+            this.gridX10Item.Text = "x10";
+            this.gridX10Item.Click += new System.EventHandler(this.gridX10ItemClicked);
+            // 
+            // resetZoomScrollButton
+            // 
+            this.resetZoomScrollButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.resetZoomScrollButton.Image = global::DXCharEditor.Properties.Resources.resetZoomScroll1;
+            this.resetZoomScrollButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.resetZoomScrollButton.Name = "resetZoomScrollButton";
+            this.resetZoomScrollButton.Size = new System.Drawing.Size(28, 28);
+            this.resetZoomScrollButton.Text = "reset zoom and scroll";
+            this.resetZoomScrollButton.Click += new System.EventHandler(this.resetZoomScrollClickEvent);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "xml";
+            this.saveFileDialog1.Filter = "Chars|*.xml";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileOkEvent);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "xml";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Chars|*.xml";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFileOkEvent);
             // 
             // Form1
             // 
@@ -489,8 +527,12 @@ namespace DXCharEditor
         public NodeTreeViewer nodeViewer;
         public PoseInfo poseInfo1;
         private System.Windows.Forms.ToolStrip editorTools;
-        private System.Windows.Forms.ToolStripButton gridButton;
         private System.Windows.Forms.ToolStripButton resetZoomScrollButton;
+        private System.Windows.Forms.ToolStripDropDownButton gridSelectButton;
+        private System.Windows.Forms.ToolStripMenuItem gridOffItem;
+        private System.Windows.Forms.ToolStripMenuItem gridX2Item;
+        private System.Windows.Forms.ToolStripMenuItem gridX5Item;
+        private System.Windows.Forms.ToolStripMenuItem gridX10Item;
     }
 }
 

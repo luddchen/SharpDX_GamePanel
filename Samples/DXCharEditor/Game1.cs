@@ -24,12 +24,14 @@ namespace DXCharEditor
             this.Scroll = Vector2.Zero;
         }
 
-        Color backColor = new Color( 0.5f, 0.5f, 0.5f );
+        Color backColor = new Color( 0.5f, 0.55f, 0.5f );
         Color overlayColor = new Color( 0.3f, 0.35f, 0.3f );
 
         private GameMode Mode;
 
         SpriteBatch spritebatch;
+        TextureBorderDrawer textureBorderDrawer;
+        public GridDrawer gridDrawer;
 
         DXTexture xGameTex, centerTex, overlayTex, circleTex, background;
         
@@ -145,6 +147,8 @@ namespace DXCharEditor
         protected override void LoadContent()
         {
             this.spritebatch = new SpriteBatch( this.GraphicsDevice );
+            this.textureBorderDrawer = new TextureBorderDrawer( this.GraphicsDevice );
+            this.gridDrawer = new GridDrawer( this.Window as DXGameWindow );
             this.xGameTex = new DXTexture( Content.Load<Texture2D>( "Content//xgame.png" ) );
             this.centerTex = new DXTexture( Content.Load<Texture2D>( "Content//center.png" ) );
             this.overlayTex = new DXTexture( Content.Load<Texture2D>( "Content//overlay.png" ) );
@@ -174,43 +178,24 @@ namespace DXCharEditor
 
         protected override void Draw( XGame.XGameTime gameTime )
         {
-            this.GraphicsDevice.Clear( Color.Black );
+            this.GraphicsDevice.Clear( this.backColor );
 
             if ( this.OnDraw != null ) this.OnDraw( this, EventArgs.Empty );
 
-            if ( this.DrawGrid && this.Window != null )
+            if ( this.DrawGrid && this.Window != null ) this.gridDrawer.Draw( this.Scroll, this.ReferenceLength );
+
+            if ( this.form.nodeViewer.Root != null )
             {
-                float bSize = this.ReferenceLength * 4;
-                while ( bSize < 256 ) bSize *= 2;
-                while ( bSize > 512 ) bSize /= 2;
-                RectangleF dest =
-                    new RectangleF(
-                        this.Scroll.X + ( this.Window as DXGameWindow ).Control.ClientSize.Width / 2,
-                        this.Scroll.Y + ( this.Window as DXGameWindow ).Control.ClientSize.Height / 2,
-                        bSize, bSize );
-                while ( dest.X > 0 ) dest.X -= bSize;
-                while ( dest.Y > 0 ) dest.Y -= bSize;
-
-                spritebatch.Begin();
-
-                for ( ; dest.X < ( this.Window as DXGameWindow ).Control.ClientSize.Width; dest.X += bSize )
-                {
-                    RectangleF dest2 = new RectangleF( dest.X, dest.Y, dest.Width, dest.Height );
-                    for ( ; dest2.Y < ( this.Window as DXGameWindow ).Control.ClientSize.Height; dest2.Y += bSize )
-                    {
-                        spritebatch.Draw( this.background.Texture, dest2, backColor );
-                    }
-                }
+                spritebatch.Begin( spritemode: SpriteSortMode.BackToFront );
+                this.form.nodeViewer.Root.Draw( spritebatch );
                 spritebatch.End();
             }
-
-            spritebatch.Begin( spritemode: SpriteSortMode.BackToFront );
-            if ( ( this.form.nodeViewer.Root != null ) ) this.form.nodeViewer.Root.Draw(spritebatch );
-            spritebatch.End();
 
             if ( this.selectedNode != null )
             {
                 TextureNode n = this.selectedNode;
+
+                textureBorderDrawer.Draw( n, ( this.Window as DXGameWindow ).Control.ClientSize.Width, ( this.Window as DXGameWindow ).Control.ClientSize.Height );
 
                 spritebatch.Begin();
 
@@ -244,7 +229,9 @@ namespace DXCharEditor
                 }
 
                 spritebatch.End();
+
             }
+
         }
 
     }

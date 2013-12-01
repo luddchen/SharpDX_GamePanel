@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharState.cs" />
     <Compile Include="CharXML.cs" />
     <Compile Include="Controls\NodeTreeViewer.cs">
       <SubType>UserControl</SubType>
@@ -102,10 +103,12 @@
       <DependentUpon>NodeInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Game1.cs" />
+    <Compile Include="GridDrawer.cs" />
     <Compile Include="Pose.cs" />
     <Compile Include="PoseNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextureBorderDrawer.cs" />
     <Compile Include="TextureNode.cs" />
     <EmbeddedResource Include="Controls\PoseInfo.resx">
       <DependentUpon>PoseInfo.cs</DependentUpon>

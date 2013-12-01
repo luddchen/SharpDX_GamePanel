@@ -214,9 +214,43 @@ namespace DXCharEditor
             this.nodeViewer.Root.Update( true );
         }
 
-        private void gridShowChangeEvent( object sender, EventArgs e )
+        private void gridOffItemClicked( object sender, EventArgs e )
         {
-            this.Game.DrawGrid = this.gridButton.Checked;
+            uncheckGridItems();
+            this.gridOffItem.Checked = true;
+            this.Game.DrawGrid = false;
+        }
+
+        private void gridX2ItemClicked( object sender, EventArgs e )
+        {
+            uncheckGridItems();
+            this.gridX2Item.Checked = true;
+            this.Game.DrawGrid = true;
+            this.Game.gridDrawer.subDivisions = 2;
+        }
+
+        private void gridX5ItemClicked( object sender, EventArgs e )
+        {
+            uncheckGridItems();
+            this.gridX5Item.Checked = true;
+            this.Game.DrawGrid = true;
+            this.Game.gridDrawer.subDivisions = 5;
+        }
+
+        private void gridX10ItemClicked( object sender, EventArgs e )
+        {
+            uncheckGridItems();
+            this.gridX10Item.Checked = true;
+            this.Game.DrawGrid = true;
+            this.Game.gridDrawer.subDivisions = 10;
+        }
+
+        private void uncheckGridItems()
+        {
+            this.gridOffItem.Checked = false;
+            this.gridX2Item.Checked = false;
+            this.gridX5Item.Checked = false;
+            this.gridX10Item.Checked = false;
         }
 
     }

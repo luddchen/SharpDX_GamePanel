@@ -29,7 +29,7 @@ namespace DXCharEditor
         public static Vector2[] ModePoints = 
         {
             // Rotation Points
-            new Vector2( 0, 0), new Vector2( 1, 0), new Vector2( 1, 1), new Vector2( 0, 1),
+            Vector2.Zero, Vector2.UnitX, Vector2.One, Vector2.UnitY,
             // Aspect X Points
             new Vector2( 0, 0.5f), new Vector2( 1, 0.5f),
             // Aspect Y Points

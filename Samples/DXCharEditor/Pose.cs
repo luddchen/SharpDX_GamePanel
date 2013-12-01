@@ -8,8 +8,8 @@ namespace DXCharEditor
 
     public enum PoseMode
     {
-        Pose,       // contains a intern ?tree? structure of changed Nodes and Values 
-        Collection  // contains via TreeNode.Nodes PoseNodes
+        Pose,
+        Collection
     }
 
     public class Pose : TreeViewerNode
@@ -69,9 +69,9 @@ namespace DXCharEditor
 
         public void RestorePose()
         {
-            foreach ( PoseNode pose in this.PoseNodes )
+            foreach ( PoseNode poseNode in this.PoseNodes )
             {
-                pose.InitializeNode();
+                poseNode.InitializeNode();
             }
         }
 

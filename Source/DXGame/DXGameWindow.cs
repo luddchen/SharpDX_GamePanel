@@ -45,7 +45,7 @@ namespace DXGame
                 ModeDescription = new ModeDescription( (int)this.Width, (int)this.Height, new Rational( 60, 1 ), Format.R8G8B8A8_UNorm ),
                 IsWindowed = true,
                 OutputHandle = this.Control.Handle,
-                SampleDescription = new SampleDescription( 1, 0 ),
+                SampleDescription = new SampleDescription( 1, 0 ),  // multisampling ?
                 SwapEffect = SwapEffect.Discard,
                 Usage = Usage.RenderTargetOutput
             };
